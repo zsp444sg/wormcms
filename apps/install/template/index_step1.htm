@@ -1,0 +1,89 @@
+{extend name="index_index" /}
+{block name="top"}检查安装环境{/block}
+{block name='jindu'}40%{/block}
+{block name='cont'}
+<div id="content_1" class="layout bg-fff pad-a30 inst-xieyi">
+    <h2 class="t-c t-16 mb-20">系统配置</h2>
+    <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+        <thead>
+        <tr>
+            <th width="25%" class="t-c">名称</th>
+            <th width="25%" class="t-c">最低版本</th>
+            <th width="25%" class="t-c">推荐版本</th>
+            <th width="25%" class="t-c">当前版本</th>
+        </tr>
+        </thead>
+        <tbody>
+            {volist name="xitong" id="cx"}
+            <tr>
+                <td class="t-c">{$cx.0}</td>
+                <td class="t-c">{$cx.1}</td>
+                <td class="t-c">{$cx.2}</td>
+                <td class="t-c">
+                    {eq name="cx.4" value="success"}
+                    <i class="t-green cx-icon cx-icon-wancheng"> {$cx.3}</i>
+                    {else /}
+                    <i class="t-red cx-icon cx-icon-close"> {$cx.3}</i>
+                    {/eq}
+                </td>
+            </tr>
+            {/volist}
+        </tbody>
+    </table>
+    <h2 class="t-c t-16 mb-20 mt-20">环境变量</h2>
+    <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+        <thead>
+        <tr>
+            <th class="t-c">变量名</th>
+            <th width="25%" class="t-c">是否可写</th>
+            <th width="25%" class="t-c">当前配置</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="check_dirs" id="cx"}
+        <tr>
+            <td class="t-c">{$cx.0}</td>
+            <td class="t-c">{$cx.1}</td>
+            <td class="t-c">
+                {eq name="cx.3" value="success"}
+                <i class="t-green cx-icon cx-icon-wancheng"> {$cx.2}</i>
+                {else /}
+                <i class="t-red cx-icon cx-icon-close"> {$cx.2}</i>
+                {/eq}
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <h2 class="t-c t-16 mb-20 mt-20">权限检测</h2>
+    <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+        <thead>
+        <tr>
+            <th class="t-c">文件名</th>
+            <th width="25%" class="t-c">是否可写</th>
+            <th width="25%" class="t-c">当前配置</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="hanshu" id="cx"}
+        <tr>
+            <td class="t-c">{$cx.0}</td>
+            <td class="t-c">{$cx.1}</td>
+            <td class="t-c">
+                {eq name="cx.3" value="success"}
+                <i class="t-green cx-icon cx-icon-wancheng"> {$cx.2}</i>
+                {else /}
+                <i class="t-red cx-icon cx-icon-close"> {$cx.2}</i>
+                {/eq}
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+{/block}
+{block name="button"}
+<a class="button bg-yellow mr-10" href="{:url('index')}">上一步</a>
+<a class="button bg-yellow" href="{:url('step2')}">下一步</a>
+<div class="layout pad-b50"></div>
+{/block}

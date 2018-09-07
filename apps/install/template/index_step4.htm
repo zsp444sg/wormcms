@@ -1,0 +1,17 @@
+{extend name="index_index" /}
+{block name="top"}系统安装完成{/block}
+{block name='jindu'}100%{/block}
+{block name='cont'}
+<div class="layout bg-fff pad-a30 cx-fex-c fex-column fex-content-c inst-xieyi">
+    <h2 class="t-c t-18 mb-20">访问网站前台</h2>
+    <div>
+        <a class="button bg-yellow" href="{:url('home/index/index')}">访问网站前台</a>
+    </div>
+    <h2 class="t-c t-18 mb-20">访问网站后台</h2>
+    <div>
+        <a class="button bg-yellow" href="{:url('admin/Index/index')}">访问网站后台</a>
+    </div>
+</div>
+{/block}
+{block name="button"}{/block}
+{block name="js"}{/block}

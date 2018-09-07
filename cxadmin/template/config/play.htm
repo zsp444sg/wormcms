@@ -1,0 +1,88 @@
+{include file="public/meat" title="支付设置"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="layout">
+                {include file="config/head" /}
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">支付设置</legend>
+            <form class="layui-form" role="form" action="" method="post">
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">支付宝ID <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[alipayappid]" class="ipt" value="{$webdb.alipayappid|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">支付宝公钥 <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <textarea type="text" name="webdb[alipaygkey]" rows="5" class="ipt">{$webdb.alipaygkey|default=''}</textarea>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">支付宝密钥 <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <textarea type="text" name="webdb[alipaykey]" rows="8" class="ipt">{$webdb.alipaykey|default=''}</textarea>
+                    </div>
+                </div>
+
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">微信APPID <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[wxappid]" class="ipt" value="{$webdb.wxappid|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">微信appSecret<span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[wxappsecret]" class="ipt" value="{$webdb.wxappsecret|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">微信小程序APPID <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[wxsmallappid]" class="ipt" value="{$webdb.wxsmallappid|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">微信小程序appSecret<span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[wxsmallsecret]" class="ipt" value="{$webdb.wxsmallsecret|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10 mt-20">
+                    <div class="x3 t-r"></div>
+                    <div class="xs8 xl9">
+                        <button class="button bg-blue" lay-submit lay-filter="d-button">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+{include file="public/footer" /}

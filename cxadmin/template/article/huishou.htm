@@ -1,0 +1,99 @@
+{include file="public/meat" title="内容列表"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex">
+            <div class="xs6 xl12">
+                <a href="{:url('index',array('mid'=>$Request.param.mid,'fid'=>$Request.param.fid))}" class="button bg-blue">返回列表</a>
+                {if $btn.add}
+                <a href="{:url('add',array('mid'=>$Request.param.mid,'fid'=>$Request.param.fid))}" class="button bg-blue">添加内容</a>
+                {/if}
+                <a href="{:url('huishou')}" class="button bg-yellow">回收站管理</a>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <form class="layui-form" role="form" action="" method="post">
+            <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+                <thead>
+                <tr>
+                    <th class="{if !$btn.del}t-c{/if}">
+                        <div class="checkbox">
+                            <label>
+                                {if $btn.del}<input id="all" class="inverted" type="checkbox" lay-ignore>{/if}
+                                <span class="text">ID</span>
+                            </label>
+                        </div>
+                    </th>
+                    <th>标题</th>
+                    <th class="t-c">栏目</th>
+                    <th class="t-c" width="100">发布者</th>
+                    <th class="t-c" width="100">浏览</th>
+                    <th class="t-c" width="200">发表时间</th>
+                    {if $btn.edit}
+                    <th class="t-c" width="80">排序</th>
+                    {/if}
+                    <th class="t-c" width="100">状态</th>
+                    <th class="t-c" width="100">荐/顶</th>
+                    {if $btn.edit || $btn.del}<th class="t-c" width="120">编辑</th>{/if}
+                    <th class="t-c" width="80">页</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="list" id="cx" empty=""}
+                <tr>
+                    <td class="{if $btn.del}alltd{/if}" data-title="ID">
+                        <div class="checkbox">
+                            <label>
+                                {if $btn.del}<input class="inverted" name="pdel[]" type="checkbox" lay-ignore value="{$cx.aid}">{/if}
+                                <span class="text">{$cx.aid}</span>
+                            </label>
+                        </div>
+                    </td>
+                    <td data-title="标题">{$cx.title}</td>
+                    <td class="t-c" data-title="栏目">{$cx.parttitle}</td>
+                    <td class="t-c" data-title="发布者">{$cx.username}</td>
+                    <td class="t-c" data-title="浏览">{$cx.hist}</td>
+                    <td class="t-c" data-title="发表时间">{$cx.addtime}</td>
+                    {if $btn.edit}
+                    <td data-title="排序">
+                        <input class="ipt ipt-S t-c" type="text" name="sort[{$cx.aid}]" value="{$cx.sort}">
+                    </td>
+                    {/if}
+                    <td class="t-c" data-title="状态">{$cx.statusicon}</td>
+                    <td class="t-c" data-title="荐/顶">{$cx.jianicon}<span class="mr-10"></span>{$cx.topicon}</td>
+                    {if $btn.edit || $btn.del}
+                    <th class="t-c" data-title="编辑">
+                        {if $btn.edit}<a class="button button-S bg-green cx-click cx-icon cx-icon-icon-1 mr-5" href="{:url('edit',array('aid'=>$cx.aid,'mid'=>$cx.mid))}"></a>{/if}
+                        {if $btn.del}<a class="button button-S bg-red cx-click cx-icon cx-icon-lajixiang" data-id="{$cx.aid}" data-href="{:url('del')}" data-type="deldata"></a>{/if}
+                    </th>
+                    {/if}
+                    <td class="t-c" data-title="页数">{$cx.page}</td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <div class="t-c pad-t20">
+                {if $btn.del}
+                <button class="button button-S bg-blue" data-href="{:url('esee')}" data-type="sort" lay-submit lay-filter="sd-btn">批量还原</button>
+                <button class="button button-S bg-red" data-href="{:url('pdel')}" data-type="sort" lay-submit lay-filter="sd-btn">彻底删除</button>
+                {/if}
+            </div>
+        </form>
+        <div class="t-c pad-t20">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    $("#all").click(function () {
+        $(this).closest("table").find("td.alltd input:checkbox").prop("checked",$(this).prop("checked"))
+    })
+</script>
+{include file="public/footer" /}

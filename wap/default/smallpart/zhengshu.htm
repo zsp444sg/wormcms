@@ -1,0 +1,27 @@
+{load href="__CSS__/main.css,__JS__/dist/myfocus-2.0.4.min.js" /}
+<div class="layout cx-fex-c">
+<div class="zhengshulist">
+    <div id="art-picimg" class="">
+        <div class="pic">
+            <ul id="test1" class="layout picurls">
+                {volist name="artlist" id="cx" empty="暂无内容"}
+                {volist name="cx.picimg" id="c" empty="暂无内容"}
+                <li>
+                    <img title="{$cx.futitle}" alt="{$cx.futitle}" src="{$c.value}">
+                </li>
+                {/volist}
+                {/volist}
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    myFocus.set({
+        id:'art-picimg',//焦点图盒子ID
+        pattern:'mF_games_tb',//风格应用的名称
+        time:5,//切换时间间隔(秒)
+        trigger:'click',//触发切换模式:'click'(点击)/'mouseover'(悬停)
+        txtHeight:'0'//文字层高度设置(像素),'default'为默认高度，0为隐藏
+    });
+</script>

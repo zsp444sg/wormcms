@@ -1,0 +1,87 @@
+.pointer{
+    cursor: pointer;
+}
+/*权限选择图标弹窗*/
+.cx-tclayui{
+    width: 50% !important;
+    height: 90% !important;
+}
+.cx-tclayui .layui-layer-content{
+    height: 100%;
+}
+#xicon{
+    padding: 10px;
+    display: none;
+}
+.site-title fieldset {
+    border: none;
+    border-top-width: medium;
+    border-top-style: none;
+    border-top-color: currentcolor;
+    padding: 0;
+    border-top: 1px solid #eee;
+}
+.site-title legend{
+    font-size: 1.6rem;
+}
+.cx-auth-iconlist li{
+    float: left;
+    font-size: 3rem;
+    margin: 10px;
+}
+.cx-auth-iconlist li i.cx-icon{
+    font-size: 3rem;
+}
+
+#auth-diconyl{
+    font-size: 3.5rem;
+    text-align: center;
+    width: 50px;
+    overflow: hidden;
+    height: 50px;
+    line-height: 50px;
+    display: block;
+    border: 1px solid #ccc;
+}
+/*用户组权限选择*/
+.auth-list{
+    line-height: 32px;
+}
+/*  输入框自动 */
+.cx-input-tabel .layui-form-select{
+    float:left;
+}
+.cx-input-flselect {
+    width: 20%;
+    white-space: nowrap;
+    vertical-align: middle;
+    display: table-cell;
+}
+.cx-input-flselect .layui-input, .cx-input-flselect .layui-select, .cx-input-flselect .layui-textarea {
+    height: 34px;
+}
+/*辅助栏目样式*/
+.cx-artsids{
+    height: 200px;
+    overflow: auto;
+    border: solid 1px #eee;
+}
+.cx-artsids .layui-fluid{
+    line-height: 30px;
+}
+/*多标签切换选项*/
+.link-topnav{
+    line-height: 2;
+    padding: 0 15px;
+    border-bottom: 2px solid #dfdfdf;
+}
+.link-topnav.active{
+    color: #0ae;
+    border-bottom: 2px solid #0ae;
+}
+.link-img{
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+}

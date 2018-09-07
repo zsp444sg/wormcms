@@ -1,0 +1,161 @@
+{include file="public/meat" title="栏目列表"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="xs6 xl12">
+                {if $btn.add}
+                <a href="{:url('add',array('mid'=>$Request.param.mid,'pid'=>$Request.param.pid))}" class="button bg-blue">添加栏目</a>
+                {/if}
+                <a href="{:url('Article/index',array('mid'=>$Request.param.mid))}" class="button bg-blue">内容管理</a>
+                <a href="{:url('Article/add',array('mid'=>$Request.param.mid))}" class="button bg-blue">发表内容</a>
+            </div>
+            <div class="xs6 xl12">
+                <form class="layui-form" role="form" action="{:url('so',array('mid'=>$Request.param.mid))}" method="post">
+                    <div class="cx-fex-r">
+                        <label class="lab">搜索栏目</label>
+                        <input class="ipt" name="keyword" placeholder="请输入搜索内容" type="text" style="width: 200px;">
+                        <button class="button f-l" type="submit"><i class="cx-icon cx-icon-sousuo"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <form class="layui-form" role="form" action="" method="post">
+            <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+                <thead>
+                <tr>
+                    <th class="{if !$btn.del}t-c{/if}" width="120">
+                        <div class="checkbox">
+                            <label>
+                                {if $btn.del}<input id="all" class="inverted" type="checkbox" lay-ignore>{/if}
+                                <span class="text">ID</span>
+                            </label>
+                        </div>
+                    </th>
+                    <th>栏目名称</th>
+                    <th class="t-c" width="120">类型</th>
+                    <th class="t-c">记录</th>
+                    <th class="t-c" width="80">内容</th>
+                    <th class="t-c" width="100">发表</th>
+                    <th class="t-c" width="130">创建</th>
+                    {if $btn.edit}
+                    <th class="t-c" width="60">排序</th>
+                    {/if}
+                    {if $btn.edit || $btn.del}<th class="t-c" width="120">编辑</th>{/if}
+                    {if $btn.edit}
+                    <th class="t-c" width="60">
+                        状态
+                    </th>
+                    {/if}
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="list" id="cx" empty=""}
+                <tr cxbs-id="{$cx.id}" cxbs-pid="{$cx.pid}">
+                    <td class="alltd {if !$btn.del}t-c{/if}" data-title="ID">
+                        <div class="checkbox">
+                            <label>
+                                {if $btn.del}<input class="inverted" name="pdel[]" type="checkbox" value="{$cx.id}" lay-ignore>{/if}
+                                <span class="text">{$cx.id}</span>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="tabel-title" data-title="栏目名称">{$cx.icon|default=''}【{$cx.title}】</td>
+                    <td class="t-c" data-title="类型">{$cx.classzh}</td>
+                    <td class="t-c" data-title="记录">{eq name="$cx.class" value="1"}{$cx.articlenum} 篇{/eq}</td>
+                    <td class="t-c" data-title="内容">
+                        {$cx.classcont}
+                    </td>
+                    <td class="t-c" data-title="发表">{eq name="$cx.class" value="1"}<a class="button button-S bor-green" href="{:url('Article/add',array('mid'=>$cx.mid,'fid'=>$cx.id))}">发表内容</a> {/eq}</td>
+                    <td class="t-c" data-title="创建">
+                        {eq name="$cx.class" value="0"}
+                        <a class="button button-S bg-green" href="{:url('add',array('pid'=>$cx.id,'mid'=>$cx.mid))}">
+                            <i class="cx-icon cx-icon-tianjia"></i> 添加子栏目
+                        </a>
+                        {/eq}
+                    </td>
+                    {if $btn.edit}
+                    <td class="t-c" data-title="排序">
+                        <input class="ipt ipt-S t-c" type="text" name="sort[{$cx.id}]" value="{$cx.sort}">
+                    </td>
+                    {/if}
+                    {if $btn.edit || $btn.del}
+                    <td class="t-c" data-title="编辑">
+                        {if $btn.edit}{$cx.classedit}{/if}
+                        {if $btn.del}<a class="button button-S bg-red ml-5 cx-click" data-id="{$cx.id}" data-href="{:url('del')}" data-type="deldata"><i class="cx-icon cx-icon-lajixiang"></i></a>{/if}
+                    </td>
+                    {/if}
+                    {if $btn.edit}
+                    <td class="t-c" data-title="状态">
+                        {$cx.statuszh}
+                    </td>
+                    {/if}
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <div class="t-c pad-t20">
+                {if $btn.edit}<button class="button button-S bg-blue mr-10" data-href="{:url('sort')}" data-type="sort" lay-submit lay-filter="sd-btn">修改排序</button>{/if}
+                {if $btn.del}<button class="button button-S bg-red" data-href="{:url('pdel')}" data-type="pdel" lay-submit lay-filter="sd-btn">批量删除</button>{/if}
+            </div>
+        </form>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    $(function () {
+        var obj_tr = $('.cx-teble tr[cxbs-id]');
+        obj_tr.each(function () {
+            var cid = $(this).attr('cxbs-id'),
+                pidarr = new Array();
+            obj_tr.each(function () {
+                var pid = $(this).attr('cxbs-pid');
+                if(pid == cid){
+                    pidarr.push(cid);
+                }
+            })
+            if(pidarr.length !== 0){
+                $(this).find('td.tabel-title').append("<i class='cx-shensuo cx-icon cx-icon-iconset0187 t-red pointer'></i>");
+            }
+        });
+        var obj_i = $('.cx-teble tr[cxbs-id] i.cx-shensuo');
+        obj_i.filter(".cx-shensuo").click(function () {
+            var cid = $(this).closest('tr').attr('cxbs-id');
+            shensuo(cid);
+        });
+    });
+    function shensuo(o) {
+        var obj_tr = $('.cx-teble tr[cxbs-pid = '+ o +']');
+        var ico = $('.cx-teble tr[cxbs-id = '+ o +'] i.cx-shensuo');
+        if(ico.hasClass('cx-icon-iconset0187')){
+            ico.removeClass('cx-icon-iconset0187').addClass('cx-icon-jia');
+            obj_tr.each(function () {
+                var zcid = $(this).attr('cxbs-id');
+                $(this).find('i.cx-shensuo').attr('class','cx-shensuo cx-icon cx-icon-iconset0187 t-red pointer')
+                shensuo(zcid);
+                $(this).hide();
+            })
+        }else{
+            ico.removeClass('cx-icon-jia').addClass('cx-icon-iconset0187');
+            obj_tr.each(function () {
+                var zcid = $(this).attr('cxbs-id');
+                $(this).find('i.cx-shensuo').attr('class','cx-shensuo cx-icon cx-icon-jia t-red pointer')
+                shensuo(zcid);
+                $(this).show();
+            })
+        }
+    }
+</script>
+<script>
+    $("#all").click(function () {
+        $(this).closest("table").find("td.alltd input:checkbox").prop("checked",$(this).prop("checked"))
+    })
+</script>
+{include file="public/footer" /}

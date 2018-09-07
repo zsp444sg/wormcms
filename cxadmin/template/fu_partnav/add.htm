@@ -1,0 +1,83 @@
+{include file="public/meat" title="添加/编辑辅栏目导航"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="layout">
+                <a href="{:url('FuPart/index',array('id'=>$Request.param.fid))}" class="button bg-blue">返回栏目列表</a>
+                <a href="{:url('index',array('fid'=>$Request.param.fid))}" class="button bg-blue">返回导航列表</a>
+                <a href="{:url('add',array('fid'=>$Request.param.fid,'pid'=>$Request.param.pid))}" class="button bg-blue">添加导航</a>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑辅栏目导航</legend>
+            <form class="layui-form" role="form" action="" method="post">
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">上级导航</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <select name="pid" required lay-verify="speclasspid">
+                            <option value="0">顶级导航</option>
+                            {volist name="postdb.pids" id="cx" empty=""}
+                            {eq name="cx.pid" value="0"}<option value="{$cx.id}">{$cx.title}</option>{/eq}
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">导航名称（<span class="t-red">必填</span> ）</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" name="title" required lay-verify="required" type="text" value="{$postdb.title|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">导航地址（<span class="t-red">必填</span> ）</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" name="url" required lay-verify="required" type="text" value="{$postdb.url|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">显示/隐藏（<span class="t-red">必填</span> ）</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="status" value="1" {eq name="$postdb.status|default='1'" value="1"}checked="checked"{/eq} title="显示" type="radio">
+                        <input name="status" value="0" {eq name="$postdb.status|default='1'" value="0"}checked="checked"{/eq} title="隐藏" type="radio">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">排序</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" placeholder="数字大的排在前面" name="sort" required lay-verify="required|number" type="text" value="{$postdb.sort|default='0'}">
+                        <span class="t-gray">数字大的排在前面</span>
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r"></div>
+                    <div class="xs8 xl9">
+                        <input type="hidden" name="id" value="{$postdb.id|default=$Request.param.id}">
+                        <input type="hidden" name="fid" value="{$postdb.fid|default=$Request.param.fid}">
+                        <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+                        <button class="button bg-blue" lay-submit lay-filter="">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+{include file="public/footer" /}

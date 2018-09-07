@@ -1,0 +1,134 @@
+{include file="public/meat" title="添加/编辑内容"/}
+{include file="public/js" /}
+{load href="__EDITOR__/wangEditor.min.js" /}
+<script type="text/javascript">
+    var E = window.wangEditor;
+</script>
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="xs6 xl12">
+                <a href="{:url('index',array('fid'=>$Request.param.fid))}" class="button bg-blue">返回列表</a>
+                {if $btn.add}
+                <a href="{:url('add',array('fid'=>$Request.param.fid))}" class="button bg-blue">添加内容</a>
+                {/if}
+            </div>
+            <div class="xs6 xl12">
+                <form class="layui-form" role="form" action="{:url('Forms/index')}" method="post">
+                    <div class="cx-fex-r">
+                        <label class="lab">搜索内容</label>
+                        <input class="ipt" name="keyword" placeholder="请输入搜索内容" type="text" style="width: 200px;">
+                        <button class="button f-l" type="submit"><i class="cx-icon cx-icon-sousuo"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑内容</legend>
+            <form class="layui-form" id="addform"  role="form" action="{:url('Forms/edit')}" method="post">
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">用户名：</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <label class="lab t-red">{$postdb.username|default=''}</label>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">发布时间：</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <label class="lab t-red">{$postdb.addtime|date="Y-m-d",###|default=''}</label>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">发布IP：</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <label class="lab t-red">{$postdb.addip|default=''}</label>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">姓名</label>
+                         </div>
+                        <div class="xs8 xl9">
+                             <label class="lab t-red">{$postdb.xingming} </label>
+                        </div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">手机</label>
+                         </div>
+                        <div class="xs8 xl9">
+                             <label class="lab t-red">{$postdb.phone} </label>
+                        </div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">户型</label>
+                         </div>
+                        <div class="xs8 xl9">
+                             <label class="lab t-red">{$postdb.huxing} </label>
+                        </div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">房屋面积</label>
+                         </div>
+                        <div class="xs8 xl9">
+                             <label class="lab t-red">{$postdb.mianji} 平方</label>
+                        </div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">产品系列</label>
+                         </div>
+                        <div class="xs8 xl9">
+                             <label class="lab t-red">{$postdb.chanpin} </label>
+                        </div>
+                    </div>
+
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">是否审核：</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <label class="pull-left">
+                            <input name="status" required value="1" type="radio" {eq name="$postdb.formrequired|default=''" value="1"}checked="checked"{/eq} title="已审核">
+                        </label>
+                        <label class="pull-left">
+                            <input name="status" required value="0" type="radio" {eq name="$postdb.formrequired|default='0'" value="0"}checked="checked"{/eq} title="未审核">
+                        </label>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">回复：</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <textarea class="ipt" rows="3" name="reply">{$postdb.reply|default=''}</textarea>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab"></label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="hidden" name="fid" value="{$Request.param.fid}">
+                        <input type="hidden" name="id" value="{$postdb.id|default=''}">
+                        <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+                        <button class="button bg-blue" lay-submit lay-filter="artbtn">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+{include file="public/footer" /}

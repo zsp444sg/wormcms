@@ -1,0 +1,51 @@
+{include file="public/meat" title="关键词管理"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t20">
+        <form class="layui-form" role="form" action="" method="post">
+            <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+                <thead>
+                <tr>
+                    <th><input id="all" class="inverted mr-5" type="checkbox" lay-ignore>时间</th>
+                    <th>通知名称</th>
+                    <th class="t-c" width="120">编辑</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="list" id="cx"}
+                <tr>
+                    <td {eq name="cx.status" value="0"}style="font-weight: 700"{/eq}><input class="inverted mr-5" name="pdel[]" type="checkbox" lay-ignore value="{$cx.id}">{$cx.addtime}</td>
+                    <td {eq name="cx.status" value="0"}style="font-weight: 700"{/eq}>{$cx.title}</td>
+                    <td class="text-c">
+                        {eq name="cx.status" value="0"}
+                        <a class="button button-S bg-blue mr-5" href="{:url('edit',array('id'=>$cx['id']))}" title="查看通知">未读</a>
+                        {else /}
+                        <a class="button button-S bg-green mr-5" href="{:url('edit',array('id'=>$cx['id']))}" title="查看通知">已读</a>
+                        {/eq}
+                        <a class="button button-S bg-red cx-click" data-id="{$cx['id']}" data-href="{:url('del')}" data-type="deldata">删除</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <div class="t-c pad-t20">
+                {$list->render()}
+            </div>
+            <div class="t-c pad-t20">
+                <button class="button button-S bg-red" data-href="{:url('pdel')}" data-type="sort" lay-submit lay-filter="sd-btn">彻底删除</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    $("#all").click(function () {
+        $(this).closest("table").find("td.alltd input:checkbox").prop("checked",$(this).prop("checked"))
+    })
+</script>
+{include file="public/footer" /}

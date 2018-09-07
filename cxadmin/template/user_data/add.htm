@@ -1,0 +1,159 @@
+{include file="public/meat" title="添加/编辑用户信息"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="layout">
+                <a href="{:url('index')}" class="button bg-blue">返回列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加导航</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑用户信息</legend>
+            <form class="layui-form" id="addform"  role="form" action="" method="post">
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">字段名(<span class="t-red">*</span>)</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" placeholder="请输入字段名" name="title" required lay-verify="required|uname|nonum|lang2" type="text" value="{$postdb.title|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">数据库键名(<span class="t-red">*</span>)</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" placeholder="请输入数据库键名" name="sqlname" required lay-verify="required|uname|nonum|lang2" type="text" value="{$postdb.sqlname|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">数据类型(<span class="t-red">*</span>)</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <select id="sqltype" name="sqltype" required lay-filter="sqltype">
+                            <option {eq name="$postdb.sqltype|default='varchar'" value="varchar"}selected="selected"{/eq} value="varchar">255个字符串以内</option>
+                            <option {eq name="$postdb.sqltype|default=''" value="int"}selected="selected"{/eq} value="int">10位以内纯数字</option>
+                            <option {eq name="$postdb.sqltype|default=''" value="mediumtext"}selected="selected"{/eq} value="mediumtext">文本文档</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">表单类型(<span class="t-red">*</span>)</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <select id="formtype" name="formtype" required lay-filter="formtype">
+                            <option {eq name="$postdb.formtype|default='text'" value="text"}selected="selected"{/eq} value="text">单行文本框</option>
+                            <option {eq name="$postdb.formtype|default=''" value="textarea"}selected="selected"{/eq} value="textarea">多行文本框</option>
+                            <option {eq name="$postdb.formtype|default=''" value="radio"}selected="selected"{/eq} value="radio">单选按钮</option>
+                            <option {eq name="$postdb.formtype|default=''" value="checkbox"}selected="selected"{/eq} value="checkbox">复选框</option>
+                            <option {eq name="$postdb.formtype|default=''" value="select"}selected="selected"{/eq} value="select">下拉菜单</option>
+                            <option {eq name="$postdb.formtype|default=''" value="time"}selected="selected"{/eq} value="time">日期选择框</option>
+                            <option {eq name="$postdb.formtype|default=''" value="upfile"}selected="selected"{/eq} value="upfile">单文件上传</option>
+                            <option {eq name="$postdb.formtype|default=''" value="upimg"}selected="selected"{/eq} value="upimg">多图片</option>
+                            <option {eq name="$postdb.formtype|default=''" value="uptxt"}selected="selected"{/eq} value="uptxt">多附件</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">表单默认值</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" placeholder="默认值一般为空" name="formvalue" type="text" value="{$postdb.formvalue|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">字段单位</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" placeholder="默认值一般为空" name="formunist" type="text" value="{$postdb.formunist|default=''}">
+                    </div>
+                </div>
+                <div id="values" class="cx-fex-c mb-15" {switch name="$postdb.formtype|default='text'"}{case value="textarea|text|time"}style="display: none;"{/case}{/switch}>
+                    <div class="x3 t-r">
+                        <label class="lab">表单可选值</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <textarea class="ipt" rows="3" placeholder="可选值请用英文 ' , ' 分割" name="formset">{$postdb.formset|default=''}</textarea>
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">表单附注</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" placeholder="表单附注一般为空" name="formtitle" type="text" value="{$postdb.formtitle|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">是否必填(<span class="t-red">*</span>)</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <div class="radio">
+                            <label class="pull-left">
+                                <input name="formrequired" required value="1" type="radio" {eq name="$postdb.formrequired|default=''" value="1"}checked="checked"{/eq} title="是">
+                            </label>
+                            <label class="pull-left">
+                                <input name="formrequired" required value="0" type="radio" {eq name="$postdb.formrequired|default='0'" value="0"}checked="checked"{/eq} title="否">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">允许查看的用户组</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        {volist name="group" id="see"}
+                        <input type="checkbox" name="seeauth[]" title="{$see.title}" {in name="$see.id" value="$postdb.seeauth|default=''"}checked="checked"{/in} value="{$see.id}">
+                        {/volist}
+                        <p class="t-gray">不选择则全部有权限</p>
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">排序值(<span class="t-red">*</span>)</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" placeholder="可以为空，数字大的在前面" name="sort" required lay-verify="number" type="text" value="{$postdb.sort|default='0'}">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab"></label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <button class="button bg-blue" lay-submit lay-filter="button">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+    layui.define(['form'], function(exports){
+        var layform = layui.form;
+        layform.on('select(formtype)', function(data){
+            if(data.value == 'radio' || data.value == 'checkbox' || data.value == 'select'){
+                $("#values").show();
+            }else{
+                $("#values").hide();
+            }
+        });
+        layform.render();
+    })
+</script>
+{include file="public/footer" /}

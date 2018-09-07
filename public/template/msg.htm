@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!-- Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>提示信息</title>
+    <meta name="description" content="后台管理系统---上海焱凤信息技术有限公司" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="cxbs.net!Zhaoyan" />
+    <!--Basic Styles-->
+    {load href="__LAYUI__/layui/css/layui.css" /}
+</head>
+<body>
+<div id="msg" style="display: none"><?php echo(strip_tags($msg));?></div>
+<div id="url" style="display: none"><?php echo($url);?></div>
+<div id="wait" style="display: none"><?php echo($wait);?></div>
+{load href="__JS__/js/jquery-2.0.3.min.js,__LAYUI__/layui.all.js" /}
+<script type="text/javascript">
+    var msg = document.getElementById('msg').innerHTML,
+        url = document.getElementById('url').innerHTML,
+        wait = document.getElementById('wait').innerHTML;
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        layer.open({
+            title: '提示',
+            content: msg,
+            yes: function(index, layero){
+                location.href = url;
+                layer.close(index);
+            }
+        });
+    });
+</script>
+</body>
+</html>

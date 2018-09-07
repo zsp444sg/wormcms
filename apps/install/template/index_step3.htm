@@ -1,0 +1,20 @@
+{extend name="index_index" /}
+{block name="top"}系统安装{/block}
+{block name='jindu'}80%{/block}
+{block name='cont'}
+<div class="layout bg-fff pad-a30">
+    <h2 class="t-c t-18 mb-20">数据库存连接成功，正在安装数据库，请勿关闭浏览器...</h2>
+    <div id="content_1" class="layout inst-xieyi"></div>
+</div>
+{/block}
+{block name="button"}
+<a id="openpage" class="button">数据库安装中...</a>
+{/block}
+{block name="js"}
+{__block__}
+<script type='text/javascript'>
+    function showmsg(msg,cl) {
+        $("#content_1").append("<p class='"+cl+"'>"+msg+"</p>");
+    }
+</script>
+{/block}

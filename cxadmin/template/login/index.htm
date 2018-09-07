@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!-- Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>登录后台管理中心---上海焱凤信息技术有限公司</title>
+    <meta name="description" content="后台管理系统---上海焱凤信息技术有限公司" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="cxbs.net!Zhaoyan" />
+    <link rel="shortcut icon" href="__ADMIN__/img/favicon.png" type="image/x-icon">
+    {load href="__LAYUI__/css/layui.css,__ADMIN__/css/login.css" /}
+</head>
+<body>
+<div class="login-bg">
+    <div class="login-img"></div>
+</div>
+<div class="login_k">
+    <div class="login_n">
+        <div class="login_c">
+            <!---->
+            <div class="cx-title">
+                <div class="text-center">
+                    <img class="login_img" src="__ADMIN__/logo-inverted.png">
+                </div>
+                <h3 class="text-center">后台管理中心</h3>
+            </div>
+            <form id="form" class="layui-form layui-form-pane" role="form" action="" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label layui-icon">&#xe612;</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label layui-icon">&#xe644;</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="userpassword" required  lay-verify="required" placeholder="请输入密码" class="layui-input">
+                    </div>
+                </div>
+                {eq name="webdb.web_adminyz" value="1"}
+                <div class="layui-form-item">
+                    <label class="layui-form-label layui-icon">&#xe644;</label>
+                    <div class="layui-input-block">
+                        <div class="cx-input-tabel">
+                            <input type="text" name="incode" required  lay-verify="required" placeholder="请输入密码" class="layui-input">
+                            <span class="cx-input-fl"><img id="verifycode_img" title="点击更换" src="{:url('yzm')}" onclick="this.src='{:url('yzm')}?seed='+Math.random()" height="36"></span>
+                        </div>
+                    </div>
+                </div>
+                {/eq}
+                <div class="layui-form-item text-center">
+                    <button class="layui-btn layui-btn-normal layui-btn-small" lay-submit lay-filter="login">登录</button>
+                </div>
+            </form>
+            <div class="layui-form-item login-bq text-center" style="display: none;">
+                <a class="text-gray text-little" href="http://www.cxbs.net" target="_blank">焱凤技术</a><br>
+                <a class="text-gray text-little" href="http://www.cxbs.net" target="_blank">www.cxbs.net</a>
+            </div>
+            <!---->
+        </div>
+    </div>
+</div>
+{load href="__LAYUI__/layui.js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('login');
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+#
+# robots.txt for cxbsCMS
+# cxbscms V1
+#
+
+User-agent: *
+
+Disallow: /apps/
+Disallow: /cxadmin/
+Disallow: /cxcore/
+Disallow: /data/
+Disallow: /extend/
+Disallow: /images/
+Disallow: /public/
+Disallow: /template/
+Disallow: /runtime/
+Disallow: /upload_files/
+Disallow: /vendor/
+

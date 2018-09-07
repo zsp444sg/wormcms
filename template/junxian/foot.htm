@@ -1,0 +1,134 @@
+<footer class="layout foot-k t-reverse">
+    <div class="cont cx-fex pad-b50 hidden-l">
+        <div class="foot-nav cx-fex-l" style="flex-grow: 2;">
+            {present name="footnav"}
+            {volist name="footnav.navs" id="cx" empty="" key="k"}
+            {eq name="cx.pid" value="0"}
+            <ul class="foot-ul">
+            <li class="t">
+                <a data-cid="t{$k}" class="cx-fex-c fex-column top-nav-a" title="{$cx.title}" href="{$cx.url}" {eq name="cx.target" value="1"}target="_blank"{/eq}>{$cx.title}</a>
+            </li>
+                {range name="cx.id" value="$footnav.pids" type="in"}
+                {volist name="footnav.navs" id="cxe"}
+                {eq name="cxe.pid" value="$cx.id"}
+                <li>
+                    <a class="t-black" title="{$cxe.title}" href="{$cxe.url}">
+                        <span>{$cxe.title}</span>
+                    </a>
+                </li>
+                {/eq}
+                {/volist}
+                {/range}
+            </ul>
+            {/eq}
+            {/volist}
+            {/present}
+            <ul class="foot-ul">
+                <li class="t">联系我们</li>
+                <li>电话：021-57170633</li>
+                <li>罗经理 18939961786</li>
+                <li>李经理 15900810291</li>
+                <li>传真：021-57170623</li>
+                <li>地址：中国 上海市奉贤区 奉炮公路322号</li>
+            </ul>
+            <div class="foot-link fex-column">
+                {notempty name="plink"}
+                <ul class="layout cx-fex-l foot-imglink">
+                    {volist name="plink" id="cx" empty=""}
+                    <li>
+                        <a title="{$cx.title}" href="{$cx.url}" target="_blank"><img class="img-responsive" src="{$cx.picurl}" alt="{$cx.title}"></a>
+                    </li>
+                    {/volist}
+                </ul>
+                {/notempty}
+                {volist name="tlink" id="cx" empty=""}
+                <ul class="layout cx-fex-l">
+                    <li class="t">
+                        {$cx.title}:
+                    </li>
+                    {volist name="cx.list" id="c" empty=""}
+                    <li>
+                        <a href="{$c.url}" title="{$c.title}" target="_blank">{$c.title}</a>
+                    </li>
+                    {/volist}
+                </ul>
+                {/volist}
+            </div>
+        </div>
+    </div>
+    <div class="layout foot-bqk">
+        <div class="cont t-reverse">
+            <div class="foot-bq">版权所有 {$webdb.foot_bq} Copyright © 2012-2018 {$webdb.www_url} {$webdb.web_beian} <script src="https://s19.cnzz.com/z_stat.php?id=1274521841&web_id=1274521841" language="JavaScript"></script></div>
+        </div>
+    </div>
+</footer>
+{load href="__JS__/jquery-2.0.3.min.js,__LAYUI__/layui.js,__JS__/cxbsnet.js" /}
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?96c3bf3dbe22ae4b6b0cab0c405a869e";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=mliQcGfAYPXMTx0ukWPtGpwb3uhsspEK&s=1"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+<link rel="stylesheet" href="https://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map('allmap');
+    var poi = new BMap.Point(121.532016,30.840556);
+    var myIcon = new BMap.Icon("__IMAGES__/junxian/dingwei.png", new BMap.Size(20,30));
+    var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
+        '<img src="__IMAGES__/junxian/logo1.jpg" alt="上海俊先过滤设备有限公司" class="f-r" style="zoom:1;overflow:hidden;width:100px;height:auto; margin-top:20px;margin-left:3px;"/>' +
+        'Tel: 021-57170633<br/>地址: 上海市奉贤区奉炮公路322号' +
+        '</div>';
+
+    //创建检索信息窗口对象
+    var searchInfoWindow = null;
+    map.centerAndZoom(poi, 15);
+    map.enableScrollWheelZoom();
+    searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+        title  : "上海俊先过滤设备有限公司",      //标题
+        width  : 290,             //宽度
+        height : 105,              //高度
+        panel  : "panel",         //检索结果面板
+        enableAutoPan : true,     //自动平移
+        searchTypes   :[
+            BMAPLIB_TAB_TO_HERE,  //到这里去
+            BMAPLIB_TAB_FROM_HERE //从这里出发
+        ]
+    });
+    var marker = new BMap.Marker(poi,{icon:myIcon}); //创建marker对象
+    marker.addEventListener("click", function(e){
+        searchInfoWindow.open(marker);
+    })
+    searchInfoWindow.open(marker);
+    map.addControl(new BMap.NavigationControl());   //添加地图类型控件
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    map.addOverlay(marker); //在地图中添加marker
+</script>
+<script>
+    layui.config({
+        base: '__JS__/'
+    }).use('default');
+    layui.config({
+        base: '__IMAGES__/junxian/js/'
+    }).use('app');
+</script>
+<!--<script type="text/javascript">-->
+    <!--// 禁止右键菜单-->
+    <!--document.oncontextmenu = function(){ return false; };-->
+    <!--// 禁止文字选择-->
+    <!--document.onselectstart = function(){ return false; };-->
+    <!--// 禁止复制-->
+    <!--document.oncopy = function(){ return false; };-->
+    <!--// 禁止剪切-->
+    <!--document.oncut = function(){ return false; };-->
+    <!--// 禁止粘贴-->
+    <!--document.onpaste = function(){ return false; };-->
+<!--</script>-->
+
+</body>
+</html>

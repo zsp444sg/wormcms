@@ -1,0 +1,44 @@
+{include file="$temps.head" title="$webs.title" keywords="$webs.keywords" description="$webs.description" /}
+<div class="layout so-top b-b">
+    <div class="cont cx-fex cx-fex-c">
+        <form class="xs10 pad-a5 layui-form" role="form" action="{:url('Search/index')}" method="post">
+            <input class="ipt so-soipt" name="keyword" placeholder="请输入搜索内容" type="text" value="{$keyword|default=''}">
+            <button class="button bg-blue so-sobtn" type="submit"><i class="cx-icon cx-icon-sousuo"> 搜索</i></button>
+        </form>
+        <div class="xs10 in-key">
+            <span>热门搜索:</span>
+            <div class="cx-fex-l xl9">
+                {$label.resou|default=""}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cont fex-column">
+    <ul class="layout fex-column mt-10">
+        {volist name="solist" id="cx" empty=""}
+        <li class="layout cx-fex-l news-list-li">
+            {notempty name="$cx.picurl"}
+            <div class="xs2 xl4">
+                <div class="news-list-img">
+                    <img class="img-responsive" src="{$cx.picurl}" alt="{$cx.futitle}">
+                </div>
+            </div>
+            <div class="xs9 xl8 cx-fex fex-column pad-l20">
+                {else /}
+                <div class="layout">
+                    {/notempty}
+                    <h3 class="news-list-t"><a href="{$cx.url}" title="{$cx.futitle}">{$cx.title|default=""}</a></h3>
+                    <div class="layout cx-fex-l news-list-tag">
+                        <span class="mr-10">所属栏目：<a href="{:url('Part/index',array('fid'=>$cx.fid))}">{$cx.partname}</a></span>
+                        <span class="mr-10">发布日期：{$cx.addtime}</span>
+                        <span class="mr-10 hidden-l">点击量：{$cx.hist}</span>
+                    </div>
+                </div>
+        </li>
+        {/volist}
+    </ul>
+    <div class="pad-a10 cx-fex-c">
+        {$pages}
+    </div>
+</div>
+{include file="$temps.foot" /}

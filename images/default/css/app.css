@@ -1,0 +1,77 @@
+html,body{
+    overflow-x: hidden;
+    overflow-x: -moz-hidde-unscrollable;
+}
+a:hover{
+    color: #f90;
+}
+.cx-top .t-reverse a:hover {
+    color: #f60;
+}
+/*公用的*/
+
+/*导航*/
+.top-k{
+    border-bottom: 1px solid #0ae;
+    transition: all .5s;
+}
+.top-logo{
+    padding: 10px 0;
+}
+.top-logo a{
+    transition: all .5s;
+    max-width: 300px;
+    max-height: 60px;
+}
+.top-nav-li{
+    height: 100%;
+    font-size: 1.6rem;
+}
+.top-nav-li>a{
+    transition: all .5s;
+    height: 100%;
+}
+.top-nav-li>a:hover{
+    background-color: #0ae;
+    color: #fff;
+}
+/*浮动导航*/
+.top-k.cx-fixed-top .top-logo a{
+    max-height: 40px;
+}
+/*功能说明*/
+.in-sm-c{
+    margin-bottom: 30px;
+}
+.in-sm-k{
+    padding: 80px 0 50px 0;
+}
+.in-sm-list{
+    height: 100%;
+    padding: 10px;
+    border: 1px solid #dfdfdf;
+    line-height: 2;
+}
+.in-sm-title{
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    top: -16px;
+    left: 0;
+}
+.in-sm-title span{
+    padding: 0 20px;
+    background: #fff;
+}
+.in-sm-cont{
+    padding-top: 15px;
+    color: #666;
+}
+/*尾部*/
+.foot-k{
+    padding: 50px 0;
+    background: #666;
+}
+.foot-bq{
+    line-height: 2;
+}

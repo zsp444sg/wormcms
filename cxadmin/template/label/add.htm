@@ -1,0 +1,43 @@
+{include file="public/_meat" title="标签管理"/}
+<div class="layui-container">
+    <fieldset class="layui-elem-field">
+        <legend class="cx-legend">请选择标签内容</legend>
+        <div class="layui-field-box cx-field-box">
+            <form class="layui-form form form-horizontal" action="{:url('addfield')}" method="post">
+                <div class="three steps">
+                    <span class="active step">第一步</span>
+                    <span class="disabled step">第二步</span>
+                    <span class="disabled step">第三步</span>
+                </div>
+                <div class="pd-20 text-c">
+                    <legend class="cx-legend">自订义显示</legend>
+                    <div class="container-fluid">
+                        <input type="text" name="plate" value="{$postdb.plate}">
+                        <input type="text" name="contr" value="{$postdb.contr}">
+                        <input type="text" name="title" value="{$postdb.title}">
+                        <input type="text" name="parts" value="{$postdb.parts}">
+                        <input type="text" name="getnew" value="{$postdb.getnew|default=''}">
+                        <input type="text" name="type" value="{$postdb.type|default=''}">
+                        <input type="text" name="id" value="{$postdb.id|default=''}">
+                        <button class="btn size-S btn-warning mr-10" data-value="htmledit" data-type="labeledit" lay-submit lay-filter="label-btn">html源代码</button>
+                        <button class="btn size-S btn-warning mr-10" data-value="imagesedit" data-type="labeledit" lay-submit lay-filter="label-btn">单张图片</button>
+                    </div>
+                </div>
+                <div class="pd-20 text-c">
+                    <legend class="cx-legend">网站内容调用</legend>
+                    <div class="container-fluid">
+                        <button class="btn size-S btn-warning mr-10" data-href="{:url('partedit')}" data-type="labeledit" lay-submit lay-filter="label-btn">主栏目调用</button>
+                        <button class="btn size-S btn-warning mr-10" data-href="{:url('fupartedit')}" data-type="labeledit" lay-submit lay-filter="label-btn">辅助栏目调用</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </fieldset>
+</div>
+{include file="public/_js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/model/'
+    }).use('app');
+</script>
+{include file="public/_footer" /}

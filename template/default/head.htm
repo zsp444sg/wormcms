@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!-- Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>[title]</title>
+    <meta name="keywords" content="[keywords]" />
+    <meta name="description" content="[description]" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="cxbs.net!Zhaoyan" />
+    <link rel="shortcut icon" href="__IMAGES__/img/favicon.png" type="image/x-icon">
+    {load href="__CSS__/cxbsnet.css,__LAYUI__/css/layui.css,__CSS__/iconfont.css,__IMAGES__/default/css/app.css" /}
+    {load href="__IMAGES__/default/js/jquery-2.0.3.min.js,__LAYUI__/layui.js,__JS__/cxbsnet.js" /}
+</head>
+<body {$bodyondblclick}>
+<header class="layout cx-fex-c top-k cx-fixed" data-f="top">
+    <span class="cont cx-fex">
+        <div class="xs3 top-logo">
+            <a class="cl" href="{$webdb.www_url}" title="{$webdb.webname}">
+                <img class="img-responsive" title="{$webdb.webname}" src="/{$webdb.updir}/{$webdb.weblogo}">
+            </a>
+        </div>
+        {neq name="mobileurl" value='true'}
+        <ul class="cx-fex xs7 cx-nav hidden-l">
+            {present name="navs"}
+            {volist name="navs.navs" id="cx" empty=""}
+            {eq name="cx.pid" value="0"}
+            <li class="top-nav-li">
+                <a class="cx-fex-c fex-column" title="{$cx.title}" href="{$cx.url}" {eq name="cx.target" value="1"}target="_blank"{/eq}>
+                <span>
+                <i class="{$cx.icon.icon|default=''}" style="color: #{$cx.icon.colos|default=''}"></i>
+                {$cx.title}
+                {eq name="webdb.nav_menu" value="1"}
+                {range name="cx.id" value="$navs.pids" type="in"}
+                <i class="cx-icon cx-icon-xiajiantou"></i>
+                </span>
+                </a>
+                <ul class="cx-nav-menu">
+                    {volist name="navs.navs" id="cxe"}
+                    {eq name="cxe.pid" value="$cx.id"}<li><a href="{$cxe.url}">{$cxe.title}</a></li>{/eq}
+                    {/volist}
+                </ul>
+                {else /}
+                </span>
+                </a>
+                {/range}
+                {/eq}
+            </li>
+            {/eq}
+            {/volist}
+            {/present}
+        </ul>
+        {/neq}
+    </div>
+</header>

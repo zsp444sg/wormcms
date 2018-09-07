@@ -1,0 +1,34 @@
+<ul class="layout cx-fex-l">
+    {volist name="artlist" id="cx" empty="暂无内容"}
+    <li class="xs3 xl6 list-cont-li">
+        <div class="pad-a5">
+            <a class="list-product cx-click"  data-href="{$cx.url}" title="{$cx.futitle}" data-title="{$cx.futitle}" data-type="openarticle">
+                <div class="list-phoes">
+                    <img class="img-responsive" src="{$cx.picurl}" title="{$cx.futitle}" alt="{$cx.futitle}">
+                </div>
+                <div class="cx-fex-c fex-column list-chanpin-txt">
+                    <div class="cx-fex">
+                        <span>产品型号</span>
+                        <span>{$cx.xinghao}</span>
+                    </div>
+                    <div class="cx-fex">
+                        <span>产品颜色</span>
+                        <span>{$cx.yanse}</span>
+                    </div>
+                    <div class="cx-fex">
+                        <span>发货地址</span>
+                        <span>{$cx.fahuo}</span>
+                    </div>
+                    <div class="cx-fex">
+                        <span>生产周期</span>
+                        <span>{$cx.zhouqi} 工作日</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </li>
+    {/volist}
+</ul>
+<div class="layout pad-a20 cx-fex-c">
+    {$pages}
+</div>

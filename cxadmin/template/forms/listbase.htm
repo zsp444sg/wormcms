@@ -1,0 +1,70 @@
+{include file="public/meat" title="表单列表"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="xs6 xl12">
+                <a href="{:url('index',array('fid'=>$Request.param.fid))}" class="button bg-blue">返回列表</a>
+                {if $btn.add}
+                <a href="{:url('add',array('fid'=>$Request.param.fid))}" class="button bg-blue">添加内容</a>
+                {/if}
+            </div>
+            <div class="xs6 xl12">
+                <form class="layui-form" role="form" action="{:url('Forms/so',array('fid'=>$Request.param.fid))}" method="post">
+                    <div class="cx-fex-r">
+                        <label class="lab">搜索内容</label>
+                        <input class="ipt" name="keyword" placeholder="请输入搜索内容" type="text" style="width: 200px;">
+                        <button class="button f-l" type="submit"><i class="cx-icon cx-icon-sousuo"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+            <thead>
+            <tr>
+                <th class="t-c">ID</th>
+                {$Artmodelth|default=''}
+                <th class="t-c">添加时间</th>
+                {if $btn.edit || $btn.del}<th class="t-c" width="120">编辑</th>{/if}
+                <th class="t-c" width="120">编辑</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id="cx" empty="" }
+            <tr>
+                <td class="t-c">{$cx.id}</td>
+                {$Artmodeltd|default=''}
+                <td class="t-c f-24">
+                    {$cx.addtime|date="Y-m-d",###}
+                </td>
+                {if $btn.edit || $btn.del}
+                <td class="t-c">
+                    {if $btn.edit}<a class="button button-S bg-green mr-5 cx-click" href="{:url('edit',array('fid'=>$Request.param.fid,'id'=>$cx.id))}" title="编辑">编辑</a>{/if}
+                    {if $btn.del}<a class="button button-S bg-red cx-click cx-icon cx-icon-lajixiang" data-id="{$cx.id}" data-href="{:url('del',array('fid'=>$Request.param.fid))}" data-type="deldata"></a>{/if}
+                </td>
+                <td class="t-c">
+                    {eq name="cx.status" value="0"}
+                    <a class="button button-S bg-red">未审核</a>
+                    {else /}
+                    <a class="button button-S bg-green">已审核</a>
+                    {/eq}
+                </td>
+                {/if}
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        <div class="t-c pad-t20">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+{include file="public/footer" /}

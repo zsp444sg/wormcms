@@ -1,0 +1,163 @@
+/*新闻中心-S*/
+.xw-list-lb-lul{
+
+}
+.xw-list-lb-lli{
+    margin: 10px 0;
+}
+.xw-list-lb-bt{
+    padding: 5px;
+    background-color: #e6e6e6;
+}
+.xw-list-lb-rul{
+    background-color: #f6f6f6;
+    padding: 7px 5px;
+}
+.xw-list-lb-rul li{
+    margin: 0 10px;
+}
+.xw-list-lb-rul li a{
+    color: #676767;
+}
+.xw-list-lb-rul li a:hover{
+    color: #09f;
+}
+
+/*新闻中心下边部分-S*/
+.xw-list{
+    border: 1px solid #d6d6d6;
+}
+.xw-list-nr-ul{
+    line-height: 2;
+}
+.xw-list-nr-li{
+    border-bottom: 1px dotted #d6d6d6;
+}
+.xw-list-nr-bt{
+
+}
+.xw-nr{
+    line-height: 2;
+}
+.xw-nr-bt{
+    font-weight: 600;
+}
+.xw-nr-xx{
+    border-bottom: 1px solid #d6d6d6;
+    color: #676767;
+    padding: 5px 0;
+}
+.xw-nr-txt{
+
+}
+.xw-nr-txt p{
+    text-indent: 2em;
+}
+
+    /*新闻中心下边部分-E*/
+/*新闻中心-E*/
+
+/*单独产品页*/
+.zoom-box{
+    position: relative;
+}
+.small-box{
+    border: 1px solid #ccc;
+    position: relative;
+}
+.small-box .square{
+    position: absolute;
+    background-color: #f6f6f6;
+    opacity: 0.5;
+    display: none;
+}
+.small-box .mask{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top:0;
+    left:0;
+}
+.img-list ul:after{
+    clear: both;
+    content: '';
+    display: table;
+}
+.img-list ul li{
+    float: left;
+    padding: 0 8px;
+}
+.img-list img{
+    border: 2px solid transparent;
+}
+.img-list img.active{
+    border: 2px solid red;
+}
+.img-tb{
+
+}
+.big-box{
+    position: absolute;
+    top:0;
+    left: 100%;
+    margin-left: 2px;
+    width: 500px;
+    height: 500px;
+    border: 1px solid #ccc;
+    display: none;
+    overflow: hidden;
+}
+.big-box img{
+    position: absolute;
+}
+
+/*产品内容*/
+.wz-bt{
+    border-bottom: 1px solid #d6d6d6;
+    padding: 0 10px 5px 0;
+}
+.wz-xx{
+    z-index: -1;
+}
+.wz-zx{
+    margin-right: 100px;
+}
+.cp-js-li{
+    line-height: 2;
+}
+
+.wz-nr{
+
+}
+.wz-nr{
+    text-indent: 2em;
+    color: #676767;
+}
+/*联系我们-S*/
+.lxwm{
+    border-top: 2px solid #09f;
+
+}
+.lxwm-bt{
+    line-height: 2;
+    background-color: #09f;
+    color: #fff;
+}
+.lxwm-ul{
+    padding: 5px 20px;
+}
+.lxwm-li{
+    line-height: 2;
+    border-bottom: 1px dotted #dfdfdf;
+}
+.lxwm-li h3{
+    background: linear-gradient(to right,rgba(0,100,200,1),rgba(255,255,255,1));
+    color: #fff;
+}
+/*联系我们-E*/
+
+
+/*新闻中心-S*/
+
+/*新闻中心-E*/

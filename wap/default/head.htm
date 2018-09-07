@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!-- Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>[title]</title>
+    <meta name="keywords" content="[keywords]" />
+    <meta name="description" content="[description]" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="cxbs.net!Zhaoyan" />
+    <link rel="shortcut icon" href="__IMAGES__/img/favicon.png" type="image/x-icon">
+    {load href="__CSS__/cxbsnet.css,__LAYUI__/css/layui.css,__LAYUI__/css/layui.mobile.css,//at.alicdn.com/t/font_595331_vs7p1j9mhho20529.css,__IMAGES__/gaojue/css/app.css,__IMAGES__/wap/css/app.css" /}
+    {load href="__IMAGES__/gaojue/js/jquery-2.0.3.min.js,__LAYUI__/layui.js" /}
+</head>
+<body {$bodyondblclick}>
+<header class="layout cx-fex cx-top pos-f">
+    <div class="cx-top-logo">
+        <a class="cx-logo cl" href="{$webdb.www_url}" title="{$webdb.webname}">
+            <img src="/{$webdb.updir}/{$webdb.weblogo}">
+        </a>
+    </div>
+    <button class="cx-nav-seeicon b-a cx-click" data-type="navsee" data-cid="#topnav"><i class="cx-icon cx-icon-htmal5icon35"></i></button>
+    <nav id="topnav" class="xs8 xl12 cx-top-nav">
+        <ul class="layout pos-r cx-fex fex-column cx-nav">
+            <li>
+                <h3 class="text-gjzhuse cx-click cx-nav-shou cx-fex-r pad-r10" data-type="navsee" data-cid="#topnav"><i class="cx-icon cx-icon-xiangzuojiantou "></i> 收起</h3>
+            </li>
+            {volist name="navs.navs" id="cx"}
+            {eq name="cx.pid" value="0"}
+            <li>
+                <a class="text-gjzhuse" href="{$cx.url}">{$cx.title}
+                    {eq name="webdb.nav_menu" value="1"}
+                    {range name="cx.id" value="$navs.pids" type="in"}
+                    <i class="cx-icon cx-icon-xiajiantou"></i>
+                </a>
+                <ul class="cx-nav-menu">
+                    {volist name="navs.navs" id="cxe"}
+                    {eq name="cxe.pid" value="$cx.id"}<li><a href="{$cxe.url}">{$cxe.title}</a></li>{/eq}
+                    {/volist}
+                </ul>
+                {else /}
+                </a>
+                {/range}
+                {/eq}
+            </li>
+            {/eq}
+            {/volist}
+        </ul>
+    </nav>
+</header>

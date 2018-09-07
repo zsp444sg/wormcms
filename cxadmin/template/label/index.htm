@@ -1,0 +1,31 @@
+{include file="public/meat" title="标签管理"/}
+<div class="cx-fex-c">
+    <div class="x11 mt-20">
+        <a class="button button-S bg-blue cx-click" data-type="close">返回频道</a>
+    </div>
+    <div class="x11 mt-15">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑内容</legend>
+            <div class="layout cx-fex-c">
+                <legend class="x11 t-c">自订义显示</legend>
+                <div class="x11 cx-fex-c">
+                    <a class="button button-S bg-blue mr-10" href="{:url('htmledit',array('id'=>$postdb.id))}">html源代码</a>
+                    <a class="button button-S bg-blue mr-10" href="{:url('imagesedit',array('id'=>$postdb.id))}">单张图片</a>
+                </div>
+                <legend class="x11 t-c mt-20">网站内容调用</legend>
+                <div class="x11 cx-fex-c">
+                    <a class="button button-S bg-blue mr-10" href="{:url('parts',array('id'=>$postdb.id))}">主栏目调用</a>
+                    <a class="button button-S bg-blue mr-10" href="{:url('partedit',array('id'=>$postdb.id))}">主栏目内容调用</a>
+                    <a class="button button-S bg-blue mr-10" href="{:url('fupartedit',array('id'=>$postdb.id))}">辅栏目调用</a>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+{include file="public/footer" /}

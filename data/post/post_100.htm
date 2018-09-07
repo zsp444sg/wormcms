@@ -1,0 +1,530 @@
+{include file="public/meat" title="添加/编辑内容"/}
+{include file="public/js" /}
+{load href="__EDITOR__/wangEditor.min.js" /}
+<script type="text/javascript">
+    var E = window.wangEditor;
+</script>
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="xs6 xl12">
+                <a href="{:url('index',array('mid'=>$Request.param.mid,'fid'=>$Request.param.fid))}" class="button bg-blue">返回列表</a>
+                {if $btn.add}
+                <a href="{:url('add',array('mid'=>$Request.param.mid,'fid'=>$Request.param.fid))}" class="button bg-blue">添加内容</a>
+                {/if}
+            </div>
+            <div class="xs6 xl12">
+                <form class="layui-form" role="form" action="{:url('index',array('mid'=>$Request.param.mid))}" method="post">
+                    <div class="cx-fex-r">
+                        <label class="lab">搜索内容</label>
+                        <input class="ipt" name="keyword" placeholder="请输入搜索内容" type="text" style="width: 200px;">
+                        <button class="button f-l" type="submit"><i class="cx-icon cx-icon-sousuo"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑内容</legend>
+            <form class="layui-form" id="addform"  role="form" action="" method="post">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">基本信息</li>
+                        <li>其他设置</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">所属分类</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <select name='fid' required lay-verify="required" lay-filter='fidselect'>
+                                        {$basearr.fids}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">{$modelbase.formtitle|default='标题'}（<span class="c-danger">必填</span> ）</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input id="title" type="text" name="title" placeholder="请输入{$postdb.titlename|default='标题'}" required lay-verify="required" class="ipt" value="{$postdb.title|default=''}">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">关键词</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="cx-input-tabel">
+                                        <input type="text" name="keywords" class="ipt" value="{$postdb.keywords|default=''}">
+                                        <div class="cx-input-flselect">
+                                            <select class="cx-input-fl" lay-filter="keys">
+                                                <option value="">选择关键词</option>
+                                                {volist name="basearr.keys" id="cx"}
+                                                <option value="{$cx.title}">{$cx.title}</option>
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <span class="t-gray">作为相关文章的索引,如多个用','隔开</span>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10" {eq name="modelbase.formauthor|default='1'" value="0"}style="display: none"{/eq}>
+                                <div class="x3 t-r">
+                                    <label class="lab">作者</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input type="text" name="author" class="ipt" value="{$postdb.author|default=''}">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10" {eq name="modelbase.formfor|default='1'" value="0"}style="display: none"{/eq}>
+                                <div class="x3 t-r">
+                                    <label class="lab">来源</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="cx-input-tabel">
+                                        <span class="cx-input-fl">名称</span>
+                                        <input type="text" name="source" class="ipt" value="{$postdb.source|default=''}">
+                                        <span class="cx-input-fl">网址</span>
+                                        <input type="text" name="sourceurl" class="ipt" value="{$postdb.sourceurl|default=''}">
+                                    </div>
+                                    <div class="cx-input-tabel mt-5">
+                                        <span class="cx-input-fl">
+                                            <input type="checkbox" name="sourcerk" value="1" lay-skin="primary" title="保存为常用来源">
+                                        </span>
+                                        <div class="cx-input-flselect">
+                                            <select class="cx-input-fl" lay-filter="sources">
+                                                <option value="">选择来源</option>
+                                                {volist name="basearr.sources" id="cx"}
+                                                <option value="{$cx.url}">{$cx.title}</option>
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">缩略图</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="cx-input-tabel">
+                                        <img class="picurlimg b-a" src="{present name='postdb.picurl'}/{$webdb.updir}/{$postdb.picurl}{/present}" onerror="this.src='__ADMIN__/imgnone.png'" height="60" width="auto">
+                                        <span class="picurltext"></span>
+                                        <a class="button button-S bor-green uploadbtn" data-img="picurlimg" data-val="picurlval" data-text="picurltext" data-del="picurldel" lay-data="{method:'post',accept:'images',data:'img',field:'picurl'}"><i class="layui-icon">&#xe67c;</i>上传缩略图</a>
+                                        <a class="button button-S bor-red picurldel cx-click" data-img="picurlimg" data-val="picurlval" data-type="closdiv" {notpresent name="postdb.picurl"}style="display:none;"{/notpresent}><i class="layui-icon">&#xe67c;</i>删除</a>
+                                        <input name="picurl" class="ipt picurlval" placeholder="默认值一般为空" type="hidden" value="{$postdb.picurl|default=''}" >
+                                    </div>
+                                    <span class="t-gray">如不上传，则取内容的第一张图片做为缩略图</span>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10" {eq name="modelbase.formdescription|default='1'" value="0"}style="display: none"{/eq}>
+                                <div class="x3 t-r">
+                                    <label class="lab">内容简介</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <textarea class="ipt" row="3" type="text" name="description" rows="3">{$postdb.description|default=''}</textarea>
+                                </div>
+                            </div>
+                            {if $btn.status}
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">相关设置</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input type="checkbox" name="status" value="1" title="审核" {eq name="postdb.status|default='1'" value="1"}checked{/eq}>
+                                    <input type="checkbox" name="jian" value="1" title="推荐" {eq name="postdb.jian|default=''" value="1"}checked{/eq}>
+                                    <input type="checkbox" name="top" value="1" title="置顶"{eq name="postdb.top|default=''" value="1"}checked{/eq}>
+                                </div>
+                            </div>
+                            {/if}
+                            <div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">规格型号(<span class='t-red'>*</span>)</label>
+                         </div>
+                        <div class="xs8 xl9"><input type="text" name="xinhao" placeholder="请输入规格型号" required lay-verify="required" class="ipt" value="{$postdb.xinhao|default=''}"></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">过滤面积</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="guolvmianji" placeholder="请输入过滤面积"  class="ipt" value="{$postdb.guolvmianji|default='80'}"><span class="cx-input-fl">㎡</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">滤板尺寸</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="lvbanchicun" placeholder="请输入滤板尺寸"  class="ipt" value="{$postdb.lvbanchicun|default=''}"><span class="cx-input-fl">mm</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">滤室厚度</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="lvshihou" placeholder="请输入滤室厚度"  class="ipt" value="{$postdb.lvshihou|default=''}"><span class="cx-input-fl">mm</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">滤室容积</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="lvshirongji" placeholder="请输入滤室容积"  class="ipt" value="{$postdb.lvshirongji|default=''}"><span class="cx-input-fl">L</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">滤板数量</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="lvbanshuliang" placeholder="请输入滤板数量"  class="ipt" value="{$postdb.lvbanshuliang|default=''}"><span class="cx-input-fl">pcs</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">过滤压力</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="yali" placeholder="请输入过滤压力"  class="ipt" value="{$postdb.yali|default=''}"><span class="cx-input-fl">Mpa</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">电机功率</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="gonglv" placeholder="请输入电机功率"  class="ipt" value="{$postdb.gonglv|default=''}"><span class="cx-input-fl">Kw</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">整机质量</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="zhiliang" placeholder="请输入整机质量"  class="ipt" value="{$postdb.zhiliang|default=''}"><span class="cx-input-fl">Kg</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">外形尺寸(长x宽x高)</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="chicun" placeholder="请输入外形尺寸(长x宽x高)"  class="ipt" value="{$postdb.chicun|default=''}"><span class="cx-input-fl">mm</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">地基尺寸</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="diji" placeholder="请输入地基尺寸"  class="ipt" value="{$postdb.diji|default=''}"><span class="cx-input-fl">mm</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">产品图片(<span class='t-red'>*</span>)</label>
+                         </div>
+                        <div class="xs8 xl9">
+                            <div class="cx-input-tabel">
+                                <a class="button bor-green dfeilds" data-acc="img" data-tabd="tupiantab" data-valname="tupian" lay-data="{method:'post',accept:'images',data:'img',field:'tupian'}"><i class="cx-icon cx-icon-shangchuan1"></i>选择并上传图片</a>
+                            </div>
+                            <div class="layui-upload-list">
+                                <table class="layui-table">
+                                  <thead>
+                                    <tr>
+                                    <th>文件名</th>
+                                    <th class="t-c">状态</th>
+                                    <th class="t-c">大小</th>
+                                    <th class="t-c">操作</th>
+                                    </tr>
+                                    </thead>
+                                  <tbody id="tupiantab">
+                                  {volist name="postdb.tupian|default=''" id="cx"}
+                                  <tr>
+                                    <td><img src="{$cx.value}" height="100" width="auto"><span class="up-title">{$cx.title}</span><input type="hidden" name="tupian[{$cx.title}]" class="ipt" value="{$cx.value}"></td>
+                                    <td class="t-c"><a class="button bg-green">正常</a></td>
+                                    <td></td>
+                                    <td class="t-c"><a class="button bg-red cx-click" data-type="clostr">删除</a></td>
+                                    </tr>
+                                  {/volist}
+                                  </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">工具箱</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input type="checkbox" name="getpic" value="1" title="将图片保存到服务器">
+                                    <input type="checkbox" name="geturl" value="1" title="去除链接">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">{$modelbase.formcontent|default='内容'}</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div id="content">{$postdb.content|default=''}</div>
+                                    <textarea id="contenttxt" class="hidden" name="content">{$postdb.content|default=''}</textarea>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab"></label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input type="hidden" name="mid" required lay-verify="required|number" value="{$Request.param.mid|default='0'}">
+                                    <input type="hidden" name="aid" value="{$postdb.aid|default=''}">
+                                    <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+                                    <button class="button bg-blue" lay-submit lay-filter="*">立即提交</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">简短标题</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input type="text" name="mtitle" class="ipt" value="{$postdb.mtitle|default=''}">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">专题</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="bk-gray cx-artsids">
+                                        {volist name="basearr.sids" id="cx" empty=""}
+                                        <div class="layui-fluid lh-30">{$cx}</div>
+                                        {/volist}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">选择分站</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="bk-gray cx-artsids">
+                                        {volist name="basearr.fuids" id="cx" empty=""}
+                                        <div class="layui-fluid">{$cx}</div>
+                                        {/volist}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">自订义模板</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="cx-input-tabel">
+                                        <span class="cx-input-fl">头部</span>
+                                        <input name="template[head]" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.template.head|default=''}" >
+                                        <div class="cx-input-flselect">
+                                            <select class="cx-input-fl">
+                                                <option>默认风格</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="cx-input-tabel mt-10">
+                                        <span class="cx-input-fl">正文</span>
+                                        <input name="template[cont]" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.template.cont|default=''}" >
+                                        <div class="cx-input-flselect">
+                                            <select class="cx-input-fl">
+                                                <option>默认风格</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="cx-input-tabel mt-10">
+                                        <span class="cx-input-fl">底部</span>
+                                        <input name="template[foot]" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.template.foot|default=''}" >
+                                        <div class="cx-input-flselect">
+                                            <select class="cx-input-fl">
+                                                <option>默认风格</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">有效日期</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input id="seefanwei" type="text" name="seefanwei" class="ipt" value="{$postdb.seefanwei|default=''}">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">点击</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input type="text" name="hist" class="ipt" value="{$postdb.hist|default=''}">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">收费</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="cx-input-tabel">
+                                        <input type="text" name="author" class="ipt" value="{$postdb.author|default=''}">
+                                        <span class="cx-input-fl">{$webdb.moneyname}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">密码</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input type="text" name="pssword" class="ipt" value="{$postdb.pssword|default=''}">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">允许浏览</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    {volist name="basearr.groups" id="cx"}
+                                    <input type="checkbox" name="seegroup[]" {in name="$cx.id" value="$postdb.seegroup|default=''"}checked{/in} value="{$cx.id}" title="{$cx.title}">
+                                    {/volist}
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">允许下载附件</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    {volist name="basearr.groups" id="cx"}
+                                    <input type="checkbox" name="dontgroup[]" {in name="$cx.id" value="$postdb.dontgroup|default=''"}checked{/in} value="{$cx.id}" title="{$cx.title}">
+                                    {/volist}
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">跳转地址</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input type="text" name="jumpurl" class="ipt" value="{$postdb.jumpurl|default=''}">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r"></div>
+                                <div class="xs8 xl9">
+                                    <button class="button bg-blue" lay-submit lay-filter="artbtn">立即提交</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+
+<script type="text/javascript">
+    var editor = new E('#content');
+    var $contenttxt = $('#contenttxt')
+    //  配置上传路径
+    editor.customConfig.uploadImgServer = "{:url('Uploads/wangeditor')}";
+    editor.customConfig.uploadImgMaxSize = 1 * 1024 * 1024;
+    editor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        $contenttxt.val(html)
+    }
+    editor.create();
+    $("#title").focus();
+    $contenttxt.val(editor.txt.html())
+</script>
+{present name="modelbase.formedit_h"}
+<script>
+    $(".w-e-text-container").height("{$modelbase.formedit_h}"+'px');
+</script>
+{else /}
+<script>
+    $(".w-e-text-container").height("450px");
+</script>
+{/present}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+    layui.define(['laydate','upload'], function(exports){
+        var laydate = layui.laydate,
+            layupload = layui.upload;
+        laydate.render({
+            elem: '#seefanwei',
+            range: '---'
+        });
+        var uplogo = layupload.render({
+            elem: '.uploadbtn',
+            url:"{:url('Uploads/index')}",
+            before: function(obj){
+                layer.load();
+            },
+            done: function(res, index, upload){
+                var cx = this.item.context.dataset;
+                layer.closeAll('loading');
+                if(res.code != 0){
+                    $('.'+cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="btn size-S btn-primary-outline reload">重试</a>');
+                    $('.'+cx.text).find('.reload').on('click', function(){
+                        uplogo.upload();
+                    });
+                    return layer.msg(res.msg,{time: 2000});
+                }
+                $('.'+cx.img).attr('src','/'+ res.src);
+                $('.'+cx.val).val(res.src);
+                $('.'+cx.del).show();
+                $('.'+cx.text).hide();
+                return layer.msg(res.msg,{time: 2000})
+            },
+            error: function(){
+                var cx = this.item.context.dataset;
+                layer.closeAll('loading');
+                $('.'+cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="btn size-S btn-primary-outline reload">重试</a>');
+                $('.'+cx.text).find('.reload').on('click', function(){
+                    uplogo.upload();
+                });
+            }
+        });
+        var dfeilds = layupload.render({
+            elem: '.dfeilds',
+            url:"{:url('Uploads/index')}",
+            multiple: true,
+            done: function(res, index, upload){
+                var cx = this.item.context.dataset;
+                var size = "";
+                if(res.size < 0.1 * 1024){                            //小于0.1KB，则转化成B
+                    size = res.size.toFixed(2) + "B"
+                }else if(res.size < 0.1 * 1024 * 1024){            //小于0.1MB，则转化成KB
+                    size = (res.size/1024).toFixed(2) + "KB"
+                }else if(res.size < 0.1 * 1024 * 1024 * 1024){        //小于0.1GB，则转化成MB
+                    size = (res.size/(1024 * 1024)).toFixed(2) + "MB"
+                }else{                                            //其他转化成GB
+                    size = (res.size/(1024 * 1024 * 1024)).toFixed(2) + "GB"
+                }
+                var sizeStr = size + "";                        //转成字符串
+                var sizes = sizeStr.indexOf(".");                    //获取小数点处的索引
+                var dou = sizeStr.substr(sizes + 1 ,2)            //获取小数点后两位的值
+                if(dou == "00"){                                //判断后两位是否为00，如果是则删除00
+                    size = sizeStr.substring(0, sizes) + sizeStr.substr(sizes + 3, 2)
+                }
+                if(cx.acc == 'img'){
+                    var imgsee =  '<td><img src="/'+ res.src +'" height="100" width="auto">'+ res.title +'<input type="hidden" name="'+ cx.valname +'['+ res.title +']" class="ipt" value="'+ res.src +'"></td>';
+                }else{
+                    var imgsee =  '<td>'+ res.title +'<input type="hidden" name="'+ cx.valname +'['+ res.title +']" class="ipt" value="'+ res.src +'"></td>';
+                }
+                var tr = $(['<tr id="upload-'+ index +'">',
+                    imgsee,
+                    '<td>'+ res.msg +'</td>',
+                    '<td class="t-c">'+ size +'</td>',
+                    '<td class="t-c">',
+                    '<button class="button bor-red m-reload layui-hide">重传</button>',
+                    '<button class="button bg-red m-delete">删除</button>',
+                    '</td>',
+                    '</tr>'].join(''));
+                if(res.code != 0){ //上传成功
+                    var tr = $('#'+cx.tabel).find('tr#upload-'+ index),
+                        tds = tr.children();
+                    tds.eq(3).find('.m-reload').removeClass('layui-hide'); //显示重传
+                }
+                tr.find('.m-delete').on('click', function(){
+                    tr.remove();
+                    dfeilds.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                });
+                $('#'+cx.tabd).append(tr);
+                this.error(index, upload);
+            },
+            error: function(index, upload){
+                var cx = this.item.context.dataset;
+                var tr = $('#'+cx.tabel).find('tr#upload-'+ index),
+                    tds = tr.children();
+                tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+                tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+            }
+        });
+    });
+</script>
+{include file="public/footer" /}

@@ -1,0 +1,30 @@
+<section class="layout news-list">
+    <ul class="cont cx-fex news-ul">
+        {volist name="artlist" id="cx" empty=""}
+        <li class="layout news-li cx-fex-l">
+            <div class="xs3 xl12 cx-fex-c fex-column fex-items-c">
+                <a class="news-img" href="{$cx.url}" title="{$cx.futitle}">
+                    <img class="img-responsive" src="{$cx.picurl1}" alt="{$cx.futitle}">
+                </a>
+            </div>
+            <div class="xs9 xl12 news-cont cx-fex-c fex-column fex-items-c">
+                <h2 class="layout news-title cx-fex-l">
+                    <a class="mr-10" title="{$cx.partname}" href="{:url('Part/index',array('fid'=>$cx.fid))}">【{$cx.partname}】</a>
+                    <a title="{$cx.futitle}" href="{$cx.url}">{$cx.title}</a>
+                </h2>
+                <div class="layout news-bq hidden-l">
+                    <span class="mr-10">发布者：{$cx.username}</span>
+                    <span class="mr-10">浏览：{$cx.hist} 次</span>
+                    <span>发布日期：{$cx.time_Y}-{$cx.time_m}-{$cx.time_d}</span>
+                </div>
+                <div class="news-txt">
+                    {$cx.description}
+                </div>
+            </div>
+        </li>
+        {/volist}
+    </ul>
+    <div class="pad-t20 pad-b20 cx-fex-c">
+        {$pages}
+    </div>
+</section>

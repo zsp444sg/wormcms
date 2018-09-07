@@ -1,0 +1,110 @@
+{include file="public/_meat" title="标签管理"/}
+<div class="layui-container">
+    <div class="container-fluid">
+        <div class="pd-20 text-c">
+            <a class="btn size-S btn-warning mr-10" href="{:url('index',array('title'=>$postdb.title,'type'=>'getnew','plate'=>$postdb.plate,'mlabel'=>$postdb.mlabel))}">更换其他内容</a>
+            <a class="btn size-S btn-warning cx-click" data-type="close">返回频道</a>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field">
+        <legend class="cx-legend text-c">html源代码</legend>
+        <div class="pt-20"></div>
+        <div class="layui-field-box cx-field-box">
+            <form class="layui-form form form-horizontal" id="addform" action="{:url('diquedit')}" method="post">
+                <div class="three steps">
+                    <span class="disabled step">第一步</span>
+                    <span class="active step">第二步</span>
+                    <span class="disabled step">第三步</span>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">选择地区</label>
+                    <div class="formControls col-xs-8 col-sm-10">
+                        <div class="bk-gray cx-artsids">
+                            <dl>
+                                <dt class="layui-fluid lh-30"><input type='checkbox' title='全部地区' value='0' lay-skin='primary' lay-filter="label-dq"></dt>
+                                {volist name="postdb.diqus" id="cx" empty=""}
+                                <dd class="layui-fluid lh-30">{$cx}</dd>
+                                {/volist}
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">样式</label>
+                    <div class="formControls col-xs-8 col-sm-10">
+                        <textarea class="textarea" type="text" name="temps" rows="3">{$postdb.conf.temps|default=""}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">是否暂时隐藏</label>
+                    <div class="formControls col-xs-8 col-sm-10">
+                        <input name="status" value="0" {eq name="$postdb.status|default=''" value="0"}checked="checked"{/eq} title="是" type="radio">
+                        <input name="status" value="1" {eq name="$postdb.status|default='1'" value="1"}checked="checked"{/eq} title="否" type="radio">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2"></label>
+                    <div class="formControls col-xs-8 col-sm-10">
+                        <input type="hidden" name="plate" value="{$postdb.plate}">
+                        <input type="hidden" name="title" value="{$postdb.title}">
+                        <input type="hidden" name="mlabel" value="{$postdb.mlabel}">
+                        <input type="hidden" name="parts" value="{$postdb.parts|default='0'}">
+                        <input type="hidden" name="id" value="{$postdb.id|default=''}">
+                        <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+                        <button id="transmit" class="btn btn-primary" lay-submit lay-filter="labelend-btn">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="pb-20"></div>
+    </fieldset>
+</div>
+{include file="public/_js" /}
+{load href="__ADMIN__/hack/wangeditor/css/wangEditor.min.css,__ADMIN__/hack/wangeditor/js/wangEditor.js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/model/'
+    }).use('app');
+</script>
+<script>
+    layui.define(['layer','upload'], function(exports){
+        var layer = layui.layer,
+            layupload = layui.upload;
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        var uplogo = layupload.render({
+            elem: '.uploadbtn',
+            url:"{:url('Uploads/index')}",
+            before: function(obj){
+                layer.load();
+            },
+            done: function(res, index, upload){
+                var cx = $(this.item).data();
+                layer.closeAll('loading');
+                if(res.code != 0){
+                    $('.'+cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="btn size-S btn-primary-outline reload">重试</a>');
+                    $('.'+cx.text).find('.reload').on('click', function(){
+                        uplogo.upload();
+                    });
+                    return layer.msg(res.msg,{time: 2000});
+                }
+                $('.'+cx.img).attr('src','/'+ res.src);
+                $('.'+cx.val).val(res.src);
+                $('.'+cx.del).show();
+                $('.'+cx.text).hide();
+                return layer.msg(res.msg,{time: 2000})
+            },
+            error: function(){
+                var cx = $(this.item).data();
+                layer.closeAll('loading');
+                $('.'+cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="btn size-S btn-primary-outline reload">重试</a>');
+                $('.'+cx.text).find('.reload').on('click', function(){
+                    uplogo.upload();
+                });
+            }
+        });
+        $('#transmit').click(function(){
+            parent.$('.{$postdb.title}').html("<a href='"+$('.conturl').val()+"'><img src='/"+$('.picurlval').val()+"' width='100%' height='auto'></a>");
+        })
+    });
+</script>
+{include file="public/_footer" /}

@@ -1,0 +1,112 @@
+{include file="public/meat" title="标签管理"/}
+<div class="cx-fex-c">
+    <div class="x11 mt-20">
+        <a class="button button-S bg-blue mr-10" href="{:url('index',array('id'=>$postdb.id,'onlay'=>'new'))}">更换其他内容</a>
+        <a class="button button-S bg-blue cx-click" data-type="close">返回频道</a>
+    </div>
+    <div class="x11 mt-15">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑内容</legend>
+            <form class="layui-form" action="{:url('imagesedit')}" method="post">
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">上传图片</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <div class="cx-input-tabel">
+                            <img class="picurlimg b-a" src="{present name='postdb.conf.img'}/{$webdb.updir}/{$postdb.conf.img}{/present}" onerror="this.src='__ADMIN__/imgnone.png'" height="60" width="auto">
+                            <span class="picurltext"></span>
+                            <a class="button button-S bor-green uploadbtn" data-img="picurlimg" data-val="picurlval" data-text="picurltext" data-del="picurldel" lay-data="{method:'post',accept:'images',data:'img',field:'picurl'}"><i class="layui-icon">&#xe67c;</i>上传缩略图</a>
+                            <a class="button button-S bor-red picurldel cx-click" data-img="picurlimg" data-val="picurlval" data-type="closdiv" {notpresent name="postdb.conf.img"}style="display:none;"{/notpresent}><i class="layui-icon">&#xe67c;</i>删除</a>
+                            <input name="conf[img]" class="ipt picurlval" placeholder="默认值一般为空" type="hidden" value="{$postdb.conf.img|default=''}" >
+                        </div>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">链接地址</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="conf[url]" class="ipt conturl" placeholder="默认值一般为空" value="{$postdb.conf.url|default=''}" type="text">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">显示类型</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="conf[class]" value="0" {eq name="$postdb.conf.class|default=''" value="0"}checked="checked"{/eq} title="背景显示" type="radio">
+                        <input name="conf[class]" value="1" {eq name="$postdb.conf.class|default='1'" value="1"}checked="checked"{/eq} title="图片显示" type="radio">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">是否暂时隐藏</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="status" value="0" {eq name="$postdb.status|default=''" value="0"}checked="checked"{/eq} title="是" type="radio">
+                        <input name="status" value="1" {eq name="$postdb.status|default='1'" value="1"}checked="checked"{/eq} title="否" type="radio">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab"></label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="hidden" name="id" required lay-verify="required" value="{$postdb.id}">
+                        <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+                        <button id="transmit" class="button bg-blue" lay-submit lay-filter="labelend-btn">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    layui.define(['layer','upload'], function(exports){
+        var layer = layui.layer,
+            layupload = layui.upload;
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        var uplogo = layupload.render({
+            elem: '.uploadbtn',
+            url:"{:url('Uploads/index')}",
+            before: function(obj){
+                layer.load();
+            },
+            done: function(res, index, upload){
+                var cx = this.item.context.dataset;
+                layer.closeAll('loading');
+                if(res.code != 0){
+                    $('.'+cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="button button-S bor-yellow reload">重试</a>');
+                    $('.'+cx.text).find('.reload').on('click', function(){
+                        uplogo.upload();
+                    });
+                    return layer.msg(res.msg,{time: 2000});
+                }
+                $('.'+cx.img).attr('src','/'+ res.src);
+                $('.'+cx.val).val(res.src);
+                $('.'+cx.del).show();
+                $('.'+cx.text).hide();
+                return layer.msg(res.msg,{time: 2000})
+            },
+            error: function(){
+                var cx = this.item.context.dataset;
+                layer.closeAll('loading');
+                $('.'+cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="button button-S bor-yellow reload">重试</a>');
+                $('.'+cx.text).find('.reload').on('click', function(){
+                    uplogo.upload();
+                });
+            }
+        });
+        $('#transmit').click(function(){
+            parent.$('.{$postdb.title}').html("<a href='"+$('.conturl').val()+"'><img src='/"+$('.picurlval').val()+"' width='100%' height='auto'></a>");
+        })
+    });
+</script>
+{include file="public/footer" /}

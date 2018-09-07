@@ -1,0 +1,168 @@
+{include file="$temps.head" title="$webs.title" keywords="$webs.keywords" description="$webs.description" /}
+<section class="layout">
+    <div class="layui-carousel in-huandeng" id="in-hd">
+        <div carousel-item>
+            <div class="img-auto">
+                {$label.in_hd01|default=""}
+            </div>
+            <div class="img-auto">
+                {$label.in_hd02|default=""}
+            </div>
+            <div class="img-auto">
+                {$label.in_hd03|default=""}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="layout in-key-k">
+    <div class="cont cx-fex">
+        <div class="xs8 in-key">
+            <span>热门搜索:</span>
+            <div class="cx-fex-l xl9">
+                {$label.resou|default=""}
+            </div>
+        </div>
+        <form class="xs4 xl12 pad-a5 layui-form" role="form" action="{:url('Search/index')}" method="post">
+            <input class="ipt in-soipt" name="keyword" placeholder="请输入搜索内容" type="text">
+            <button class="button bg-blue in-sobtn" type="submit"><i class="cx-icon cx-icon-sousuo"></i></button>
+        </form>
+    </div>
+</section>
+<section class="layout in-cp">
+    <div class="cont fex-column pad-a20 in-cp-k bg-fff">
+        <div class="in-cp-nav cx-fex fex-items-c">
+            <h3 class="t t-18 t-blue">产品展示</h3>
+            <div class="xl2 cx-fex-c fex-column top-caidan">
+                <a class="top-caidan-a t-blue cx-click" data-type="navlay" data-cid="#cp-nav"><i class="cx-icon cx-icon-htmal5icon35"></i></a>
+            </div>
+            <div id="cp-nav" class="cx-fex-l in-cp-r t-16">
+                {$label.in_parts|default=""}
+            </div>
+        </div>
+        <ul class="layout cx-fex-l pad-t15">
+            <li class="xs6 pad-a5 in-cp-list">
+                {$label.in_cplistgg|default=""}
+            </li>
+            {$label.in_cplist|default=""}
+        </ul>
+    </div>
+</section>
+<section class="cont fex-column in-ys">
+    <h2 class="t-c t-blue">{$label.in_ystitle|default=""}</h2>
+    <div class="index-sfq-ul cx-fex-l mt-20">
+        {$label.in_yscont|default=""}
+    </div>
+</section>
+<section class="layout in-gg">
+    <div class="img-auto in-gg">
+        {$label.in_gg1|default=""}
+    </div>
+</section>
+<section class="layout in-gy">
+    <div class="cont cx-fex bg-fff in-gy-k">
+        <div class="xs8 fex-column pad-a30 in-gy-c">
+            <div class="t-18 in-gy-tk cx-fex-l">
+                <h2 class="in-gy-t t-blue" style="border: none">企业概况</h2>
+                <span class="ml-10">/ About us</span>
+            </div>
+            <h4 class="in-gy-ft t-18">{$label.in_biaoyu|default=""}</h4>
+            <h4 class="in-gy-ft t-18">{$label.in_biaoyu1|default=""}</h4>
+            <span class="x1 mt-20 in-gy-sp bg-blue"></span>
+            <div class="in-gy-cont t-16">
+                {$label.in_jieshao|default=""}
+            </div>
+        </div>
+        <div class="xs4 in-gy-img">
+            {$label.gywm_img01|default=""}
+        </div>
+    </div>
+</section>
+<section class="cont fex-column in-news">
+    <h2 class="t-c t-blue">新闻中心</h2>
+    <div class="layui-tab layui-tab-brief mt-50">
+        <ul class="in-newstab layui-tab-title cx-fex">
+            <li class="layui-this">公司新闻</li>
+            <li>行业新闻</li>
+            <li>过滤器资讯</li>
+            <li>技术支持</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="layout cx-fex-l">
+                    <div class="xs4 xl12">
+                        <div class="layui-carousel in-newshdk" id="in-newshds">
+                            <div carousel-item>
+                                {$label.in_newshd01|default=""}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xs8 xl12 in-news-ul">
+                        {$label.in_news1|default=""}
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="layout cx-fex-l">
+                    <div class="xs4 xl12">
+                        <div class="layui-carousel in-newshdk" id="in-newshds1">
+                            <div carousel-item>
+                                {$label.in_newshd02|default=""}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xs8 xl12 in-news-ul">
+                        {$label.in_news2|default=""}
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="layout cx-fex-l">
+                <div class="xs4 xl12">
+                    <div class="layui-carousel in-newshdk" id="in-newshds2">
+                        <div carousel-item>
+                            {$label.in_newshd03|default=""}
+                        </div>
+                    </div>
+                </div>
+                <div class="xs8 xl12 in-news-ul">
+                    {$label.in_news3|default=""}
+                </div>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="layout cx-fex-l">
+                <div class="xs4 xl12">
+                    <div class="layui-carousel in-newshdk" id="in-newshds3">
+                        <div carousel-item>
+                            {$label.in_newshd04|default=""}
+                        </div>
+                    </div>
+                </div>
+                <div class="xs8 xl12 in-news-ul">
+                    {$label.in_news4|default=""}
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="layout in-lx pos-r">
+    <div id="allmap" class="mapzy in-maps"></div>
+    <div class="layout cx-fex-c fex-column fex-items-c in-lx-k">
+        <div class="fex-column pad-a30 bg-fff in-lx-c">
+            <div class="in-gy-tk cx-fex-l">
+                <h2 class="in-gy-t" style="border: none">联系我们</h2>
+                <span class="ml-10">/ Contact us</span>
+            </div>
+            <ul class="in-gy-rul fex-column">
+                {$label.in_lianxi|default=""}
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="layout in-gg">
+    <div class="img-auto in-gg">
+        {$label.in_gg2|default=""}
+    </div>
+</section>
+{include file="$temps.foot" /}

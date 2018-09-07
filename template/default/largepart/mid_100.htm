@@ -1,0 +1,24 @@
+<section class="layout anli-list">
+    <ul class="cx-fex">
+        {volist name="artlist" id="cx" empty=""}
+        <li class="xb3 xm4 xs6 xl12">
+            <div class="anli-l pos-r">
+                <div class="anli-list-p img-auto pos-a">
+                    <a class="zoomImages" href="" title="{$cx.futitle}" style="background-image:url('{$cx.uiimg}');"></a>
+                </div>
+                <div class="anli-cont pos-a cx-fex-c fex-column fex-items-c">
+                    <h2 class="x11 cx-fex-c"><a class="anli-title t-18" title="{$cx.futitle}" href="{$cx.url}">{$cx.title}</a></h2>
+                    <p class="x11 anli-txt hidden-l">{$cx.description}</p>
+                    <a class="button bor-gray" title="{$cx.futitle}" href="{$cx.url}">查看详细</a>
+                </div>
+            </div>
+        </li>
+        {/volist}
+    </ul>
+    <div class="pad-t20 pad-b20 cx-fex-c">
+        {$pages}
+    </div>
+</section>
+
+
+

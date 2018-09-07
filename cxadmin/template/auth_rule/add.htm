@@ -1,0 +1,157 @@
+{include file="public/meat" title="添加/编辑权限"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="xs6 xl12">
+                <a href="{:url('index')}" class="button bg-blue">返回列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加权限</a>
+                {/if}
+            </div>
+            <div class="xs6 xl12">
+                <form class="layui-form" role="form" action="so" method="post">
+                    <div class="cx-fex-r">
+                        <label class="lab">搜索权限</label>
+                        <input class="ipt" name="keyword" placeholder="请输入搜索内容" type="text" style="width: 200px;">
+                        <button class="button f-l" type="submit"><i class="cx-icon cx-icon-sousuo"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑权限</legend>
+            <form class="layui-form" id="addform"  role="form" action="" method="post">
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">上级权限</label>
+                    </div>
+                    <select name="pid" lay-verify="required">
+                        <option value="0">顶级权限</option>
+                        {foreach $pidauthrule as $cx}
+                        <option value="{$cx.id}" {eq name="$postdb.pid|default='0'" value="$cx.id"}selected="selected"{/eq}>{$cx.dtitle} {$cx.title}</option>
+                        {/foreach}
+                    </select>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">权限名称</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="请输入权限名称" class="ipt" value="{$postdb.title|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">管理地址</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="name" required  lay-verify="required" placeholder="请输入管理地址" class="ipt" value="{$postdb.name|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">选择图标</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <div class="f-l profile-header t-c">
+                            <span id="auth-diconyl" onclick="xicon(this)" class="{$postdb.icon|default='cx-icon cx-icon-add t-gray'}"></span>
+                            <input id="diconipt" type="hidden" name="icon" placeholder="请选择图标" class="ipt" value="{$postdb.icon|default=''}">
+                        </div>
+                        <div class="f-l ml-20" style="line-height: 38px;">
+                            <a class="button button-S bg-green" cx-href="groupicon" onclick="xicon(this)" href="#">选择图标</a>
+                            <a id="delicon" class="button button-S bg-yellow" onclick="delaicon(this)" href="#">删除图标</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">是否启用</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="status" type="radio" value="1" {eq name="$postdb.status|default='1'" value="1"}checked="checked"{/eq} title="启用权限">
+                        <input name="status" type="radio" value="0" {eq name="$postdb.status|default=''" value="0"}checked="checked"{/eq} title="禁用权限">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">开发专用</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="open" type="radio" value="0" {eq name="$postdb.open|default=''" value="0"}checked="checked"{/eq} title="是">
+                        <input name="open" type="radio" value="1" {eq name="$postdb.open|default='1'" value="1"}checked="checked"{/eq} title="否">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">后台菜单显示</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="menusee" type="radio" value="1" {eq name="$postdb.menusee|default='1'" value="1"}checked="checked"{/eq} title="是">
+                        <input name="menusee" type="radio" value="0" {eq name="$postdb.menusee|default='1'" value="0"}checked="checked"{/eq} title="否">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">自订义规则</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="condition" placeholder="一般为空" class="ipt" value="{$postdb.condition|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">排序</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="sort" lay-verify="number" placeholder="数字越大排序越靠前" class="ipt" value="{$postdb.sort|default='0'}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3">
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="hidden" name="id" class="ipt" value="{$postdb.id|default=''}">
+                        <button class="button bg-blue" lay-submit lay-filter="button">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+<div id="xicon">
+    {include file="auth_rule/icon" /}
+</div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    function xicon(o) {
+        layer.open({
+            title: false,
+            type: 1,
+            skin: 'cx-tclayui',
+            content: $('#xicon'),
+            end: function(index, layero){
+                $('#xicon').hide()
+            }
+        });
+    }
+    function dicon(o) {
+        var val = $(o).find('i').attr('class');
+        $('#diconipt').attr('value', val);
+        $('#auth-diconyl').removeClass();
+        $('#auth-diconyl').addClass(val);
+        layer.close(layer.index);
+    }
+    function delaicon(o) {
+        $('#diconipt').attr('value','');
+        $('#auth-diconyl').attr('class','cx-icon cx-icon-add t-gray');
+    }
+</script>
+{include file="public/footer" /}

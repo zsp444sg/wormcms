@@ -1,0 +1,95 @@
+{include file="public/meat" title="短信设置"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="layout">
+                {include file="config/head" /}
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">短信设置</legend>
+            <form class="layui-form" role="form" action="" method="post">
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">阿里云短信KeyId <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[accesskeyidsms]" class="ipt" value="{$webdb.accesskeyidsms|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">阿里云短信KeySecret <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[accesskeysecretsms]" class="ipt" value="{$webdb.accesskeysecretsms|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">注册短信ID <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[aliyuncode]" class="ipt" value="{$webdb.aliyuncode|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">找回密码短信ID <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[aliyunpwdcode]" class="ipt" value="{$webdb.aliyunpwdcode|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">下单成功短信ID <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[aliyunordercode]" class="ipt" value="{$webdb.aliyunordercode|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">支付成功短信ID <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[aliyunpaycode]" class="ipt" value="{$webdb.aliyunpaycode|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">阿里云签名 <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[aliyunqianming]" class="ipt" value="{$webdb.aliyunqianming|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">管理员手机 <span class="t-red">*</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="webdb[adminphone]" class="ipt" value="{$webdb.adminphone|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10 mt-20">
+                    <div class="x3 t-r"></div>
+                    <div class="xs8 xl9">
+                        <button class="button bg-blue" lay-submit lay-filter="d-button">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+{include file="public/footer" /}

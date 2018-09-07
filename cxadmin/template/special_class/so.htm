@@ -1,0 +1,86 @@
+{include file="public/_meat" title="搜索结果"/}
+<div class="layui-container">
+    <div class="layui-row pd-t-20">
+        <div class="layui-col-xs12 layui-col-sm6">
+            <a href="{:url('index')}" class="btn btn-primary">返回专题分类列表</a>
+            {if $btn.add}
+            <a href="{:url('add')}" class="btn btn-primary">添加专题分类</a>
+            {/if}
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6">
+            <form class="layui-form form form-horizontal" role="form" action="so" method="post">
+                <div class="formControls cx-input-tabel">
+                    <span class="cx-input-fl">搜索</span>
+                    <input type="text" name="keyword" class="input-text" required placeholder="请输入搜索内容">
+                    <span class="cx-input-fl" style="padding: 0">
+                        <button class="btn size-S cx-input-tabelbtn" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title site-title">
+        <legend>搜索结果</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane" role="form" action="" method="post">
+        <table class="cx-teble table table-border table-bordered table-striped table-hover table-bg">
+            <thead>
+            <tr>
+                <th class="{if !$btn.del}text-c{/if}" width="120">
+                    <div class="checkbox">
+                        <label>
+                            {if $btn.del}<input id="all" class="inverted" type="checkbox" lay-ignore>{/if}
+                            <span class="text">ID</span>
+                        </label>
+                    </div>
+                </th>
+                <th>分类名称</th>
+                <th class="text-c">专题数量</th>
+                <th class="text-c" width="150">排序</th>
+                {if $btn.del}<th class="text-c" width="100">编辑</th>{/if}
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id="cx"}
+                <tr>
+                    <td class="alltd table-line-height {if !$btn.del}text-c{/if}">
+                        <div class="checkbox">
+                            <label>
+                                {if $btn.del}<input class="inverted" name="delid[{$cx.id}]" type="checkbox" value="{$cx.id}" lay-ignore>{/if}
+                                <span class="text">{$cx.id}</span>
+                            </label>
+                        </div>
+                    </td>
+                    <td>{$cx.icon|default=''}{$cx.title}</td>
+                    <td class="text-c">{$cx.contnum}</td>
+                    <td class="text-c"><input class="input-text size-S text-c" type="text" name="sort[{$cx.id}]" value="{$cx.sort}"></td>
+                    {if $btn.del || $btn.edit}
+                    <td class="text-c">
+                        {if $btn.edit}<a class="btn size-S btn-success mr-5" href="{:url('edit',array('id'=>$cx['id']))}" title="编辑【{$cx.title}】模型">编辑</a>{/if}
+                        {if $btn.del}<a class="btn size-S btn-danger cx-click" data-id="{$cx['id']}" data-href="{:url('del')}" data-type="deldata">删除</a>{/if}
+                    </td>
+                    {/if}
+                </tr>
+            {/volist}
+            </tbody>
+        </table>
+        <div class="text-c pd-20">
+            {if $btn.edit}<button class="btn size-S btn-success mr-10" data-href="{:url('sort')}" data-type="sort" lay-submit lay-filter="sd-btn">修改排序</button>{/if}
+            {if $btn.del}<button class="btn size-S btn-danger" data-href="{:url('pdel')}" data-type="pdel" lay-submit lay-filter="sd-btn">批量删除</button>{/if}
+        </div>
+        <div class="text-c pt-20"></div>
+    </form>
+</div>
+{include file="public/_js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/model/'
+    }).use('app');
+</script>
+<script>
+    $("#all").click(function () {
+        $(this).closest("table").find("td.alltd input:checkbox").prop("checked",$(this).prop("checked"))
+    })
+</script>
+{include file="public/_footer" /}

@@ -1,0 +1,20 @@
+<ul class="cx-fex-l">
+    {volist name="artlist" id="cx" empty="暂无内容"}
+    <li class="xs3 xl6 list-product">
+        <div class="pad-a5 list-phoes">
+            <a title="{$cx.futitle}" href="{:url('Article/index',array('fuid'=>$parts.id,'aid'=>$cx.aid))}">
+                <img class="img-responsive" src="{$cx.picurl}" title="{$cx.futitle}" alt="{$cx.futitle}">
+            </a>
+            <div class="cx-fex-c">
+                <label><a title="{$cx.futitle}" href="{:url('Article/index',array('fuid'=>$parts.id,'aid'=>$cx.aid))}">【{$cx.partname}】 {$cx.title}</a></label>
+                <label style="font-size: 1.2rem">
+                    <a class="t-gray" title="{$cx.futitle}" href="{:url('Article/index',array('fuid'=>$parts.id,'aid'=>$cx.aid))}">发布日期：{$cx.time_Y}-{$cx.time_m}-{$cx.time_d}</a>
+                </label>
+            </div>
+        </div>
+    </li>
+    {/volist}
+</ul>
+<div class="pad-a20 cx-fex-c">
+    {$pages}
+</div>

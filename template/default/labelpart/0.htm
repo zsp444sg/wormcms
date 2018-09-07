@@ -1,0 +1,18 @@
+<ul class="cx-fex-l">
+    {volist name="artlist" id="cx" empty="暂无内容"}
+    <li class="layout list-news cl">
+        <div class="pad-a10 list-newsk">
+            <h2 class="list-newsk-title">
+                <a class="t-blue" title="{$cx.futitle}" href="{$cx.url}">{$cx.title}</a>
+            </h2>
+            <div class="list-news-bq t-gray">
+                <span class="mr-10">发布者：{$cx.username}</span>
+                <span>发布日期：{$cx.time_Y}-{$cx.time_m}-{$cx.time_d}</span>
+            </div>
+            <div class="list-news-cont t-gray">
+                {$cx.description}
+            </div>
+        </div>
+    </li>
+    {/volist}
+</ul>

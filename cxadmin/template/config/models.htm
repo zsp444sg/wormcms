@@ -1,0 +1,149 @@
+{include file="public/meat" title="模型基本设置"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="layout">
+                {include file="config/head" /}
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">模型基本设置</legend>
+            <form class="layui-form" role="form" action="" method="post">
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">子栏目选择任意模型</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="webdb[bindingmodel]" value="1" {eq name="$webdb.bindingmodel|default=''" value="1"}checked="checked"{/eq} type="radio" title="允许">
+                        <input name="webdb[bindingmodel]" value="0" {eq name="$webdb.bindingmodel|default='0'" value="0"}checked="checked"{/eq} type="radio" title="不允许">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">小栏目显示内容条数</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <div class="cx-input-tabel">
+                            <input name="webdb[partnum]" class="ipt" placeholder="默认值一般为空" type="text" value="{$webdb.partnum}" >
+                            <span class="cx-input-fl">条</span>
+                        </div>
+                        <span class="t-gray">子栏目显示多少条内容</span>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">子栏目显示标题字数</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <div class="cx-input-tabel">
+                            <input name="webdb[parttitle]" class="ipt" placeholder="默认值一般为空" type="text" value="{$webdb.parttitle}" >
+                            <span class="cx-input-fl">字符</span>
+                        </div>
+                        <span class="t-gray">一汉字等于2字符</span>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">在上级分类显示</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <div class="cx-input-tabel">
+                            <input name="webdb[partupnum]" class="ipt" placeholder="默认值一般为空" type="text" value="{$webdb.partupnum}" >
+                            <span class="cx-input-fl">条</span>
+                        </div>
+                        <span class="t-gray">子栏目在上级分类显示多少条内容</span>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">大分类显示标题字数</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <div class="cx-input-tabel">
+                            <input name="webdb[partupttitle]" class="ipt" placeholder="默认值一般为空" type="text" value="{$webdb.partupttitle}" >
+                            <span class="cx-input-fl">字符</span>
+                        </div>
+                        <span class="t-gray">一汉字等于2字符</span>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">分类显示内容简介字数</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <div class="cx-input-tabel">
+                            <input name="webdb[partdisnums]" class="ipt" placeholder="默认值一般为空" type="text" value="{$webdb.partdisnums}" >
+                            <span class="cx-input-fl">字符</span>
+                        </div>
+                        <span class="t-gray">一汉字等于2字符</span>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">关键词是否显示链接</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="webdb[keywordurl]" value="1" {eq name="$webdb.keywordurl|default=''" value="1"}checked="checked"{/eq} type="radio" title="显示">
+                        <input name="webdb[keywordurl]" value="0" {eq name="$webdb.keywordurl|default='0'" value="0"}checked="checked"{/eq} type="radio" title="不显示">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">是自动提取缩略图</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="webdb[onepic]" value="1" {eq name="$webdb.onepic|default='1'" value="1"}checked="checked"{/eq} type="radio" title="是">
+                        <input name="webdb[onepic]" value="0" {eq name="$webdb.onepic|default=''" value="0"}checked="checked"{/eq} type="radio" title="否">
+                        <p class="t-gray cl">选择“是”则自动取第一张图片做为缩略图</p>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab">是自动添加水印</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="webdb[imgwater]" value="1" {eq name="$webdb.imgwater|default='1'" value="1"}checked="checked"{/eq} type="radio" title="是" lay-filter="shuiyin">
+                        <input name="webdb[imgwater]" value="0" {eq name="$webdb.imgwater|default=''" value="0"}checked="checked"{/eq} type="radio" title="否" lay-filter="shuiyin">
+                    </div>
+                </div>
+                <div id="shuiyin" class="cx-fex-l mb-10" {eq name="webdb.imgwater" value="0"}style="display:none;"{/eq}>
+                    <div class="x3 t-r">
+                        <label class="lab">水印类型</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="webdb[imgwatermo]" value="1" {eq name="$webdb.imgwatermo|default='1'" value="1"}checked="checked"{/eq} type="radio" title="图片">
+                        <input name="webdb[imgwatermo]" value="0" {eq name="$webdb.imgwatermo|default=''" value="0"}checked="checked"{/eq} type="radio" title="文字">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10 mt-20">
+                    <div class="x3 t-r"></div>
+                    <div class="xs8 xl9">
+                        <button class="button bg-blue" lay-submit lay-filter="d-button">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    layui.define(['form'], function(exports){
+        var layform = layui.form;
+        layform.on('radio(shuiyin)', function(data){
+            if(data.value == 1){
+                $("#shuiyin").show();
+            }else{
+                $("#shuiyin").hide();
+            }
+        });
+    })
+</script>
+{include file="public/footer" /}

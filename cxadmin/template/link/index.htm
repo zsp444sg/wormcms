@@ -1,0 +1,95 @@
+{include file="public/meat" title="友情链接列表"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-l">
+            <div class="xs6 xl12">
+                <a class="button bg-blue">友情链接列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加友情链接</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div class="x11 mt-20">
+        <div class="cx-fex-l">
+            {volist name="linkclass" id="c" empty="" key="k"}
+            <a class="link-topnav {empty name='$Request.param.class'}{eq name='$k' value='1'}active{/eq}{else /}{eq name='$Request.param.class' value='$c.id'}active{/eq}{/empty}" href="{:url('index',array('class'=>$c.id))}">{$c.title}</a>
+            {/volist}
+        </div>
+        <form class="layui-form pad-a10" role="form" action="" method="post">
+            <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+                <thead>
+                <tr>
+                    <th class="{if !$btn.del}t-c{/if}">
+                        <div class="checkbox">
+                            <label>
+                                {if $btn.del}<input id="all" class="inverted" type="checkbox" lay-ignore>{/if}
+                                <span class="text">ID</span>
+                            </label>
+                        </div>
+                    </th>
+                    <th>链接名称</th>
+                    <th class="t-c">链接地址</th>
+                    <th class="t-c">logo</th>
+                    {if $btn.edit}
+                    <th class="t-c" width="200">排序</th>
+                    <th class="t-c" width="150">编辑</th>
+                    {/if}
+                    <th class="t-c" width="150">状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="list" id="cx" empty=""}
+                <tr>
+                    <td class="alltd {if !$btn.del}t-c{/if}" data-title="ID">
+                        <div class="checkbox">
+                            <label>
+                                {if $btn.del}<input class="inverted" name="pdel[]" type="checkbox" value="{$cx.id}" lay-ignore>{/if}
+                                <span class="text">{$cx.id}</span>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="tabel-title" data-title="链接名称">【{$cx.title}】</td>
+                    <td class="t-c" data-title="链接地址">{$cx.url}</td>
+                    <td class="t-c" data-title="logo">{notempty name="cx.picurl"}<img class="link-img img-responsive" src="{$cx.picurl}" alt="">{/notempty}</td>
+                    <td class="t-c" data-title="排序"><input class="ipt ipt-S t-c" type="text" name="sort[{$cx.id}]" value="{$cx.sort}"></td>
+                    <td class="t-c" data-title="编辑">
+                        {if $btn.edit}<a class="button button-S bg-green" href="{:url('edit',array('id'=>$cx.id))}"><i class="cx-icon cx-icon-lajixiang"></i> 编辑</a>{/if}
+                        {if $btn.del}<a class="button button-S bg-red ml-5 cx-click" data-id="{$cx.id}" data-href="{:url('del')}" data-type="deldata"><i class="cx-icon cx-icon-lajixiang"></i> 删除</a>{/if}
+                    </td>
+                    <td class="t-c" data-title="状态">
+                        {$cx.statuszh}
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <div class="t-c pad-t20">
+                {if $btn.edit || $btn.del}
+                {if $btn.edit}
+                <button class="button button-S bg-blue" data-href="{:url('sort')}" data-type="sort" lay-submit lay-filter="sd-btn">修改排序</button>
+                {/if}
+                {if $btn.del}
+                <button class="button button-S bg-red" data-href="{:url('pdel')}" data-type="sort" lay-submit lay-filter="sd-btn">彻底删除</button>
+                {/if}
+                {/if}
+            </div>
+        </form>
+        <div class="t-c pad-t20">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    $("#all").click(function () {
+        $(this).closest("table").find("td.alltd input:checkbox").prop("checked",$(this).prop("checked"))
+    })
+</script>
+{include file="public/footer" /}

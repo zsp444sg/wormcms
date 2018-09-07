@@ -1,0 +1,117 @@
+html{font-size:62.5%;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+body {font-family:Microsoft Yahei,Avenir,Segoe UI,Hiragino Sans GB,STHeiti,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;font-size: 1.4rem; color: #333}
+
+
+/* 公用 */
+.pointer{
+    cursor: pointer;
+}
+.cx-pr{
+    position: relative;
+}
+.ml-10{
+    margin-left: 10px;
+}
+.cx-fl{
+    float: left;
+}
+.cx-fr{
+    float: right;
+}
+.text-center{
+    text-align: center;
+}
+/*背景*/
+.login-bg{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.login-img{
+    background-image: url('../login-bg.jpg');
+    background-repeat: no-repeat,no-repeat;
+    background-position: center center,center center;
+    background-size: cover,cover;
+    height: 100%;
+    z-index: -1;
+}
+/*登录框*/
+.login_k{
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.login_n{
+    display: table-cell;
+    vertical-align: middle;
+}
+.login_c{
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 364px;
+    min-width: 320px;
+    max-width: 412px;
+    width: calc(100% - 40px);
+    padding: 36px;
+    margin-bottom: 28px;
+    background: rgba(255,255,255,.8);
+    -webkit-box-shadow: 0 0 20px #e9eaed;
+    -moz-box-shadow: 0 0 20px #e9eaed;
+    /*box-shadow: 0 2px 3px rgba(0,0,0,.55);*/
+    box-shadow: 0 0 20px #e9eaed;
+}
+@media (max-width: 640px) {
+    .login_c{
+        min-width: 200px;
+        padding: 15px;
+    }
+}
+/*表单*/
+.cx-title{
+    margin-bottom: 20px;
+}
+.login_img{
+    max-width: 80%;
+    height: auto;
+    margin: auto;
+}
+.cx-title h3{
+    font-size: 1.8rem;
+    line-height: 40px;
+    color: #666;
+}
+.layui-form-pane .layui-form-label{
+    width: 50px;
+    font-size: 1.8rem;
+}
+.layui-form-pane .layui-input-block{
+    margin-left: 50px;
+}
+.login-bq{
+    border-top: 1px solid #fff;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+.login-bq a{
+    color: #999;
+}
+.cx-input-tabel{
+    display: table;
+    position: relative;
+}
+.cx-input-tabel-c{
+    display: table;
+    position: relative;
+    margin: 0 auto;
+}
+.cx-input-fl {
+    border: 1px solid #ddd;
+    text-align: center;
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+    display: table-cell;
+}

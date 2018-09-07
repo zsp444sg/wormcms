@@ -1,0 +1,67 @@
+{include file="public/meat" title="添加栏目"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="layout">
+                <a href="{:url('index')}" class="button bg-blue">返回栏目列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加栏目</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加栏目</legend>
+        <form class="layui-form" role="form" action="" method="post">
+            <div class="cx-fex-l mb-10">
+                <div class="x3 t-r">
+                    <label class="lab">栏目名称(<span class="t-red">*</span>)</label>
+                </div>
+                <div class="xs8 xl9">
+                    <textarea class="ipt" rows="3" required lay-verify="required" placeholder="要想一次批量创建多个栏目,每个栏目名称换一行." name="title"></textarea>
+                </div>
+            </div>
+            <div class="cx-fex-l mb-10">
+                <div class="x3 t-r">
+                    <label class="lab">所属分类</label>
+                </div>
+                <div class="xs8 xl9">
+                    <select  name="pid" required lay-filter='formtype'>
+                        <option {eq name="$Request.param.pid|default='0'" value="0"}selected{/eq} value="0">顶级分类</option>
+                        {volist name="postdb.pids" id="cx"}
+                        <option {eq name="$Request.param.pid|default=''" value="$cx.id"}selected{/eq} value="{$cx.id}">{$cx.icon|default=''}{$cx.title}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            <div class="cx-fex-l mb-10">
+                <div class="x3 t-r">
+                    <label class="lab">栏目类型(<span class="t-red">*</span>)</label>
+                </div>
+                <div class="xs8 xl9">
+                    <input name="class" required type="radio" value="0" checked="checked" title="大分类">
+                    <input name="class" required type="radio" value="1" title="小栏目">
+                </div>
+            </div>
+            <div class="cx-fex-l mb-10">
+                <div class="x3 t-r">
+                    <label class="lab"></label>
+                </div>
+                <div class="xs8 xl9">
+                    <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+                    <button class="button bg-blue" lay-submit lay-filter="userbtn">立即提交</button>
+                </div>
+            </div>
+        </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+{include file="public/footer" /}

@@ -1,0 +1,39 @@
+{include file="$temps.head" title="$webdb.webname" keywords="$webdb.webkeywords" description="$webdb.description" /}
+<div class="layout cx-fex-c mt-50">
+    <div class="layout cx-fex list-cont-t">
+        <h3 class="list-cont-title"><span class="mr-15">&nbsp;</span>{$parts.title}</h3>
+        <button class="cx-nav-seeicon b-a cx-click leftnav" data-type="listnavsee" data-title="{$lagpart.title}" data-cid="#leftnav"><span>更多</span><i class="cx-icon cx-icon-xiangyoujiantou"></i></button>
+    </div>
+    <div class="layout cx-fex fex-column list-right-c">
+        {include file="$largetemp" /}
+    </div>
+</div>
+<div id="leftnav" style="display: none">
+    <ul class="layout list-nav-cont cx-fex-c">
+        {volist name="partlist" id="cx" empty=""}
+        {eq name="$cx.pid" value="$lagpart.id"}
+        <li class="x11 cx-fex-c pos-r">
+            <a class="layout cx-fex list-nav-za {eq name='$cx.class' value='0'}cx-click{/eq}{eq name='$cx.id' value='$parts.id'}alick{/eq}" {eq name="$cx.class" value="0"}data-type="listnavz"{else /}href="{:url('Part/index',array('fid'=>$cx.id))}"{/eq}>
+            <span>{$cx.title}</span>
+            <i class="cx-icon cx-icon-xiangyoujiantou"></i>
+            </a>
+            {eq name="$cx.class" value="0"}
+            <ul class="x11 cx-fex-c list-znav">
+                {volist name="partlist" id="c" empty=""}
+                {eq name="$c.pid" value="$cx.id"}
+                <li class="layout">
+                    <a class="layout cx-fex" href="{:url('Part/index',array('fid'=>$cx.id))}">
+                        <span>{$c.title}</span>
+                        <i class="cx-icon cx-icon-xiangyoujiantou"></i>
+                    </a>
+                </li>
+                {/eq}
+                {/volist}
+            </ul>
+            {/eq}
+        </li>
+        {/eq}
+        {/volist}
+    </ul>
+</div>
+{include file="$temps.foot" /}

@@ -1,0 +1,64 @@
+{include file="public/meat" title="修改用户组权限"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="xs6 xl12">
+                <a href="{:url('index')}" class="button bg-blue">返回列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加用户组</a>
+                {/if}
+            </div>
+            <div class="xs6 xl12">
+                <form class="layui-form" role="form" action="so" method="post">
+                    <div class="cx-fex-r">
+                        <label class="lab">搜索用户组</label>
+                        <input class="ipt" name="keyword" placeholder="请输入搜索内容" type="text" style="width: 200px;">
+                        <button class="button f-l" type="submit"><i class="cx-icon cx-icon-sousuo"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">修改用户组权限</legend>
+            <form id="form" class="layui-form" role="form" action="{:url('groupauth')}" method="post">
+                <ul id="zhedian" class="cx-fold">
+                    {foreach $rulelist as $cx}
+                    <li class="cx-fold-group">
+                        <h4 class="cx-fold-title">
+                            <input class="hidden" type="checkbox" name="rules[{$cx.id}]" value="{$cx.id}" {if(in_array($cx.id,$edit.rules))} checked="checked" {/if} lay-filter="authbox" lay-ignore>{$cx.title}
+                        </h4>
+                        <div class="cx-fold-cont">
+                            {foreach $cx.zauth as $c}
+                            <dl class="mb-15 cl">
+                                <dt class="f-l dt">
+                                    <input type="checkbox" name="rules[{$c.id}]" value="{$c.id}" title="{$c.title}" {if(in_array($c.id,$edit.rules))}checked="checked"{/if} lay-filter="authbox" data-lv="1">
+                                </dt>
+                                <dd class="f-l dd">
+                                    {foreach $c.zauth as $x}
+                                    <input type="checkbox" name="rules[{$x.id}]" value="{$x.id}" title="{$x.title}" {if(in_array($x.id,$edit.rules))} checked="checked" {/if} lay-filter="authbox" data-lv="2">
+                                    {/foreach}
+                                </dd>
+                            </dl>
+                            {/foreach}
+                        </div>
+                    </li>
+                    {/foreach}
+                </ul>
+                <div class="t-c mt-20">
+                    <input class="form-control" name="id" required="" type="hidden" value="{$edit.id}">
+                    <button type="submit" class="button bg-blue" lay-submit lay-filter="button">提交</button>
+                    <a href="{:url('index')}" class="button bg-red">放弃</a>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+{include file="public/footer" /}

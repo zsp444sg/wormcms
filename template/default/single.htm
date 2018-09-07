@@ -1,0 +1,32 @@
+{include file="$temps.head" title="$webs.title" keywords="$webs.keywords" description="$webs.description" /}
+<section class="layout cx-fex-c sing-top">
+    <div class="cont cx-fex-c">
+        <div class="xs8 xl12 cx-fex-c fex-column fex-items-c t-reverse">
+            {$label.single_bg|default=""}
+        </div>
+    </div>
+</section>
+{eq name="mobileurl" value='true'}
+<nav class="layout cx-fex fw-l-nav t-reverse" data-scroll-reveal="enter bottom,move 100px">
+    <a class="fw-l-nav-a alick" title="{$parts.title}" href="{:url('Part/index',array('fid'=>$parts.id))}">{$parts.title}</a>
+    <a class="m-listnav cx-click" data-type="mlistnav" data-cid="#listnav" data-title="{$parts.title}"><i class="cx-icon cx-icon-all"></i></a>
+</nav>
+{/eq}
+<nav {eq name="mobileurl" value='true'}id="listnav"{/eq} class="layout cx-fex-c fw-l-nav t-reverse" {neq name="mobileurl" value='true'}data-scroll-reveal="enter bottom,move 100px"{else/}style="display:none;"{/neq}>
+{volist name="partlist" id="cx" empty=""}
+{eq name="$cx.pid" value="$lagpart.id"}
+<a class="fw-l-nav-a {eq name='$cx.id' value='$parts.id'}alick{/eq}" title="{$cx.title}" href="{:url('Part/index',array('fid'=>$cx.id))}">
+    {$cx.title}
+</a>
+{/eq}
+{/volist}
+</nav>
+<section class="layout sing-k">
+    <div class="cont cx-fex-c">
+        <h1 class="sing-title t-c">{$parts.title}</h1>
+        <div class="xs12 xl11 sing-cont">
+            {$parts.cont}
+        </div>
+    </div>
+</section>
+{include file="$temps.foot" /}

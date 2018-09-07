@@ -1,0 +1,86 @@
+{include file="public/meat" title="来源管理"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="xs6 xl12">
+                <a href="{:url('index')}" class="button bg-blue">来源列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加来源</a>
+                {/if}
+            </div>
+            <div class="xs6 xl12">
+                <form class="layui-form" role="form" action="{:url('so')}" method="post">
+                    <div class="cx-fex-r">
+                        <label class="lab">搜索</label>
+                        <input class="ipt" name="keyword" placeholder="请输入搜索内容" type="text" style="width: 200px;">
+                        <button class="button f-l" type="submit"><i class="cx-icon cx-icon-sousuo"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <form class="layui-form" role="form" action="" method="post">
+            <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+                <thead>
+                <tr>
+                    <th class="{if !$btn.del}t-c{/if}" width="120">
+                        <div class="checkbox">
+                            <label>
+                                {if $btn.del}<input id="all" class="inverted" type="checkbox" lay-ignore>{/if}
+                                <span class="text">ID</span>
+                            </label>
+                        </div>
+                    </th>
+                    <th>来源站点</th>
+                    <th class="t-c">站点地址</th>
+                    {if $btn.del}<th class="t-c" width="130">编辑</th>{/if}
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="list" id="cx"}
+                <tr>
+                    <td class="alltd table-line-height {if !$btn.del}t-c{/if}">
+                        <div class="checkbox">
+                            <label>
+                                {if $btn.del}<input class="inverted" name="delid[{$cx.id}]" type="checkbox" value="{$cx.id}" lay-ignore>{/if}
+                                <span class="text">{$cx.id}</span>
+                            </label>
+                        </div>
+                    </td>
+                    <td>{$cx.title}</td>
+                    <td class="t-c">{$cx.url}</td>
+                    {if $btn.del || $btn.edit}
+                    <td class="t-c">
+                        {if $btn.edit}<a class="button button-S bg-green mr-5" href="{:url('edit',array('id'=>$cx['id']))}" title="编辑【{$cx.title}】模型">编辑</a>{/if}
+                        {if $btn.del}<a class="button button-S bg-red cx-click" data-id="{$cx['id']}" data-href="{:url('del')}" data-type="deldata">删除</a>{/if}
+                    </td>
+                    {/if}
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <div class="t-c pad-t20">
+                {$list->render()}
+            </div>
+            <div class="t-c pad-t20">
+                {if $btn.del}
+                <button class="button button-S bg-red" data-href="{:url('pdel')}" data-type="sort" lay-submit lay-filter="sd-btn">彻底删除</button>
+                {/if}
+            </div>
+        </form>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    $("#all").click(function () {
+        $(this).closest("table").find("td.alltd input:checkbox").prop("checked",$(this).prop("checked"))
+    })
+</script>
+{include file="public/footer" /}

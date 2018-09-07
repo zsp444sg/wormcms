@@ -1,0 +1,71 @@
+{include file="$temps.head" title="$webs.title" keywords="$webs.keywords" description="$webs.description" /}
+{load href="__IMAGES__/default/js/scrollbar/jquery.mCustomScrollbar.min.css,__IMAGES__/default/js/scrollbar/jquery.mCustomScrollbar.concat.min.js" /}
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=mliQcGfAYPXMTx0ukWPtGpwb3uhsspEK&s=1"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+<section class="layout cx-fex-c sing-top">
+    <div class="cont cx-fex-c">
+        <div class="xs8 xl12 cx-fex-c fex-column fex-items-c t-reverse">
+            {$label.single_bg|default=""}
+        </div>
+    </div>
+</section>
+{eq name="mobileurl" value='true'}
+<nav class="layout cx-fex fw-l-nav t-reverse" data-scroll-reveal="enter bottom,move 100px">
+    <a class="fw-l-nav-a alick" title="{$parts.title}" href="{:url('Part/index',array('fid'=>$parts.id))}">{$parts.title}</a>
+    <a class="m-listnav cx-click" data-type="mlistnav" data-cid="#listnav" data-title="{$parts.title}"><i class="cx-icon cx-icon-all"></i></a>
+</nav>
+{/eq}
+<nav {eq name="mobileurl" value='true'}id="listnav"{/eq} class="layout cx-fex-c fw-l-nav t-reverse" {neq name="mobileurl" value='true'}data-scroll-reveal="enter bottom,move 100px"{else/}style="display:none;"{/neq}>
+{volist name="partlist" id="cx" empty=""}
+{eq name="$cx.pid" value="$lagpart.id"}
+<a class="fw-l-nav-a {eq name='$cx.id' value='$parts.id'}alick{/eq}" title="{$cx.title}" href="{:url('Part/index',array('fid'=>$cx.id))}">
+    {$cx.title}
+</a>
+{/eq}
+{/volist}
+</nav>
+<section class="layout sing-k">
+    <div class="cont cx-fex-c">
+        <h1 class="sing-title t-c">{$parts.title}</h1>
+        <div class="sing-cont xs12 xl11">
+            {$parts.cont}
+            <div id="allmap" class="mapzy"></div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map('allmap');
+    var poi = new BMap.Point(121.755854,31.044833);
+    var myIcon = new BMap.Icon("images/gaojue/logo1.png", new BMap.Size(20,30));
+    var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
+        '<img src="__IMAGES__/default/logo1.jpg" alt="上海焱凤信息技术有限公司" class="f-r" style="zoom:1;overflow:hidden;width:100px;height:auto; margin-top:20px;margin-left:3px;"/>' +
+        'Tel: 021-80158202<br/>地址: 上海市浦东新区惠南镇城南路168弄绿地峰汇商务广场B座1725室' +
+        '</div>';
+
+    //创建检索信息窗口对象
+    var searchInfoWindow = null;
+    map.centerAndZoom(poi, 15);
+    map.enableScrollWheelZoom();
+    searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+        title  : "上海焱凤信息技术有限公司",      //标题
+        width  : 290,             //宽度
+        height : 105,              //高度
+        panel  : "panel",         //检索结果面板
+        enableAutoPan : true,     //自动平移
+        searchTypes   :[
+            BMAPLIB_TAB_TO_HERE,  //到这里去
+            BMAPLIB_TAB_FROM_HERE //从这里出发
+        ]
+    });
+    var marker = new BMap.Marker(poi,{icon:myIcon}); //创建marker对象
+    marker.addEventListener("click", function(e){
+        searchInfoWindow.open(marker);
+    })
+    searchInfoWindow.open(marker);
+    map.addControl(new BMap.NavigationControl());   //添加地图类型控件
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    map.addOverlay(marker); //在地图中添加marker
+</script>
+{include file="$temps.foot" /}

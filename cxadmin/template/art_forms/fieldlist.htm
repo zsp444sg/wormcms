@@ -1,0 +1,89 @@
+{include file="public/meat" title="模型列表"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="layout">
+                <a href="{:url('index')}" class="button bg-blue">返回模型列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加模型</a>
+                {/if}
+                <a href="#" class="button">字段列表</a>
+                {if $btn.add_field}
+                <a href="{:url('add_field',array('id'=>$Request.param.id))}" class="button bg-blue">添加字段</a>
+                {/if}
+                <a href="{:url('artmobe',array('id'=>$Request.param.id))}" class="button bg-blue">生成模板</a>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+    <form class="layui-form" role="form" action="" method="post">
+        <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+            <thead>
+            <tr>
+                <th>字段名</th>
+                <th>数据库键名</th>
+                <th>表单类型</th>
+                <th class="t-c" width="100">是否必填</th>
+                <th class="t-c" width="80">排序</th>
+                {if $btn.edit || $btn.del}<th class="t-c" width="120">编辑</th>{/if}
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id="cx" empty="" }
+            <tr>
+                <td>{$cx.title|default=''}</td>
+                <td>{$cx.sqlname|default=''}</td>
+                <td>{$cx.formtext|default=''}</td>
+                <td class="t-c">
+                    {eq name="$cx.formrequired|default=''" value="1"}<a class="button button-S bor-red" title="必填">必填</a>{/eq}
+                </td>
+                <td class="t-c f-24">
+                    <input class="ipt ipt-S t-c" required lay-verify="required|number" type="text" name="{$cx.sqlname}" value="{$cx.sort}">
+                </td>
+                {if $btn.edit || $btn.del}
+                <td class="t-c">
+                    {if $btn.edit}<a class="button button-S bg-green mr-5 cx-click" href="{:url('edit_field',array('id'=>$Request.param.id,'sname'=>$cx.sqlname))}" title="编辑">编辑</a>{/if}
+                    {if $btn.del}<a class="button button-S bg-red" data-id="{$Request.param.id}" data-name="{$cx.sqlname}" data-href="{:url('del_field')}" onclick="delfield(this)">删除</a>{/if}
+                </td>
+                {/if}
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        <div class="t-c pad-t20">
+            {if $btn.edit_field}<button class="button bg-blue" lay-submit lay-filter="all-btn">排序</button>{/if}
+        </div>
+        <div class="t-c"></div>
+    </form>
+</div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    function delfield(o) {
+        layui.define(['layer'], function(exports){
+            var layer = layui.layer;
+            var d = $(o).data();
+            layer.confirm("不可恢复！你确定要删除吗？", {icon: 3, title:"友情提示"}, function(index){
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    data: {id:d.id,name:d.name},
+                    url: d.href,
+                    success:function (data) {
+                        layer.msg(data.msg,{icon:7});
+                        location.reload();
+                    }
+                })
+                layer.close(index);
+            });
+        })
+    }
+    $("#all").click(function () {
+        $(this).closest("table").find("td.alltd input:checkbox").prop("checked",$(this).prop("checked"))
+    })
+</script>
+{include file="public/footer" /}

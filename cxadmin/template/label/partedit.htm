@@ -1,0 +1,187 @@
+{include file="public/meat" title="主栏目调用"/}
+<div class="cx-fex-c">
+    <div class="x11 mt-20">
+        <a class="button button-S bg-blue mr-10" href="{:url('index',array('id'=>$postdb.id,'onlay'=>'new'))}">更换其他内容</a>
+        <a class="button button-S bg-blue cx-click" data-type="close">返回频道</a>
+    </div>
+    <div class="x11 mt-15">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">主栏目调用</legend>
+            <form class="layui-form form form-horizontal" id="addform" action="{:url('partedit')}" method="post">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">基本信息</li>
+                        <li>其他设置</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">选择栏目</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="bk-gray cx-artsids">
+                                        {volist name="postdb.dyparts" id="cx" empty=""}
+                                        <div class="layui-fluid lh-30">{$cx}</div>
+                                        {/volist}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">显示类型</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input name="conf[status]" value="1" {eq name="$postdb.conf.status|default='1'" value="1"}checked="checked"{/eq} title="已审核" type="radio">
+                                    <input name="conf[status]" value="0" {eq name="$postdb.conf.status|default=''" value="0"}checked="checked"{/eq} title="全部(包含已审核和未审核)" type="radio">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">是否显示推荐</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input name="conf[jian]" value="1" {eq name="$postdb.conf.jian|default=''" value="1"}checked="checked"{/eq} title="推荐" type="radio">
+                                    <input name="conf[jian]" value="0" {eq name="$postdb.conf.jian|default='0'" value="0"}checked="checked"{/eq} title="全部(包含已推荐和推荐)" type="radio">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">排序</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <select name="conf[listorder]">
+                                        <option value="0" {eq name="$postdb.conf.listorder|default='0'" value="0"}selected="selected"{/eq}>默认</option>
+                                        <option value="1" {eq name="$postdb.conf.listorder|default=''" value="1"}selected="selected"{/eq}>发表时间降序</option>
+                                        <option value="3" {eq name="$postdb.conf.listorder|default=''" value="3"}selected="selected"{/eq}>点击率降序</option>
+                                        <option value="5" {eq name="$postdb.conf.listorder|default=''" value="5"}selected="selected"{/eq}>最近浏览</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">选择模型</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <select name="conf[mids]">
+                                        <option value="all">所有模型</option>
+                                        <option {eq name="$postdb.conf.mids|default=''" value="0"}selected="selected"{/eq} value="0">文章模型</option>
+                                        {volist name="postdb.dymids" id="cx"}
+                                        <option {eq name="$postdb.conf.mids|default=''" value="$cx.id"}selected="selected"{/eq} value="{$cx.id}">{$cx.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">从第几条开始读取 <span class="t-red">(*)</span> </label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="cx-input-tabel">
+                                        <input name="conf[num]" class="ipt" placeholder="默认为1" value="{$postdb.conf.num|default='1'}" type="text">
+                                        <span class="cx-input-fl">条</span>
+                                    </div>
+                                    <span class="t-gray">默认为1</span>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab"></label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input type="hidden" name="id" required lay-verify="required" value="{$postdb.id|default=''}">
+                                    <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+                                    <button class="button bg-blue" lay-submit lay-filter="labelend-btn">立即提交</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">风格样式</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    {$postdb.temps}
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">显示几行 <span class="t-red">(*)</span> </label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="cx-input-tabel">
+                                        <input name="conf[rows]" class="ipt" placeholder="默认为1" value="{$postdb.conf.rows|default='5'}" type="text">
+                                        <span class="cx-input-fl">行</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">标题显示多少字节 <span class="t-red">(*)</span> </label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="cx-input-tabel">
+                                        <input name="conf[titlenum]" class="ipt" placeholder="默认为1" value="{$postdb.conf.titlenum|default='20'}" type="text">
+                                        <span class="cx-input-fl">行</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">简介显示多少字节 <span class="t-red">(*)</span> </label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <div class="cx-input-tabel">
+                                        <input name="conf[contnum]" class="ipt" placeholder="默认为1" value="{$postdb.conf.contnum|default='80'}" type="text">
+                                        <span class="cx-input-fl">字节</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">是否暂时隐藏</label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <input name="status" value="0" {eq name="$postdb.status|default=''" value="0"}checked="checked"{/eq} title="是" type="radio">
+                                    <input name="status" value="1" {eq name="$postdb.status|default='1'" value="1"}checked="checked"{/eq} title="否" type="radio">
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab">模板代码 <span class="t-red">(*)</span> </label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <textarea id="content" class="ipt" name="conf[tempcode]" rows="5">{$postdb.conf.tempcode|default=''}</textarea>
+                                </div>
+                            </div>
+                            <div class="cx-fex-l mb-10">
+                                <div class="x3 t-r">
+                                    <label class="lab"></label>
+                                </div>
+                                <div class="xs8 xl9">
+                                    <button class="button bg-blue" lay-submit lay-filter="labelend-btn">立即提交</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        $('.transmit').click(function(){
+            parent.$('.{$postdb.title}').html($('#content').val());
+        })
+    })
+</script>
+{include file="public/footer" /}

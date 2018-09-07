@@ -1,0 +1,279 @@
+{include file="public/meat" title="添加/编辑用户信息"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="layout">
+                <a href="{:url('index')}" class="button bg-blue">返回列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加新用户</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑用户信息</legend>
+            <form class="layui-form" id="addform"  role="form" action="" method="post">
+                <h2 class="t-c b-b t-red t-18 mb-20">必填项</h2>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">用户名<span class="t-red">(*)</span></label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" class="ipt" placeholder="请输入用户名" {present name="postdb.username"}disabled{/present} required  lay-verify="required" name="username" value="{$postdb.username|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">用户昵称<span class="t-red">(*)</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="uniname" class="ipt" placeholder="请输入用户昵称" required  lay-verify="required" value="{$postdb.uniname|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">电子邮箱<span class="t-red">(*)</span> </label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="uemail" class="ipt" placeholder="请输入电子邮箱" {present name="postdb.uemail_yz"}{eq name="postdb.uemail_yz" value="1"}disabled{/eq}{/present} required  lay-verify="required|email" value="{$postdb.uemail|default=''}">
+                    </div>
+                </div>
+                {present name="postdb.upassword"}
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">旧密码</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="password" class="ipt" {present name="postdb.upassword"}disabled value="******"{/present} >
+                    </div>
+                </div>
+                {/present}
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">设置新密码</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="password" name="newpassword" class="ipt" placeholder="如果不更换密码,请留空">
+                        <span class="t-gray">如果不更换密码,请留空</span>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">选择会员组<span class="t-red">(*)</span></label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <select name="group_id" lay-verify="required">
+                            <option value="">请选择用户组</option>
+                            {volist name="groupid" id="cx"}
+                            <option {eq name="postdb.group_id|default=''" value="$cx.id"}selected{/eq} value="{$cx.id}">{$cx.title}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">用户状态<span class="t-red">(*)</span></label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="status" type="radio" value="1" {eq name="$postdb.status|default='1'" value="1"}checked="checked"{/eq} title="已通过">
+                        <input name="status" type="radio" value="0" {eq name="$postdb.status|default=''" value="0"}checked="checked"{/eq} title="未通过">
+                    </div>
+                </div>
+                <h2 class="t-c b-b t-gray t-18 mb-20">选填项</h2>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">用户头像</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <img class="picurlimg b-a" src="{present name='postdb.uicon'}/{$webdb.updir}/{$postdb.uicon}{/present}" onerror="this.src='__ADMIN__/usererror.png'" height="60" width="auto">
+                        <span class="picurltext"></span>
+                        <a class="button button-S bor-green uploadbtn" data-img="picurlimg" data-val="picurlval" data-text="picurltext" data-del="picurldel" lay-data="{method:'post',accept:'images',data:'img',field:'picurl'}"><i class="layui-icon">&#xe67c;</i>上传头像</a>
+                        <a class="button button-S bor-red picurldel cx-click" data-img="picurlimg" data-val="picurlval" data-type="closdiv" {notpresent name="postdb.uicon"}style="display:none;"{/notpresent}><i class="layui-icon">&#xe67c;</i>删除</a>
+                        <input name="uicon" class="ipt picurlval" placeholder="默认值一般为空" type="hidden" value="{$postdb.uicon|default=''}" >
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">姓名</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="uname" class="ipt" placeholder="请输入姓名" {present name="postdb.ucard_yz"}{eq name="postdb.ucard_yz" value="1"}disabled{/eq}{/present} value="{$postdb.uname|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">性别</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="usex" type="radio" value="1" {eq name="$postdb.usex|default=''" value="1"}checked="checked"{/eq} title="男">
+                        <input name="usex" type="radio" value="0" {eq name="$postdb.usex|default='0'" value="0"}checked="checked"{/eq} title="女">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">手机号码</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="uphone" class="ipt" placeholder="请输入手机号码" {present name="postdb.uphone_yz"}{eq name="postdb.uphone_yz" value="1"}disabled{/eq}{/present} value="{$postdb.uphone|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">QQ号码</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="uicq" class="ipt" placeholder="请输入QQ号码" value="{$postdb.uicq|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">出生日期</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" id="ubday" name="ubday" class="ipt cx-time" placeholder="请选择出生日期" value="{$postdb.ubday|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">身份证号</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="ucard" class="ipt" {present name="postdb.ucard_yz"}{eq name="postdb.ucard_yz" value="1"}disabled{/eq}{/present} placeholder="请输入身份证号" value="{$postdb.ucard|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">联系地址</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="uaddress" class="ipt" placeholder="请输入联系地址" value="{$postdb.uaddress|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">个性签名</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="ugraph" class="ipt" placeholder="请填写个性签名" value="{$postdb.ugraph|default=''}">
+                    </div>
+                </div>
+                <h2 class="t-c b-b t-gray t-18 mb-20">自订义字段</h2>
+                {include file="user/userdata" /}
+                <div class="cx-fex-l mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab"></label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="hidden" name="id" class="layui-input" value="{$postdb.id|default=''}">
+                        <input type="hidden" name="uid" class="layui-input" value="{$postdb.uid|default=''}">
+                        <button class="button bg-blue" lay-submit lay-filter="button">确认提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+    layui.define(['laydate','upload'], function(exports){
+        var laydate = layui.laydate,
+            layupload = layui.upload;
+        laydate.render({
+            elem: '#seefanwei',
+            range: '---'
+        });
+        var uplogo = layupload.render({
+            elem: '.uploadbtn',
+            url:"{:url('Uploads/index')}",
+            before: function(obj){
+                layer.load();
+            },
+            done: function(res, index, upload){
+                var cx = this.item.context.dataset;
+                layer.closeAll('loading');
+                if(res.code != 0){
+                    $('.'+cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="btn size-S btn-primary-outline reload">重试</a>');
+                    $('.'+cx.text).find('.reload').on('click', function(){
+                        uplogo.upload();
+                    });
+                    return layer.msg(res.msg,{time: 2000});
+                }
+                $('.'+cx.img).attr('src','/'+ res.src);
+                $('.'+cx.val).val(res.src);
+                $('.'+cx.del).show();
+                $('.'+cx.text).hide();
+                return layer.msg(res.msg,{time: 2000})
+            },
+            error: function(){
+                var cx = this.item.context.dataset;
+                layer.closeAll('loading');
+                $('.'+cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="btn size-S btn-primary-outline reload">重试</a>');
+                $('.'+cx.text).find('.reload').on('click', function(){
+                    uplogo.upload();
+                });
+            }
+        });
+        var dfeilds = layupload.render({
+            elem: '.dfeilds',
+            url:"{:url('Uploads/index')}",
+            multiple: true,
+            done: function(res, index, upload){
+                var cx = this.item.context.dataset;
+                var size = "";
+                if(res.size < 0.1 * 1024){                            //小于0.1KB，则转化成B
+                    size = res.size.toFixed(2) + "B"
+                }else if(res.size < 0.1 * 1024 * 1024){            //小于0.1MB，则转化成KB
+                    size = (res.size/1024).toFixed(2) + "KB"
+                }else if(res.size < 0.1 * 1024 * 1024 * 1024){        //小于0.1GB，则转化成MB
+                    size = (res.size/(1024 * 1024)).toFixed(2) + "MB"
+                }else{                                            //其他转化成GB
+                    size = (res.size/(1024 * 1024 * 1024)).toFixed(2) + "GB"
+                }
+                var sizeStr = size + "";                        //转成字符串
+                var sizes = sizeStr.indexOf(".");                    //获取小数点处的索引
+                var dou = sizeStr.substr(sizes + 1 ,2)            //获取小数点后两位的值
+                if(dou == "00"){                                //判断后两位是否为00，如果是则删除00
+                    size = sizeStr.substring(0, sizes) + sizeStr.substr(sizes + 3, 2)
+                }
+                if(cx.acc == 'img'){
+                    var imgsee =  '<td><img src="/'+ res.src +'" height="100" width="auto">'+ res.title +'<input type="hidden" name="'+ cx.valname +'['+ res.title +']" class="ipt" value="'+ res.src +'"></td>';
+                }else{
+                    var imgsee =  '<td>'+ res.title +'<input type="hidden" name="'+ cx.valname +'['+ res.title +']" class="ipt" value="'+ res.src +'"></td>';
+                }
+                var tr = $(['<tr id="upload-'+ index +'">',
+                    imgsee,
+                    '<td>'+ res.msg +'</td>',
+                    '<td class="t-c">'+ size +'</td>',
+                    '<td class="t-c">',
+                    '<button class="button bor-red m-reload layui-hide">重传</button>',
+                    '<button class="button bg-red m-delete">删除</button>',
+                    '</td>',
+                    '</tr>'].join(''));
+                if(res.code != 0){ //上传成功
+                    var tr = $('#'+cx.tabel).find('tr#upload-'+ index),
+                        tds = tr.children();
+                    tds.eq(3).find('.m-reload').removeClass('layui-hide'); //显示重传
+                }
+                tr.find('.m-delete').on('click', function(){
+                    tr.remove();
+                    dfeilds.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                });
+                $('#'+cx.tabd).append(tr);
+                this.error(index, upload);
+            },
+            error: function(index, upload){
+                var cx = this.item.context.dataset;
+                var tr = $('#'+cx.tabel).find('tr#upload-'+ index),
+                    tds = tr.children();
+                tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+                tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+            }
+        });
+    });
+</script>
+{include file="public/footer" /}

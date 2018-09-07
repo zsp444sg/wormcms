@@ -1,0 +1,128 @@
+{include file="$temps.head" title="$webs.title" keywords="$webs.keywords" description="$webs.description" /}
+<section class="layout">
+    <div class="list-gg img-auto">
+        {block name="guanggao"}{$label.guangyuwogg01|default=""}{/block}
+    </div>
+</section>
+<section class="cont cx-fex">
+    <div id="lxwm-nav" class="xs3 fex-column pos-r">
+        <div id="cx-cixi" class="cp-cont-l fex-column" data-cid="#listnavr" data-top="60">
+            <h3 class="bg-blue t-reverse t-c list-l-title">{block name="navtitle"}关于我们{/block}</h3>
+            <ul class="cp-cont-class fex-column">
+                {block name="nav"}
+                {volist name="partlist" id="cx" empty=""}
+                {eq name="$cx.pid" value="$lagpart.id"}
+                <li class="in-cp-li {eq name='$cx.id' value='$parts.id'}open{/eq} {eq name='$cx.id' value='$parts.pid'}open{/eq}">
+                    <a class="cx-fex-l in-cp-lia {eq name='$cx.id' value='$parts.id'}alick{/eq}" title="{$cx.title}" href="{:url('Part/index',array('fid'=>$cx.id))}">
+                        <i class="cx-icon cx-icon-xiangyoujiantou mr-10"></i> {$cx.title}
+                    </a>
+                    {eq name="$cx.class" value="0"}
+                    <ul class="in-cp-rul cx-fex-c">
+                        {volist name="partlist" id="c" empty=""}
+                        {eq name="$c.pid" value="$cx.id"}
+                        <li class="x10 in-cp-lie">
+                            <a class="cx-fex in-cp-liea {eq name='$c.id' value='$parts.id'}alick{/eq}" title="{$c.title}" href="{:url('Part/index',array('fid'=>$c.id))}"><i class="cx-icon cx-icon-youjiantou mr-10"></i>{$c.title}</a>
+                        </li>
+                        {/eq}
+                        {/volist}
+                    </ul>
+                    {/eq}
+                </li>
+                {/eq}
+                {/volist}
+                {/block}
+            </ul>
+        </div>
+    </div>
+    <div id="listnavr" class="xs9 xl12 list-r">
+        <div class="layout fex-column list-rcon">
+            <div class="list-r-t cx-fex">
+                <h3 class="t-16 list-r-title">{$parts.title}</h3>
+                <div class="xl2 cx-fex-c fex-column top-caidan">
+                    <a class="top-caidan-a t-blue cx-click" data-type="navlay" data-cid="#lxwm-nav"><i class="cx-icon cx-icon-htmal5icon35"></i></a>
+                </div>
+                <div class="list-menu hidden-l">{$menu}</div>
+            </div>
+            <h1 class="t-c news-cont-title">{$parts.title}</h1>
+            <div class="news-cont">
+<form class="layui-form" id="addform" role="form" action="{:url('Forms/addform')}" method="post">
+    <div class="cx-fex-l mb-10">
+        <div class="x3 cx-fex-r">
+            <label class="lab">姓名(<span class="t-red">*</span>)</label>
+        </div>
+        <div class="xs8 xl9"><input name="xinming" placeholder="请输入姓名" required="" lay-verify="required" class="ipt" value="" type="text"></div>
+    </div><div class="cx-fex-l mb-10">
+    <div class="x3 cx-fex-r">
+        <label class="lab">手机(<span class="t-red">*</span>)</label>
+    </div>
+    <div class="xs8 xl9"><input name="phone" placeholder="请输入手机" required="" lay-verify="required" class="ipt" value="" type="text"></div>
+</div><div class="cx-fex-l mb-10">
+    <div class="x3 cx-fex-r">
+        <label class="lab">咨询产品(<span class="t-red">*</span>)</label>
+    </div>
+    <div class="xs8 xl9">
+        <select id="chanpin" name="chanpin" required="" lay-verify="required" lay-filter="chanpin">
+            <option value="">请选择咨询产品</option><option value="袋式过滤器" selected="selected">袋式过滤器</option><option value="过滤机系列">过滤机系列</option><option value="过滤元件">过滤元件</option><option value="精密过滤器">精密过滤器</option><option value="全自动过滤器">全自动过滤器</option><option value="输液泵系列">输液泵系列</option><option value="压滤机系列">压滤机系列</option><option value="储罐系列">储罐系列</option>
+        </select><div class="layui-unselect layui-form-select"><div class="layui-select-title"><input placeholder="请选择咨询产品" value="袋式过滤器" readonly="" class="layui-input layui-unselect" type="text"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit" style=""><dd lay-value="" class="layui-select-tips">请选择咨询产品</dd><dd lay-value="袋式过滤器" class="layui-this">袋式过滤器</dd><dd lay-value="过滤机系列" class="">过滤机系列</dd><dd lay-value="过滤元件" class="">过滤元件</dd><dd lay-value="精密过滤器" class="">精密过滤器</dd><dd lay-value="全自动过滤器" class="">全自动过滤器</dd><dd lay-value="输液泵系列" class="">输液泵系列</dd><dd lay-value="压滤机系列" class="">压滤机系列</dd><dd lay-value="储罐系列" class="">储罐系列</dd></dl></div>
+
+    </div>
+</div><div class="cx-fex-l mb-10">
+    <div class="x3 cx-fex-r">
+        <label class="lab">留言(<span class="t-red">*</span>)</label>
+    </div>
+    <div class="xs8 xl9">
+        <textarea class="ipt" type="text" name="liuyan" rows="3" required="" lay-verify="required"></textarea>
+
+    </div>
+</div>
+    <div class="cx-fex-l mb-10">
+        <div class="x3 t-r">
+            <label class="lab"></label>
+        </div>
+        <div class="xs8 xl9">
+            <input name="fid" required="" lay-verify="required|number" value="1" type="hidden">
+            <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+            <button class="button bg-blue" lay-submit="" lay-filter="artbtn">立即提交</button>
+        </div>
+    </div>
+</form>
+            </div>
+        </div>
+    </div>
+</section>
+<!--广告-->
+<section class="cont">
+    <div class="list-gg img-auto">
+        {block name="guanggao1"}{$label.guangyuwogg02|default=""}{/block}
+    </div>
+</section>
+<!--相似产品-S-->
+<section class="cont">
+    <div class="cp-cont-t cx-fex">
+        <h6 class="t-16 list-r-title">我们的产品</h6>
+    </div>
+    <ul class="cx-fex-l cp-cont-tui">
+        {$label.article_xiangsi1|default=""}
+    </ul>
+</section>
+<!--相似产品-S-->
+<section class="cont">
+    <div class="cp-cont-t cx-fex">
+        <h6 class="t-16 list-r-title">我们的最新动态</h6>
+    </div>
+    <div class="layout cx-fex cplist-newscont">
+        <div class="xs4 xl12">
+            <div class="layui-carousel cplist-newshdk" id="in-newshds">
+                <div carousel-item>
+                    {$label.cplistnewshd|default=""}
+                </div>
+            </div>
+        </div>
+        <div class="xs8 xl12 in-news-ul">
+            <div class="layout fex-column cplist-newslsit-ul">
+                {$label.cplistnewslist|default=""}
+            </div>
+        </div>
+    </div>
+</section>
+{include file="$temps.foot" /}

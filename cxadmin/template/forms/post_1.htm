@@ -1,0 +1,190 @@
+{include file="public/meat" title="添加/编辑内容"/}
+{include file="public/js" /}
+{load href="__EDITOR__/wangEditor.min.js" /}
+<script type="text/javascript">
+    var E = window.wangEditor;
+</script>
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="xs6 xl12">
+                <a href="{:url('index',array('mid'=>$Request.param.mid,'fid'=>$Request.param.fid))}" class="button bg-blue">返回列表</a>
+                {if $btn.add}
+                <a href="{:url('add',array('mid'=>$Request.param.mid,'fid'=>$Request.param.fid))}" class="button bg-blue">添加内容</a>
+                {/if}
+            </div>
+            <div class="xs6 xl12">
+                <form class="layui-form" role="form" action="{:url('Forms/index')}" method="post">
+                    <div class="cx-fex-r">
+                        <label class="lab">搜索内容</label>
+                        <input class="ipt" name="keyword" placeholder="请输入搜索内容" type="text" style="width: 200px;">
+                        <button class="button f-l" type="submit"><i class="cx-icon cx-icon-sousuo"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑内容</legend>
+            <form class="layui-form" id="addform"  role="form" action="{:url('Forms/add')}" method="post">
+                <div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">姓名</label>
+                         </div>
+                        <div class="xs8 xl9"><input type="text" name="xingming" placeholder="请输入姓名"  class="ipt" value="{$postdb.xingming|default=''}"></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">手机</label>
+                         </div>
+                        <div class="xs8 xl9"><input type="text" name="phone" placeholder="请输入手机"  class="ipt" value="{$postdb.phone|default=''}"></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">户型</label>
+                         </div>
+                        <div class="xs8 xl9">
+                            <select id="huxing" name="huxing"  lay-filter="huxing">
+                            <option value=''>请选择户型</option><option {eq name="postdb.huxing|default=''" value="一室一厅"}selected="selected"{/eq} value="一室一厅">一室一厅</option><option {eq name="postdb.huxing|default=''" value="两室一厅"}selected="selected"{/eq} value="两室一厅">两室一厅</option><option {eq name="postdb.huxing|default=''" value="两室两厅"}selected="selected"{/eq} value="两室两厅">两室两厅</option><option {eq name="postdb.huxing|default=''" value="三室一厅"}selected="selected"{/eq} value="三室一厅">三室一厅</option><option {eq name="postdb.huxing|default=''" value="三室两厅"}selected="selected"{/eq} value="三室两厅">三室两厅</option><option {eq name="postdb.huxing|default=''" value="四室两厅"}selected="selected"{/eq} value="四室两厅">四室两厅</option><option {eq name="postdb.huxing|default=''" value="四室三厅"}selected="selected"{/eq} value="四室三厅">四室三厅</option><option {eq name="postdb.huxing|default=''" value="五室两厅"}selected="selected"{/eq} value="五室两厅">五室两厅</option><option {eq name="postdb.huxing|default=''" value="五室三厅"}selected="selected"{/eq} value="五室三厅">五室三厅</option>
+                            </select>
+                            
+                        </div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">房屋面积</label>
+                         </div>
+                        <div class="xs8 xl9"><div class="cx-input-tabel"><input type="text" name="mianji" placeholder="请输入房屋面积"  class="ipt" value="{$postdb.mianji|default=''}"><span class="cx-input-fl">平方</span></div></div>
+                    </div><div class="cx-fex-l mb-10">
+                        <div class="x3 t-r">
+                         <label class="lab">产品系列</label>
+                         </div>
+                        <div class="xs8 xl9">
+                            <input name="chanpin[]" value="中央空调" {if isset($postdb['chanpin']) && in_array('中央空调',explode(',',$postdb['chanpin']))}checked{/if} type="checkbox" title="中央空调" ><input name="chanpin[]" value="地暖" {if isset($postdb['chanpin']) && in_array('地暖',explode(',',$postdb['chanpin']))}checked{/if} type="checkbox" title="地暖" ><input name="chanpin[]" value="暖气片" {if isset($postdb['chanpin']) && in_array('暖气片',explode(',',$postdb['chanpin']))}checked{/if} type="checkbox" title="暖气片" ><input name="chanpin[]" value="新风系统" {if isset($postdb['chanpin']) && in_array('新风系统',explode(',',$postdb['chanpin']))}checked{/if} type="checkbox" title="新风系统" ><input name="chanpin[]" value="中央净水" {if isset($postdb['chanpin']) && in_array('中央净水',explode(',',$postdb['chanpin']))}checked{/if} type="checkbox" title="中央净水" >
+                            
+                        </div>
+                    </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r">
+                        <label class="lab"></label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input type="hidden" name="fid" required lay-verify="required|number" value="{$Request.param.fid}">
+                        <input type="hidden" name="id" value="{$postdb.id|default=''}">
+                        <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+                        <button class="button bg-blue" lay-submit lay-filter="artbtn">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{present name="modelbase.formedit_h"}
+<script>
+    $(".w-e-text-container").height("{$modelbase.formedit_h}"+'px');
+</script>
+{else /}
+<script>
+    $(".w-e-text-container").height("450px");
+</script>
+{/present}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+    layui.define(['laydate','upload'], function(exports){
+        var laydate = layui.laydate,
+            layupload = layui.upload;
+        laydate.render({
+            elem: '#seefanwei',
+            range: '---'
+        });
+        var uplogo = layupload.render({
+            elem: '.uploadbtn',
+            url:"{:url('Uploads/index')}",
+            before: function(obj){
+                layer.load();
+            },
+            done: function(res, index, upload){
+                var cx = this.item.context.dataset;
+                layer.closeAll('loading');
+                if(res.code != 0){
+                    $('.'+cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="btn size-S btn-primary-outline reload">重试</a>');
+                    $('.'+cx.text).find('.reload').on('click', function(){
+                        uplogo.upload();
+                    });
+                    return layer.msg(res.msg,{time: 2000});
+                }
+                $('.'+cx.img).attr('src','/'+ res.src);
+                $('.'+cx.val).val(res.src);
+                $('.'+cx.del).show();
+                $('.'+cx.text).hide();
+                return layer.msg(res.msg,{time: 2000})
+            },
+            error: function(){
+                var cx = this.item.context.dataset;
+                layer.closeAll('loading');
+                $('.'+cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="btn size-S btn-primary-outline reload">重试</a>');
+                $('.'+cx.text).find('.reload').on('click', function(){
+                    uplogo.upload();
+                });
+            }
+        });
+        var dfeilds = layupload.render({
+            elem: '.dfeilds',
+            url:"{:url('Uploads/index')}",
+            multiple: true,
+            done: function(res, index, upload){
+                var cx = this.item.context.dataset;
+                var size = "";
+                if(res.size < 0.1 * 1024){                            //小于0.1KB，则转化成B
+                    size = res.size.toFixed(2) + "B"
+                }else if(res.size < 0.1 * 1024 * 1024){            //小于0.1MB，则转化成KB
+                    size = (res.size/1024).toFixed(2) + "KB"
+                }else if(res.size < 0.1 * 1024 * 1024 * 1024){        //小于0.1GB，则转化成MB
+                    size = (res.size/(1024 * 1024)).toFixed(2) + "MB"
+                }else{                                            //其他转化成GB
+                    size = (res.size/(1024 * 1024 * 1024)).toFixed(2) + "GB"
+                }
+                var sizeStr = size + "";                        //转成字符串
+                var sizes = sizeStr.indexOf(".");                    //获取小数点处的索引
+                var dou = sizeStr.substr(sizes + 1 ,2)            //获取小数点后两位的值
+                if(dou == "00"){                                //判断后两位是否为00，如果是则删除00
+                    size = sizeStr.substring(0, sizes) + sizeStr.substr(sizes + 3, 2)
+                }
+                if(cx.acc == 'img'){
+                    var imgsee =  '<td><img src="/'+ res.src +'" height="100" width="auto">'+ res.title +'<input type="hidden" name="'+ cx.valname +'['+ res.title +']" class="ipt" value="'+ res.src +'"></td>';
+                }else{
+                    var imgsee =  '<td>'+ res.title +'<input type="hidden" name="'+ cx.valname +'['+ res.title +']" class="ipt" value="'+ res.src +'"></td>';
+                }
+                var tr = $(['<tr id="upload-'+ index +'">',
+                    imgsee,
+                    '<td>'+ res.msg +'</td>',
+                    '<td class="t-c">'+ size +'</td>',
+                    '<td class="t-c">',
+                    '<button class="button bor-red m-reload layui-hide">重传</button>',
+                    '<button class="button bg-red m-delete">删除</button>',
+                    '</td>',
+                    '</tr>'].join(''));
+                if(res.code != 0){ //上传成功
+                    var tr = $('#'+cx.tabel).find('tr#upload-'+ index),
+                        tds = tr.children();
+                    tds.eq(3).find('.m-reload').removeClass('layui-hide'); //显示重传
+                }
+                tr.find('.m-delete').on('click', function(){
+                    tr.remove();
+                    dfeilds.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                });
+                $('#'+cx.tabd).append(tr);
+                this.error(index, upload);
+            },
+            error: function(index, upload){
+                var cx = this.item.context.dataset;
+                var tr = $('#'+cx.tabel).find('tr#upload-'+ index),
+                    tds = tr.children();
+                tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+                tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+            }
+        });
+    });
+</script>
+{include file="public/footer" /}

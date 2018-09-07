@@ -1,0 +1,63 @@
+<footer class="layout foot-k t-reverse">
+    <div class="cont cx-fex">
+        <div class="layout t-c">
+            <ul class="cx-fex cx-footnav hidden-l">
+                {present name="footnav"}
+                {volist name="footnav.navs" id="cx"}
+                {eq name="cx.pid" value="0"}
+                <li>
+                    <a title="{$cx.title}" href="{$cx.url}" {eq name="cx.target" value="1"}target="_blank"{/eq}>
+                    <i class="{$cx.icon.icon|default=''}" style="color: #{$cx.icon.colos|default=''}"></i>
+                    {$cx.title}
+                    {eq name="webdb.nav_menu" value="1"}
+                    {range name="cx.id" value="$navs.pids" type="in"}
+                    <i class="cx-icon cx-icon-xiajiantou"></i>
+                    </a>
+                    <ul class="cx-footnav-menu">
+                        {volist name="navs.navs" id="cxe"}
+                        {eq name="cxe.pid" value="$cx.id"}<li><a href="{$cxe.url}">{$cxe.title}</a></li>{/eq}
+                        {/volist}
+                    </ul>
+                    {else /}
+                    </a>
+                    {/range}
+                    {/eq}
+                </li>
+                <li>|</li>
+                {/eq}
+                {/volist}
+                {/present}
+            </ul>
+            <div class="foot-bq">
+                <span class="mt-10">版权所有 © {$webdb.foot_bq}</span>
+                <span class="mt-10 hidden-l">Copyright © 2012-2018 wormcms.com</span>
+            </div>
+            <div class="foot-bq">
+                <span class="mt-10 mr-10">{$webdb.web_beian}</span>
+            </div>
+            <div class="foot-bq">
+                <script src="https://s22.cnzz.com/z_stat.php?id=1274285349&web_id=1274285349" language="JavaScript"></script>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    layui.config({
+        base: '__IMAGES__/default/js/'
+    }).use('app');
+</script>
+<script>
+    layui.config({
+        base: '__JS__/'
+    }).use('default');
+</script>
+{load href="__JS__/scrollReveal.min.js" /}
+<script>
+    if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))){
+        (function(){
+            window.scrollReveal = new scrollReveal({reset: true});
+        })();
+    };
+</script>
+</body>
+</html>

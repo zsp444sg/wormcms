@@ -1,0 +1,90 @@
+{include file="public/meat" title="导航列表"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="xs6 xl12">
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加导航</a>
+                {/if}
+            </div>
+            <div class="xs6 xl12">
+                <form class="layui-form" role="form" action="{:url('Config/webconf')}" method="post">
+                    <div class="cx-fex-r">
+                        <select name="webdb[nav_menu]">
+                            <option {eq name="$webdb.nav_menu" value="1" }selected{/eq} value="1">启用二级导航</option>
+                            <option {eq name="$webdb.nav_menu" value="0" }selected{/eq} value="0">禁用二级导航</option>
+                        </select>
+                        <button class="button bg-yellow f-l" type="submit">确定</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <div>
+            <a href="{:url('index?seetype=0')}" class="button {neq name='$Request.param.seetype|default=0' value='0'}bg-blue{/neq}">全部导航</a>
+            <a href="{:url('index?seetype=1')}" class="button {neq name='$Request.param.seetype' value='1'}bg-blue{/neq}">PC端导航</a>
+            <a href="{:url('index?seetype=2')}" class="button {neq name='$Request.param.seetype' value='2'}bg-blue{/neq}">手机端导航</a>
+            <a href="{:url('index?seetype=3')}" class="button {neq name='$Request.param.seetype' value='3'}bg-blue{/neq}">底部导航</a>
+            <a href="{:url('index?seetype=4')}" class="button {neq name='$Request.param.seetype' value='4'}bg-yellow{/neq}">回收站管理</a>
+        </div>
+        <form class="layui-form" role="form" action="" method="post">
+            <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+                <thead>
+                <tr>
+                    <th class="t-c" width="80">{if $btn.del}<label><input id="all" class="inverted" type="checkbox" lay-ignore> 全选</label>{/if}</th>
+                    <th>导航名称</th>
+                    <th>链接地址</th>
+                    <th>导航类型</th>
+                    <th class="t-c" width="120">添加下级导航</th>
+                    <th class="t-c" width="80">显示</th>
+                    <th class="t-c" width="100">排序</th>
+                    {if $btn.del}<th class="t-c" width="120">编辑</th>{/if}
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="list" id="cx"}
+                <tr>
+                    <td class="t-c {if $btn.del}alltd{/if}">
+                        {if $btn.del}<input class="inverted" name="pdel[]" type="checkbox" lay-ignore value="{$cx.id}">{/if}
+                    </td>
+                    <td>
+                        {$cx.fg|default=''}
+                        【{present name="$cx.icon.icon"}<i class="{$cx.icon.icon} mr-5" style="color: #{$cx.icon.colos}"></i>{/present}{$cx.title}】
+                    </td>
+                    <td>{$cx.url}</td>
+                    <td>{$cx.seetypezh}</td>
+                    <td class="t-c"><a class="button button-S bg-green" href="{:url('add',array('pid'=>$cx.id))}">添加子导航</a></td>
+                    <td class="t-c">{$cx.statuszh}</td>
+                    <td class="t-c"><input class="ipt ipt-S t-c" type="text" name="sort[{$cx.id}]" value="{$cx.sort}"></td>
+                    {if $btn.del || $btn.edit}
+                    <td class="t-c">
+                        {if $btn.edit}<a class="button button-S bg-blue mr-5" href="{:url('edit',array('id'=>$cx['id']))}" title="编辑【{$cx.title}】导航"><i class="cx-icon cx-icon-icon-1 t-18"></i></a>{/if}
+                        {if $btn.del}<a class="button button-S bg-red cx-click" data-id="{$cx['id']}" data-href="{:url('del')}" data-type="deldata"><i class="cx-icon cx-icon-lajixiang t-18"></i></a>{/if}
+                    </td>
+                    {/if}
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+            <div class="t-c pad-t20">
+                {if $btn.edit}<button class="button button-S bg-blue mr-10" data-href="{:url('sort')}" data-type="sort" lay-submit lay-filter="sd-btn">修改排序</button>{/if}
+                {if $btn.edit}<button class="button button-S bg-red" data-href="{:url('pdel')}" data-type="sort" lay-submit lay-filter="sd-btn">批量删除</button>{/if}
+                {eq name="$Request.param.seetype" value="4"}<button class="button button-S bg-yellow ml-10" data-href="{:url('phuan')}" data-type="sort" lay-submit lay-filter="sd-btn">批量还原</button>{/eq}
+            </div>
+        </form>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    $("#all").click(function () {
+        $(this).closest("table").find("td.alltd input:checkbox").prop("checked",$(this).prop("checked"))
+    })
+</script>
+{include file="public/footer" /}

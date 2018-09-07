@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <title>{$webs.title}</title>
+    <meta name="keywords" content="{$webs.keywords}" />
+    <meta name="description" content="{$webs.description}" />
+    {load href="__CSS__/cxbsnet.css,__LAYUI__/css/layui.css,__IMAGES__/gaojue/css/animate.min.css,__CSS__/iconfont.css,__IMAGES__/gaojue/css/art.css,__IMAGES__/wap/css/app.css" /}
+    {load href="__IMAGES__/gaojue/js/jquery-2.0.3.min.js,__LAYUI__/layui.js" /}
+    {load href="__CSS__/main.css,__JS__/dist/myfocus-2.0.4.min.js" /}
+<body>
+<div id="content_b" class="layout bg-fff">
+    <div class="cont cx-fex">
+        <div class="layout">
+            <div style="width:100%;display: block">
+                <div id="art-picimg" class="">
+                    <div class="pic">
+                        <ul id="test1" class="layout picurls">
+                            {volist name="contdb.picimg" id="cx" empty="暂无图片"}
+                            <li>
+                                <img class="img-responsive" title="{$contdb.title}" alt="{$contdb.title}" src="{$cx.value}">
+                            </li>
+                            {/volist}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout">
+            <div class="x11 fex-column art-cp-top">
+                <h1 class="art-h1title">{$contdb.title}</h1>
+                <h2 class="art-h2title">产品属性</h2>
+                <ul class="art-left-ul">
+                    <li>
+                        <b>产品型号</b>
+                        {$contdb.title}
+                    </li>
+                    {notempty name="contdb.lashou"}
+                    <li>
+                        <b>拉手</b>
+                        {$contdb.lashou}
+                    </li>
+                    {/notempty}
+                    {notempty name="contdb.caizhi"}
+                    <li>
+                        <b>材质</b>
+                        {$contdb.caizhi}
+                    </li>
+                    {/notempty}
+                    {notempty name="contdb.suoju"}
+                    <li>
+                        <b>锁具</b>
+                        {$contdb.suoju}
+                    </li>
+                    {/notempty}
+                    {notempty name="contdb.guige"}
+                    <li>
+                        <b>规格</b>
+                        {$contdb.guige}
+                    </li>
+                    {/notempty}
+                    {notempty name="contdb.yanse"}
+                    <li>
+                        <b>颜色</b>
+                        {$contdb.yanse}
+                    </li>
+                    {/notempty}
+                    {notempty name="contdb.fahuo"}
+                    <li>
+                        <b>发货地</b>
+                        {$contdb.fahuo}
+                    </li>
+                    {/notempty}
+                    {notempty name="contdb.zhouqi"}
+                    <li>
+                        <b>生产周期</b>
+                        {$contdb.zhouqi} 工作日
+                    </li>
+                    {/notempty}
+                </ul>
+                <h2 class="art-h2title">产品介绍</h2>
+                <div class="art-left-cont">
+                    {$contdb.articleconts}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    myFocus.set({
+        id:'art-picimg',//焦点图盒子ID
+        pattern:'mF_games_tb',//风格应用的名称
+        time:5,//切换时间间隔(秒)
+        trigger:'click',//触发切换模式:'click'(点击)/'mouseover'(悬停)
+        txtHeight:'0'//文字层高度设置(像素),'default'为默认高度，0为隐藏
+    });
+</script>
+{include file="$temps.foot" /}

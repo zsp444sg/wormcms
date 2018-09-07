@@ -1,0 +1,50 @@
+{include file="$temps.head" title="$webs.title" keywords="$webs.keywords" description="$webs.description" /}
+<section class="layout cx-fex-c list-top img-auto">
+    {$label.topgg_bg|default=""}
+</section>
+{eq name="mobileurl" value='true'}
+<nav class="layout cx-fex fw-l-nav t-reverse" data-scroll-reveal="enter bottom,move 100px">
+    <a class="fw-l-nav-a alick" title="{$parts.title}" href="{:url('Part/index',array('fid'=>$parts.id))}">{$parts.title}</a>
+    <a class="m-listnav cx-click" data-type="mlistnav" data-cid="#listnav" data-title="{$parts.title}"><i class="cx-icon cx-icon-all"></i></a>
+</nav>
+{/eq}
+<nav {eq name="mobileurl" value='true'}id="listnav"{/eq} class="layout cx-fex-c fw-l-nav t-reverse" {neq name="mobileurl" value='true'}data-scroll-reveal="enter bottom,move 100px"{else/}style="display:none;"{/neq}>
+<a class="fw-l-nav-a {eq name='$parts.id' value='$lagpart.id'}alick{/eq}" title="{$lagpart.title}" href="{:url('Part/index',array('fid'=>$lagpart.id))}">{$lagpart.title}</a>
+{volist name="partlist" id="cx" empty=""}
+{eq name="$cx.pid" value="$lagpart.id"}
+<a class="fw-l-nav-a {eq name='$cx.id' value='$parts.id'}alick{/eq}" title="{$cx.title}" href="{:url('Part/index',array('fid'=>$cx.id))}">
+    {$cx.title}
+</a>
+{/eq}
+{/volist}
+</nav>
+{include file="$largetemp" /}
+<aside class="layout yunwei-xue" data-scroll-reveal="enter bottom">
+    <div class="cont t-reverse cx-fex">
+        <div class="xs3 xl6 pad-a10 fex-column t-c">
+            <div class="yunwei-xue-c">
+                <i class="cx-icon cx-icon-mian"></i>
+                <h5>3天免费试用</h5>
+            </div>
+        </div>
+        <div class="xs3 xl6 pad-a10 fex-column t-c">
+            <div class="yunwei-xue-c">
+                <i class="cx-icon cx-icon-beian"></i>
+                <h5>免费快速备案</h5>
+            </div>
+        </div>
+        <div class="xs3 xl6 pad-a10 fex-column t-c">
+            <div class="yunwei-xue-c">
+                <i class="cx-icon cx-icon-erji-zengzhifuwu"></i>
+                <h5>电信星级机房</h5>
+            </div>
+        </div>
+        <div class="xs3 xl6 pad-a10 fex-column t-c">
+            <div class="yunwei-xue-c">
+                <i class="cx-icon cx-icon-iconfontfuwushichang"></i>
+                <h5>7x24小时售后支持</h5>
+            </div>
+        </div>
+    </div>
+</aside>
+{include file="$temps.foot" /}

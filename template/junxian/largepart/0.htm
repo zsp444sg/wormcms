@@ -1,0 +1,26 @@
+<ul class="layout fex-column mt-10">
+    {volist name="artlist" id="cx" empty=""}
+    <li class="layout cx-fex-l news-list-li">
+        {notempty name="$cx.picurl"}
+        <div class="xs2 xl4">
+            <div class="news-list-img">
+                <img class="img-responsive" src="{$cx.picurl}" alt="{$cx.futitle}">
+            </div>
+        </div>
+        <div class="xs9 xl8 cx-fex fex-column pad-l20">
+            {else /}
+            <div class="layout">
+                {/notempty}
+                <h3 class="news-list-t"><a {present name="diquname"}href="{:url('Article/index',array('aid'=>$cx.aid,'chc'=>$diquname.zoneid))}"{else /}href="{:url('Article/index',array('aid'=>$cx.aid))}"{/present} title="{$cx.futitle}">{present name="diquname"}{$diquname.zonename}{/present}{$cx.title|default=""}</a></h3>
+                <div class="layout cx-fex-l news-list-tag">
+                    <span class="mr-10">所属栏目：<a {present name="diquname"}href="{:url('Part/index',array('fid'=>$cx.fid,'chc'=>$diquname.zoneid))}"{else /}href="{:url('Part/index',array('fid'=>$cx.fid))}"{/present}>{present name="diquname"}{$diquname.zonename}{/present}{$cx.partname}</a></span>
+                    <span class="mr-10">发布日期：{$cx.addtime}</span>
+                    <span class="mr-10 hidden-l">点击量：{$cx.hist}</span>
+                </div>
+            </div>
+    </li>
+    {/volist}
+</ul>
+<div class="pad-a10 cx-fex-c">
+    {$pages}
+</div>

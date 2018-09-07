@@ -1,0 +1,77 @@
+{include file="$temps.head" title="$webdb.webname" keywords="$webdb.webkeywords" description="$webdb.description" /}
+{load href="__IMAGES__/gaojue/js/scrollbar/jquery.mCustomScrollbar.min.css,__IMAGES__/gaojue/js/scrollbar/jquery.mCustomScrollbar.concat.min.js" /}
+<div class="layout list-cont cx-fex">
+    <div class="xs3 list-nav cx-fex fex-column">
+        <ul id="leftnav" class="layout list-nav-cont cx-fex-c">
+            <li class="x11 mb-15 cx-fex-c">
+                <h3 class="list-nav-title pos-r text-gjzhuse">
+                    <span class="list-nav-lt"></span>
+                    <span class="list-nav-lb"></span>
+                    {$lagpart.title}
+                    <span class="list-nav-rt"></span>
+                    <span class="list-nav-rb"></span>
+                </h3>
+            </li>
+            {volist name="partlist" id="cx" empty=""}
+            {eq name="$cx.pid" value="$lagpart.id"}
+            <li class="x11 cx-fex-c pos-r">
+                <a class="layout cx-fex list-nav-za text-gjzhuse {eq name='$cx.class' value='0'}cx-click{/eq}{eq name='$cx.id' value='$parts.id'}alick{/eq}" {eq name="$cx.class" value="0"}data-type="listnavz"{else /}href="{:url('Part/index',array('fid'=>$cx.id))}"{/eq}>
+                <span>{$cx.title}</span>
+                <i class="cx-icon cx-icon-xiangyoujiantou"></i>
+                </a>
+                {eq name="$cx.class" value="0"}
+                <ul class="x11 cx-fex-c list-znav">
+                    {volist name="partlist" id="c" empty=""}
+                    {eq name="$c.pid" value="$cx.id"}
+                    <li class="layout">
+                        <a class="layout cx-fex text-gjzhuse" href="{:url('Part/index',array('fid'=>$cx.id))}">
+                            <span>{$c.title}</span>
+                            <i class="cx-icon cx-icon-xiangyoujiantou"></i>
+                        </a>
+                    </li>
+                    {/eq}
+                    {/volist}
+                </ul>
+                {/eq}
+            </li>
+            {/eq}
+            {/volist}
+        </ul>
+        <div class="layout list-foot cx-fex-c">
+            <span>版权所有 © {$webdb.foot_bq}</span>
+            <span class="hidden-l">{$webdb.web_beian}</span>
+            <span class="hidden-l"> 技术支持:<a href="http://www.cxbs.net">焱凤技术</a></span>
+        </div>
+    </div>
+    <div class="xs9 xl12 list-right">
+        <div id="content_1" class="layout list-right">
+            <div class="layout cx-fex-c">
+                <div class="xs11 xl12 cx-fex-c list-cont-t">
+                    <h3 class="list-cont-title pos-r"><span class="list-cont-title-l"></span>{$parts.title}<span class="list-cont-title-r"></span></h3>
+                    <button class="cx-nav-seeicon b-a cx-click leftnav" data-type="navsee" data-cid="#leftnav"><i class="cx-icon cx-icon-htmal5icon35"></i></button>
+                </div>
+                <div class="xs11 xl12 cx-fex fex-column list-right-c">
+                    <div class="jieshao-conts">
+                        {$parts.cont}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function($){
+        $(window).load(function(){
+            $("#content_1").mCustomScrollbar({
+                theme:"light", //主题颜色
+                autoHideScrollbar: true, //是否自动隐藏滚动条
+                scrollInertia :0,//滚动延迟
+                horizontalScroll : false,//水平滚动条
+                callbacks:{
+                }
+            });
+        });
+    })(jQuery);
+
+</script>
+{include file="$temps.foot" /}

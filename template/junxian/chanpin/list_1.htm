@@ -1,0 +1,110 @@
+{include file="$temps.head" title="$webs.title" keywords="$webs.keywords" description="$webs.description" /}
+<section class="layout">
+    <div class="list-gg img-auto">
+        {block name="guanggao"}{$label.listgg101|default=""}{/block}
+    </div>
+</section>
+<section class="cont cx-fex mt-20">
+    <div id="list-nav" class="xs3 fex-column pos-r">
+        <div id="cx-cixi" class="list-l fex-column" data-cid="#listnavr" data-top="60">
+            <h3 class="bg-blue t-reverse t-c list-l-title">{block name="navtitle"}产品中心{/block}</h3>
+            <ul class="in-cp-class fex-column">
+                {block name="nav"}
+                {volist name="partlist" id="cx" empty=""}
+                {if condition="($cx.mid == $lagpart.mid) AND ($cx.pid == 0) "}
+                <li class="in-cp-li {eq name='$cx.id' value='$parts.id'}open{/eq} {eq name='$cx.id' value='$parts.pid'}open{/eq}">
+                    <a class="cx-fex-l in-cp-lia {eq name='$cx.id' value='$parts.id'}alick{/eq}" title="{$cx.title}" href="{:url('Part/index',array('fid'=>$cx.id))}">
+                        <i class="cx-icon cx-icon-xiangyoujiantou mr-10"></i> {$cx.title}
+                    </a>
+                    {eq name="$cx.class" value="0"}
+                    <ul class="in-cp-rul cx-fex-c">
+                        {volist name="partlist" id="c" empty=""}
+                        {eq name="$c.pid" value="$cx.id"}
+                        <li class="x10 in-cp-lie">
+                            <a class="cx-fex in-cp-liea {eq name='$c.id' value='$parts.id'}alick{/eq}" title="{$c.title}" href="{:url('Part/index',array('fid'=>$c.id))}"><i class="cx-icon cx-icon-youjiantou mr-10"></i>{$c.title}</a>
+                        </li>
+                        {/eq}
+                        {/volist}
+                    </ul>
+                    {/eq}
+                </li>
+                {/if}
+                {/volist}
+                {/block}
+            </ul>
+        </div>
+    </div>
+    <div id="listnavr" class="xs9 list-r">
+        {block name="conts"}
+        <div class="layout fex-column list-rcon">
+            <div class="list-r-t cx-fex">
+                <h3 class="t-16 list-r-title">{$parts.title}</h3>
+                <div class="xl2 cx-fex-c fex-column top-caidan">
+                    <a class="top-caidan-a t-blue cx-click" data-type="navlay" data-cid="#list-nav"><i class="cx-icon cx-icon-htmal5icon35"></i></a>
+                </div>
+                <div class="list-menu hidden-l">{$menu}</div>
+            </div>
+            {include file="$largetemp" /}
+        </div>
+        {/block}
+    </div>
+</section>
+<section class="cont list-gg mt-30">
+    <div class="img-auto">
+        {block name="guanggao1"}{$label.listgg02|default=""}{/block}
+    </div>
+</section>
+<section class="cont fex-column">
+    <div class="layout cx-fex cplist-newst">
+        <h3>{block name="listnewstitle"}<a href="{:url('Part/index?fid=41')}">袋式过滤器使用说明</a>{/block}</h3>
+        {block name="listnewsmove"}<a class="t-14" href="{:url('Part/index?fid=41')}">更多 <i class="cx-icon cx-icon-xiangyoujiantou"></i></a>{/block}
+    </div>
+    <div class="layout cx-fex cplist-newscont">
+        <div class="xs4 xl12">
+            <div class="layui-carousel cplist-newshdk" id="in-newshds">
+                <div carousel-item>
+                    {block name="listnewshd"}{$label.cplistnewshd|default=""}{/block}
+                </div>
+            </div>
+        </div>
+        <div class="xs8 in-news-ul">
+            <div class="layout fex-column cplist-newslsit-ul">
+                {block name="listnewsls"}{$label.cplistnewslist|default=""}{/block}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="layout in-gy">
+    <div class="cont cx-fex bg-fff in-gy-k">
+        <div class="xs8 fex-column pad-a30 in-gy-c">
+            <div class="t-18 in-gy-tk cx-fex-l">
+                <h2 class="in-gy-t t-blue" style="border: none">企业概况</h2>
+                <span class="ml-10">/ About us</span>
+            </div>
+            <h4 class="in-gy-ft t-18">{$label.list_biaoyu|default=""}</h4>
+            <h4 class="in-gy-ft t-18">{$label.list_biaoyu1|default=""}</h4>
+            <span class="x1 mt-20 in-gy-sp bg-blue"></span>
+            <div class="in-gy-cont t-16">
+                {$label.list_jieshao|default=""}
+            </div>
+        </div>
+        <div class="xs4 in-gy-img">
+            {$label.gywm_img01|default=""}
+        </div>
+    </div>
+</section>
+<section class="layout in-lx pos-r">
+    <div id="allmap" class="mapzy in-maps"></div>
+    <div class="layout cx-fex-c fex-column fex-items-c in-lx-k">
+        <div class="fex-column pad-a30 bg-fff in-lx-c">
+            <div class="in-gy-tk cx-fex-l">
+                <h2 class="in-gy-t" style="border: none">联系我们</h2>
+                <span class="ml-10">/ Contact us</span>
+            </div>
+            <ul class="in-gy-rul fex-column">
+                {$label.in_lianxi|default=""}
+            </ul>
+        </div>
+    </div>
+</section>
+{include file="$temps.foot" /}

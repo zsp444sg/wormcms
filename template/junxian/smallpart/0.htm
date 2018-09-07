@@ -1,0 +1,28 @@
+<div class="layout fex-column mt-10">
+    {volist name="artlist" id="cx" empty=""}
+    <dl class="layout fex-column pad-a5 news-list-dl" data-scroll-reveal="enter bottom,move 50px">
+        <dt class="news-list-dt"><a {present name="diquname"}href="{:url('Article/index',array('aid'=>$cx.aid,'chc'=>$diquname.zoneid))}"{else /}href="{:url('Article/index',array('aid'=>$cx.aid))}"{/present} title="{$cx.futitle}">{present name="diquname"}{$diquname.zonename}{/present}{$cx.title|default=""}</a></dt>
+        <dd class="cx-fex-l">
+            {notempty name="$cx.picurl"}
+            <div class="xs2">
+                <div class="news-list-img">
+                    <img class="img-responsive" src="{$cx.picurl}" alt="{$cx.futitle}">
+                </div>
+            </div>
+            <div class="xs10 cx-fex-c fex-items-c pad-l20">
+                {else /}
+                <div class="layout">
+                    {/notempty}
+                    {$cx.description}
+                </div>
+        </dd>
+        <dd class="b">
+            <span class="mr-10">发布日期：{$cx.addtime}</span>
+            <span class="mr-10">点击量：{$cx.hist}</span>
+        </dd>
+    </dl>
+    {/volist}
+</div>
+<div class="pad-a10 cx-fex-c">
+    {$pages}
+</div>

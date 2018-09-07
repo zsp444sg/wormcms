@@ -1,0 +1,77 @@
+{include file="public/meat" title="模型列表"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="layout">
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加表单模型</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <form class="layui-form" role="form" action="" method="post">
+            <table class="cx-teble cx-teble-bor-w cx-teble-bor cx-table-striped cx-table-hover cx-table-responsive-w">
+                <thead>
+                <tr>
+                    <th class="t-c">ID</th>
+                    <th>表单名称</th>
+                    <th class="t-c">管理内容</th>
+                    <th class="t-c" width="120">游客发布</th>
+                    <th class="t-c">创建用户</th>
+                    <th class="t-c">创建时间</th>
+                    {if $btn.edit}
+                    <th class="t-c" width="100">字段</th>
+                    <th class="t-c" width="60">排序</th>
+                    <th class="t-c" width="100">设置</th>
+                    {/if}
+                    {if $btn.del}
+                    <th class="t-c" width="80">删除</th>
+                    {/if}
+                    <th class="t-c" width="80">状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $list as $cx}
+                <tr>
+                    <td class="t-c">{$cx.id}</td>
+                    <td>{$cx.title}</td>
+                    <td class="t-c"><a class="button button-S bor-green" href="{:url('Forms/index',array('fid'=>$cx['id']))}" title="模型字段管理">{$cx.formnum} 条</a></td>
+                    <td class="t-c">{$cx.touristzh}</td>
+                    <td class="t-c">{$cx.username}</td>
+                    <td class="t-c">{$cx.addtime}</td>
+                    {if $btn.edit}
+                    <td class="t-c">
+                        <a class="button button-S bg-green" href="{:url('fieldlist',array('id'=>$cx['id']))}" title="模型字段管理">字段管理</a>
+                    </td>
+                    <td>
+                        <input class="ipt ipt-S t-c" type="text" name="sort[{$cx.id}]" value="{$cx.sort}">
+                    </td>
+                    <td class="t-c">
+                        <a class="button button-S bg-green" href="{:url('edit',array('id'=>$cx['id']))}" title="编辑【{$cx.title}】模型">编辑</a>
+                    </td>
+                    {/if}
+                    {if $btn.del}
+                    <td class="t-c">
+                        <a class="button button-S bg-red cx-click" data-id="{$cx['id']}" data-href="{:url('del')}" data-type="deldata">删除</a>
+                    </td>
+                    {/if}
+                    <td class="t-c">{$cx.statuszan}</td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+            <div class="t-c pad-t20">
+                {if $btn.edit}<button class="button button-S bg-blue" data-href="{:url('sort')}" data-type="sort" lay-submit lay-filter="sd-btn">修改排序</button>{/if}
+            </div>
+        </form>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+{include file="public/footer" /}

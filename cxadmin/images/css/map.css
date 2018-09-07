@@ -1,0 +1,268 @@
+html {
+    /*隐藏滚动条，当IE下溢出，仍然可以滚动*/
+    -ms-overflow-style:none;
+    /*火狐下隐藏滚动条*/
+    overflow:-moz-scrollbars-none;
+}
+/*Chrome下隐藏滚动条，溢出可以透明滚动*/
+html::-webkit-scrollbar{width:0px}
+.cx-click{
+    cursor: pointer;
+}
+/*桌面*/
+.map{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.map-img{
+    background-image: url('../desktop_windows7.jpg');
+    background-repeat: no-repeat,no-repeat;
+    background-position: center center,center center;
+    background-size: cover,cover;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    display: block;
+}
+/*桌面图标*/
+.cx-map{
+    margin: auto;
+    width: 98%;
+    position: relative;
+}
+.cx-mapindex{
+    position: relative;
+    overflow: hidden;
+    display: block;
+    height: calc(100% - 30px);
+    margin-top: 15px;
+}
+.cx-map-app{
+    /*height: 88px;*/
+    padding: 3px;
+    width: 88px;
+    border: 1px solid transparent;
+    position: absolute;
+    cursor: pointer;
+}
+.cx-map-icon{
+    display: block;
+    width: 60px;
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font-size: 50px;
+    color: #fff;
+}
+.cx-map-title{
+    width: 68px;
+    height: 21px;
+    display: block;
+    margin: 5px auto 0;
+    line-height: 21px;
+    text-align: center;
+    /*background-color: rgba(0, 0, 0, 0.6);*/
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #fff;
+}
+.cx-map-app:hover {
+    border: solid 1px #7da2ce;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: inset 0 0 1px #fff;
+    -moz-box-shadow: inset 0 0 1px #fff;
+    -webkit-box-shadow: inset 0 0 1px #fff;
+    background: rgba(162,190,253,.3);
+}
+
+/* 任务栏 */
+.cx-taskbar {
+    width: 100%;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.6);
+    background: url(../cx-taskbarbg.png) repeat;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 99999999;
+}
+.cx-win {
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 2rem;
+}
+.cx-win:hover,.cx-win-on{
+    background: rgba(0, 0, 0, 0.6);
+}
+.cx-time{
+    width:80px;
+    height:40px;
+    text-align:center;
+    color:#fff;
+    position:absolute;
+    top:0px;
+    right:15px;
+}
+.cx-time:hover{
+    background-color: rgba(255, 255, 255, 0.30);
+}
+.cx-showdesktop{
+    width: 15px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.28);
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+/* 开始菜单 */
+.cx-menu{
+    display: none;
+    max-width: 50%;
+    background-color: rgba(0, 0, 0, 0.9);
+    position: fixed;
+    left: 0;
+    bottom: 40px;
+    color: #fff;
+    font-size: 1.2rem;
+    z-index: 99999999;
+}
+@media (max-width: 580px) {
+    .cx-menu{
+        max-width: 100%;
+    }
+}
+.cx-menu-on{
+    display: block;
+}
+.cx-menu a{
+    color: #fff;
+}
+.cx-menuleft{
+    float: left;
+}
+.cx-menuleft .cx-icon{
+    width: 30px;
+    font-size: 2rem;
+    line-height: 30px;
+    text-align: center;
+    display: inline-table;
+}
+.cx-menuleft img{
+    max-width: 30px;
+    height: auto;
+}
+.cx-menuleftsz{
+    position: absolute;
+    bottom: 0;
+}
+.cx-menuleftsz li a,.cx-nav{
+    padding: 5px 10px;
+    display: table;
+}
+.cx-menuleftsz li:hover,.cx-nav:hover{
+    background-color: rgba(255, 255, 255, 0.10);
+}
+.cx-menuleft span{
+    display: none;
+    line-height: 30px;
+}
+/*菜单列表*/
+.cx-side{
+    float: left;
+    z-index: 9999999;
+    width: 240px;
+    background-color: #393D49;
+    overflow-x: hidden;
+}
+.cx-side .mCSB_inside > .mCSB_container{
+    margin-right: 0;
+}
+.cx-side .layui-collapse,.cx-menulist{
+    border: none;
+}
+.cx-menulist .layui-colla-title{
+    background: none;
+    line-height: 38px;
+    height: 38px;
+    color: #fff;
+    font-size: 1.2rem;
+}
+.cx-menulist .layui-colla-title:hover{
+    background: #6f7587;
+}
+.cx-menucont{
+    border: none;
+    background:#292b30;
+    padding: 0;
+}
+.cx-menucont li a{
+    padding: 8px 20px 8px 36px;
+    display: block;
+}
+.cx-menucont li:hover a{
+    background: #737887;
+}
+/*任务栏菜单*/
+.cx-task-app {
+    padding: 0 8px;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    color: #fff;
+    cursor: default;
+    border-bottom: 2px solid #fff;
+    margin: 0 1px;
+}
+.cx-task-app:hover {
+    background-color: rgba(255, 255, 255, 0.10);
+}
+.cx-task-app.cx-task-on {
+    background-color: rgba(255, 255, 255, 0.30);
+}
+
+/*框架*/
+.layui-layer-setwin a.layui-refreswind {
+    cursor: pointer;
+    font-size: 1.6rem;
+    transition: All 0.4s ease-in-out;
+    -webkit-transition: All 0.4s ease-in-out;
+    -moz-transition: All 0.4s ease-in-out;
+    -o-transition: All 0.4s ease-in-out;
+}
+.layui-layer-setwin a.layui-refreswind:hover{
+    transform:rotate(360deg);
+    -webkit-transform:rotate(360deg);
+    -moz-transform:rotate(360deg);
+    -o-transform:rotate(360deg);
+    -ms-transform:rotate(360deg);
+}
+/*右键*/
+.right-menu{
+    position: absolute;
+    width: 150px;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    border: #CCC 1px solid;
+    display: none;
+    border-radius: 5px;
+    z-index: 99999999;
+}
+.right-menu li{
+    padding: 5px 30px;
+    font-size: 1.4rem;
+    line-height: 2;
+}

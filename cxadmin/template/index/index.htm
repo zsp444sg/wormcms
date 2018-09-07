@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!-- Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>后台管理首页---上海焱凤信息技术有限公司</title>
+    <meta name="description" content="后台管理系统---上海焱凤信息技术有限公司" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="cxbs.net!Zhaoyan" />
+    <link rel="shortcut icon" href="__ADMIN__/img/favicon.png" type="image/x-icon">
+    {load href="__CSS__/cxbsnet.css,__LAYUI__/css/layui.css,//at.alicdn.com/t/font_595331_f9fax6dn5oc7hkt9.css,__ADMIN__/js/scrollbar/jquery.mCustomScrollbar.min.css,__ADMIN__/css/map.css" /}
+</head>
+<body>
+<!--桌面-->
+<div class="map">
+    <div class="map-img">
+        <div class="cx-map">
+            <div class="cx-mapindex">
+                {volist name="cont.model" id="cx" empty=""}
+                <div class="cx-map-app cx-click" data-type="openadd" data-href="{:url('Part/index',array('mid'=>$cx.mid))}" data-isicon="" data-cid="{$cx.mid}" data-title="管理【{$cx.title}】">
+                    <img class="cx-map-icon" src="{$cx.icon}">
+                    <span class="cx-map-title layui-elip">{$cx.title}</span>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+</div>
+<!--任务栏-->
+<div class="cx-taskbar">
+    <div id="cx-openmenu" class="cx-menu">
+        <!--基本信息-->
+        <div class="cx-menuleft pos-r">
+            <h3 class="cx-nav layout cx-click" data-type="menuleft"><i class="cx-icon cx-icon-htmal5icon35"></i> <span class="ml-10">开始</span></h3>
+            <ul class="cx-menuleftsz">
+                <li class="cl">
+                    <nobr>
+                        <a class="cx-click" data-type="openadd" data-href="{:url('User/edit',array('uid'=>$cxbsuser['uid']))}" data-title="修改个人资料">
+                            <img class="layui-circle" src="{$webdb.updir}/{$cxbsuser.uicon}" onerror="this.src='__ADMIN__/usererror.png'"> <span class="ml-10">{$cxbsuser.username}</span>
+                        </a>
+                    </nobr>
+                </li>
+                <li class="cl">
+                    <nobr>
+                        <a class="cx-click" data-type="openadd" data-href="{:url('Config/index')}" data-title="网站核心设置">
+                            <i class="cx-icon cx-icon-shezhi"></i> <span class="ml-10">网站设置</span>
+                        </a>
+                    </nobr>
+                </li>
+                <li class="cl">
+                    <nobr>
+                        <a href="{:url('Login/loginqu')}">
+                            <i class="cx-icon cx-icon-tuichu"></i> <span class="ml-10">退出</span>
+                        </a>
+                    </nobr>
+                </li>
+            </ul>
+        </div>
+        <!--后台菜单-->
+        <div class="cx-side pos-r">
+            <div class="layui-collapse" lay-accordion="">
+                <div class="cx-menulist layui-colla-item">
+                    <h2 class="layui-colla-title">内容管理</h2>
+                    <ul class="cx-menucont layui-colla-content">
+                        {volist name="cont.model" id="cx" empty=""}
+                        <li>
+                            <a class="cx-click pointer" data-type="openadd" data-href="{:url('Part/index',array('mid'=>$cx.mid))}" data-isicon="" data-cid="{$cx.mid}" data-title="管理【{$cx.title}】">
+                                <span class="menu-text">管理【{$cx.title}】</span>
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+                {foreach $menu as $menu}
+                <div class="cx-menulist layui-colla-item">
+                    <h2 class="layui-colla-title">{$menu.title}</h2>
+                    {if $menu.zauth}
+                    <ul class="cx-menucont layui-colla-content">
+                        {foreach $menu.zauth as $emenu}
+                        <li>
+                            <a class="cx-click pointer" data-type="openadd" data-href="{:url($emenu.name)}" data-isicon="" data-cid="{$emenu.id}" data-title="{$emenu.title}">
+                                <i class="{$emenu.icon}"></i>
+                                <span class="menu-text">{$emenu.title}</span>
+                            </a>
+                        </li>
+                        {/foreach}
+                    </ul>
+                    {/if}
+                </div>
+                {/foreach}
+
+            </div>
+        </div>
+    </div>
+    <div class="layui-inline cx-win cx-click" data-type="opentaskbar">
+        <i class="cx-icon cx-icon-win"></i>
+    </div>
+    <div class="layui-inline cx-task"></div>
+    <div class="layui-inline cx-time cx-click cx-fr" data-type="opentime">
+        <label class="layout t-c cl" id="laydate-hs"></label>
+        <label class="layout t-c cl" id="laydate-ymd"></label>
+    </div>
+    <div class="layui-inline cx-showdesktop cx-click" data-type="showdesktop" title="显示桌面"></div>
+</div>
+<div class="right-menu">
+    <ul class="cx-fex fex-column">
+        <li class="b-b">
+            <a class="cx-click" data-type="allfull">进入全屏</a>
+        </li>
+        <li><a class="cx-click" data-type="showdesktop">显示桌面</a></li>
+        <li><a class="cx-click" data-type="closeall">关闭所有</a></li>
+        <li class="b-b"><a class="cx-click" data-type="openadd" data-href="{:url('Config/index')}" data-title="网站核心设置">系统设置</a></li>
+
+        <li><a class="cx-click" class="cx-click" data-type="openadd" data-href="http://www.cxbs.net" data-title="焱凤技术">技术支持</a></li>
+        <li><a href="{:url('Login/loginqu')}">退出登录</a></li>
+    </ul>
+</div>
+{load href="__ADMIN__/js/jquery-2.0.3.min.js,__LAYUI__/layui.js,__ADMIN__/js/scrollbar/jquery.mCustomScrollbar.concat.min.js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('map');
+</script>
+</body>
+</html>

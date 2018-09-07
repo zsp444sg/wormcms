@@ -1,0 +1,104 @@
+{extend name="index_index" /}
+{block name="top"}配置数据库{/block}
+{block name='jindu'}60%{/block}
+{block name='cont'}
+<form class="layui-form" id="addform"  role="form" action="" method="post">
+<div class="layout bg-fff pad-a30">
+    <h2 class="t-c b-b t-18 mb-20">数据库信息</h2>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">数据库地址<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="text" class="ipt" placeholder="请输入数据库地址" required  lay-verify="required" name="db[hostname]" value="localhost">
+        </div>
+    </div>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">数据库名<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="text" class="ipt" placeholder="请输入数据库名" required  lay-verify="required" name="db[database]" value="">
+        </div>
+    </div>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">数据库用户名<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="text" class="ipt" placeholder="请输入数据库用户名" required  lay-verify="required" name="db[username]" value="">
+        </div>
+    </div>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">数据库密码<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="text" class="ipt" placeholder="请输入数据库密码" required  lay-verify="required" name="db[password]" value="">
+        </div>
+    </div>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">数据库端口<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="text" class="ipt" placeholder="请输入数据库端口" required  lay-verify="required" name="db[hostport]" value="3306">
+        </div>
+    </div>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">数据表前缀<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="text" class="ipt" placeholder="请输入数据表前缀" required  lay-verify="required" name="db[prefix]" value="cx_">
+            <span class="t-red">同一数据库安装多个系统，请更改不同的数据表前缀</span>
+        </div>
+    </div>
+    <h2 class="t-c b-b t-18 mb-20">网站基本信息</h2>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">网站名称<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="text" class="ipt" placeholder="请输入网站名称" required  lay-verify="required" name="web[webname]" value="">
+        </div>
+    </div>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">管理员用户名<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="text" class="ipt" placeholder="请输入管理员用户名" required  lay-verify="required" name="web[username]" value="admin">
+        </div>
+    </div>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">管理员密码<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="password" class="ipt" placeholder="请输入管理员密码" required  lay-verify="required" name="web[userpassword]" value="">
+        </div>
+    </div>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">重复密码<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="password" class="ipt" placeholder="请再次输入密码" required  lay-verify="required" name="web[ruserpassword]" value="">
+        </div>
+    </div>
+    <div class="cx-fex-l mb-15">
+        <div class="x3 t-r">
+            <label class="lab">超级识别符<span class="t-red">(*)</span></label>
+        </div>
+        <div class="xs8 xl9">
+            <input type="text" class="ipt" placeholder="请输入超级识别符" required  lay-verify="required" name="web[shibiefu]" value="{$shibiefu}">
+        </div>
+    </div>
+</div>
+{/block}
+{block name="button"}
+<a class="button bg-yellow mr-10" href="{:url('step1')}">上一步</a>
+<button class="button bg-yellow" lay-submit lay-filter="button">下一步</button>
+{/block}
+{block name="js"}</form><div class="layout pad-b50"></div>{/block}

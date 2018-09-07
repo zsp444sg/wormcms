@@ -1,0 +1,124 @@
+{include file="public/meat" title="添加/编辑用户组"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="xs6 xl12">
+                <a href="{:url('index')}" class="button bg-blue">返回列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加用户组</a>
+                {/if}
+            </div>
+            <div class="xs6 xl12">
+                <form class="layui-form" role="form" action="so" method="post">
+                    <div class="cx-fex-r">
+                        <label class="lab">搜索用户组</label>
+                        <input class="ipt" name="keyword" placeholder="请输入搜索内容" type="text" style="width: 200px;">
+                        <button class="button f-l" type="submit"><i class="cx-icon cx-icon-sousuo"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑用户组</legend>
+            <form class="layui-form" id="addform"  role="form" action="" method="post">
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r"><label class="lab">用户组名称</label></div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="请输入用户组名称" class="ipt" value="{$postdb.title|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r"><label class="lab">用户组类型</label></div>
+                    <div class="xs8 xl9">
+                        <input name="grouptype" type="radio" value="1" {eq name="$postdb.grouptype|default='1'" value="1"}checked="checked"{/eq} title="用户组" lay-filter="grouptype">
+                        <input name="grouptype" type="radio" value="0" {eq name="$postdb.grouptype|default=''" value="0"}checked="checked"{/eq} title="系统组" lay-filter="grouptype">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10" id="jifeng" {neq name="$postdb.grouptype|default='1'" value="1"}style="display: none"{/neq}>
+                    <div class="x3 t-r"><label class="lab">升级积分</label></div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" name="groupup" required  lay-verify="required" type="text" value="{$postdb.groupup|default='0'}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r"><label class="lab">用户组图标</label></div>
+                    <div class="xs8 xl9">
+                        <div class="f-l text-center">
+                            <img id="groupicon" src="{present name='postdb.groupicon'}/{$webdb.updir.'/'.$postdb.groupicon}{/present}" onerror="__ADMIN__/imgnone.png" style="width:60px; height:60px;" class="b-a cx-click" data-type="upicon" data-href="#upicon" data-isicon="" data-cid="" data-title="选择图标">
+                            <input id="iconipt" class="form-control" name="groupicon" type="hidden" value="{$postdb.groupicon|default=''}">
+                        </div>
+                        <div class="f-l ml-20" style="line-height: 60px;">
+                            <a class="button button-S bg-green cx-click" data-type="upicon" data-href="#upicon" data-isicon="groupicon" data-vals="iconipt" data-title="选择图标">选择图标</a>
+                            <a id="delicon" class="button button-S bg-red" onclick="delicon(this)" href="#">删除图标</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10" id="houtai" {eq name="$postdb.grouptype|default='1'" value="1"}style="display: none"{/eq}>
+                    <div class="x3 t-r"><label class="lab">后台管理</label></div>
+                    <div class="xs8 xl9">
+                        <input name="groupadmin" type="radio" value="1" {eq name="$postdb.groupadmin|default=''" value="1"}checked="checked"{/eq} title="启用后台">
+                        <input name="groupadmin" type="radio" value="0" {eq name="$postdb.groupadmin|default='0'" value="0"}checked="checked"{/eq} title="禁用后台">
+                    </div>
+                </div>
+
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r"><label class="lab">是否启用</label></div>
+                    <div class="xs8 xl9">
+                        <input name="status" type="radio" value="1" {eq name="$postdb.status|default='1'" value="1"}checked="checked"{/eq} title="是">
+                        <input name="status" type="radio" value="0" {eq name="$postdb.status|default=''" value="0"}checked="checked"{/eq} title="否">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r"><label class="lab">排序</label></div>
+                    <div class="xs8 xl9">
+                        <input type="text" name="sort" lay-verify="number" placeholder="数字越大排序越靠前" class="ipt" value="{$postdb.sort|default='0'}">
+                    </div>
+                </div>
+                <div class="cx-fex-l mb-10">
+                    <div class="x3 t-r"></div>
+                    <div class="xs8 xl9">
+                        <input type="hidden" name="id" class="ipt" value="{$postdb.id|default=''}">
+                        <button class="button bg-blue" lay-submit>立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+<div id="upicon" style="display: none;overflow:hidden;">
+    {include file="auth_group/icon" /}
+</div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+</script>
+<script>
+    layui.use('form',function () {
+        var layform = layui.form;
+        layform.on('radio(grouptype)', function(data){
+            if(data.value == 1){
+                $("#jifeng").show();
+                $("#houtai").hide();
+            }else{
+                $("#jifeng").hide();
+                $("#houtai").show();
+            }
+        });
+    });
+    function delicon(o) {
+        $("#groupicon").attr('src','__ADMIN__/imgnone.png');
+        $("#iconipt").val('');
+    }
+    function upiframe(o) {
+        var a = $(o).data();
+        $("#groupicon").attr('src',a.src);
+        $("#iconipt").val(a.url);
+        layer.close(layer.index);
+    }
+</script>
+{include file="public/footer" /}

@@ -1,0 +1,55 @@
+{include file="$temps.head" title="$webs.title" keywords="$webs.keywords" description="$webs.description" /}
+<div class="layout cx-fex-c cl list-gg">
+    <div class="layout list-gg-k">
+        {$label.listgg_01|default=''}
+    </div>
+</div>
+<div class="cont cx-fex mt-30">
+    <div class="xs3 cx-fex-c list-left">
+        <h3 class="layout list-nav-title">
+            {$lagpart.title}
+        </h3>
+        <ul class="layout list-nav-cont cx-fex-c">
+            {volist name="partlist" id="cx" empty=""}
+            {eq name="$cx.pid" value="$lagpart.id"}
+            <li class="x11 cx-fex-c pos-r">
+                <a class="layout cx-fex {eq name='$cx.class' value='0'}cx-click{/eq}{eq name='$cx.id' value='$parts.id'}alick{/eq}" {eq name="$cx.class" value="0"}data-type="listnavz"{else /}href="{:url('FuPart/index',array('fuid'=>$cx.id))}"{/eq}>
+                    <span>{$cx.title}</span>
+                    <i class="cx-icon cx-icon-xiangyoujiantou"></i>
+                </a>
+                {eq name="$cx.class" value="0"}
+                <ul class="x11 cx-fex-c list-znav">
+                {volist name="partlist" id="c" empty=""}
+                {eq name="$c.pid" value="$cx.id"}
+                    <li class="layout">
+                        <a class="layout cx-fex" href="{:url('FuPart/index',array('fuid'=>$c.id))}">
+                            <span>{$c.title}</span>
+                            <i class="cx-icon cx-icon-xiangyoujiantou"></i>
+                        </a>
+                    </li>
+                {/eq}
+                {/volist}
+                </ul>
+                {/eq}
+            </li>
+            {/eq}
+            {/volist}
+        </ul>
+        <div class="layout mt-20 hidden-l">
+            {$label.listgg_04|default=''}
+        </div>
+        <div class="layout mt-20 hidden-l">
+            <h3 class="layout list-nav-title">{$label.listtitle_02|default=''}</h3>
+            <ul>{$label.listgg_02|default=''}</ul>
+        </div>
+    </div>
+    <div class="xs9 xl12">
+        <div class="layout list-cont">
+            <div class="layout cx-fex-r mb-list">
+                {$menu}
+            </div>
+            {include file="$largetemp" /}
+        </div>
+    </div>
+</div>
+{include file="$temps.foot" /}

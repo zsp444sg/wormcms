@@ -1,0 +1,111 @@
+{include file="public/_meat" title="添加专题分类"/}
+<div class="layui-container">
+    <div class="layui-row pd-t-20">
+        <div class="layui-col-xs12 layui-col-sm6">
+            <a href="{:url('index')}" class="btn btn-primary">返回专题分类列表</a>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6">
+            <form class="layui-form form form-horizontal" role="form" action="so" method="post">
+                <div class="formControls cx-input-tabel">
+                    <span class="cx-input-fl">搜索</span>
+                    <input type="text" name="keyword" class="input-text" required placeholder="请输入关键词">
+                    <span class="cx-input-fl" style="padding: 0">
+                        <button class="btn size-S cx-input-tabelbtn" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <legend class="text-c mt-20">添加/修改专题分类</legend>
+    <form class="layui-form form form-horizontal" id="addform"  role="form" action="" method="post">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">上级分类</label>
+            <div class="formControls col-xs-8 col-sm-10">
+                <select name="pid" required lay-verify="speclasspid">
+                    {$postdb.pids}
+                </select>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">分类名称（<span class="c-danger">必填</span> ）</label>
+            <div class="formControls col-xs-8 col-sm-10">
+                <input class="input-text" name="title" required lay-verify="required|uname|nonum|lang2" type="text" value="{$postdb.title|default=''}">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">默认风格</label>
+            <div class="formControls col-xs-8 col-sm-10">
+                <select name="plate">
+                    {$postdb.plate}
+                </select>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">自订义模板</label>
+            <div class="formControls col-xs-8 col-sm-10">
+                <div class="cx-input-tabel">
+                    <span class="cx-input-fl">头部</span>
+                    <input class="input-text" name="temp[top]" type="text" value="{$postdb.top|default=''}">
+
+                </div>
+                <div class="cx-input-tabel mt-5">
+                    <span class="cx-input-fl">列表页</span>
+                    <input class="input-text" name="temp[list]" type="text" value="{$postdb.list|default=''}">
+
+                </div>
+                <div class="cx-input-tabel mt-5">
+                    <span class="cx-input-fl">尾部</span>
+                    <input class="input-text" name="temp[foot]" type="text" value="{$postdb.foot|default=''}">
+
+                </div>
+                <div class="cx-input-tabel mt-5">
+                    <span class="cx-input-fl">专题列表</span>
+                    <input class="input-text" name="temp[speciallist]" type="text" value="{$postdb.speciallist|default=''}">
+
+                </div>
+                <div class="cx-input-tabel mt-5">
+                    <span class="cx-input-fl">专题内容</span>
+                    <input class="input-text" name="temp[specialcont]" type="text" value="{$postdb.specialcont|default=''}">
+
+                </div>
+                <span class="c-999">一般留空,即以默认为标准</span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">SEO关键词</label>
+            <div class="formControls col-xs-8 col-sm-10">
+                <input class="input-text" name="keywords" type="text" value="{$postdb.keywords|default=''}">
+                <span class="c-999">多个关键词请用“,”隔开</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">分类简介</label>
+            <div class="formControls col-xs-8 col-sm-10">
+                <textarea class="textarea" name="description" rows="3">{$postdb.description|default=''}</textarea>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">排序</label>
+            <div class="formControls col-xs-8 col-sm-10">
+                <input class="input-text" placeholder="数字大的排在前面" name="sort" required lay-verify="required|number" type="text" value="{$postdb.sort|default='0'}">
+                <span class="c-999">数字大的排在前面</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"></label>
+            <div class="formControls col-xs-8 col-sm-10">
+                <input type="hidden" name="id" value="{$postdb.id|default=''}">
+                <button class="btn btn-primary" lay-submit lay-filter="">立即提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="public/_js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/model/'
+    }).use('app');
+</script>
+{include file="public/_footer" /}

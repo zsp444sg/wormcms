@@ -1,0 +1,25 @@
+<ul class="layout cx-fex-l mt-10">
+    {volist name="artlist" id="cx" empty=""}
+    <li class="xs6 pad-a5" data-scroll-reveal="enter bottom,move 50px">
+        <a class="layout cx-fex cp-list-li" href="{$cx.url}" title="{$cx.futitle}">
+        <div class="xl6 pad-a5 cp-list-tp">
+            <div class="cp-list-box">
+                <img class="img-responsive" src="{$cx.picurl2}" alt="{$cx.futitle}">
+            </div>
+        </div>
+        <ul class="xl6 fex-column cp-list-ul">
+            <li class="t"><h3>{$cx.title|default=""}</h3></li>
+            {present name="$cx.xinhao"}
+            <li>
+                <span>规格型号:</span>
+                <span class="ml-10">{$cx.xinhao}</span>
+            </li>
+            {/present}
+        </ul>
+        </a>
+    </li>
+    {/volist}
+</ul>
+<div class="pad-a10 cx-fex-c">
+    {$pages}
+</div>

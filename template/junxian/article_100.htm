@@ -1,0 +1,309 @@
+{extend name="./template/junxian/chanpin/list_1.htm" /}
+{block name="guanggao"}{$label.chanpingg1|default=""}{/block}
+{block name="nav"}
+{volist name="partlist" id="cx" empty=""}
+{if condition="($cx.mid == $lagpart.mid) AND ($cx.pid == 0) "}
+<li class="in-cp-li {eq name='$cx.id' value='$contdb.fid'}open{/eq}">
+    <a class="cx-fex-l in-cp-lia {eq name='$cx.id' value='$contdb.fid'}alick{/eq}" title="{$cx.title}" href="{:url('Part/index',array('fid'=>$cx.id))}">
+        <i class="cx-icon cx-icon-xiangyoujiantou mr-10"></i> {$cx.title}
+    </a>
+    {eq name="$cx.class" value="0"}
+    <ul class="in-cp-rul cx-fex-c">
+        {volist name="partlist" id="c" empty=""}
+        {eq name="$c.pid" value="$cx.id"}
+        <li class="x10 in-cp-lie">
+            <a class="cx-fex in-cp-liea {eq name='$c.id' value='$contdb.fid'}alick{/eq}" title="{$c.title}" href="{:url('Part/index',array('fid'=>$c.id))}"><i class="cx-icon cx-icon-youjiantou mr-10"></i>{$c.title}</a>
+        </li>
+        {/eq}
+        {/volist}
+    </ul>
+    {/eq}
+</li>
+{/if}
+{/volist}
+{/block}
+{block name="ganggaowei"}
+{$label.article_1001|default=""}
+{/block}
+{block name="conts"}
+<div class="fex-column list-rcon">
+    <div class="list-r-t cx-fex">
+        <h3 class="t-16 list-r-title">{$contdb.partname}</h3>
+        <div class="list-menu">{$menu}</div>
+    </div>
+<div class="cx-fex mt-20">
+    <div class="xs6 fex-column">
+        <div class="cx-projector">
+            <div class="cx-projector-zk">
+                <div class="cx-projector-k">
+                    <div class="cx-projector-xd"></div>
+                    <div class="cx-projector-xz"></div>
+                </div>
+            </div>
+            <div class="cx-projector-list cx-fex">
+                <div class="cx-projector-pn cx-projector-prev">
+                    <i class="cx-icon cx-icon-xiangzuojiantou"></i>
+                </div>
+                <div class="cx-projector-thumb">
+                    <ul class="cx-projector-ul">
+                        {volist name="contdb.tupian" id="cx" empty="" key="key"}
+                        <li>
+                            <div class="thumb">
+                                <img class="img-responsive" src="{$cx.value}" alt="{$contdb.title}" data-small="{$cx.value}" data-big="{$cx.value}">
+                            </div>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+                <div class="cx-projector-pn cx-projector-next">
+                    <i class="cx-icon cx-icon-xiangyoujiantou"></i>
+                </div>
+            </div>
+            <div class="cx-projector-big">
+                <img src="" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="xs6 fex-column pad-l20">
+        <h1 class="t-18 cp-cont-title">{$contdb.title}</h1>
+        <ul class="fex-column cp-cont-ul">
+            {present name="$contdb.xinhao"}
+            <li>
+                <span>规格型号:</span>
+                <span class="ml-10">{$contdb.xinhao}</span>
+            </li>
+            {/present}
+            {present name="$contdb.yali"}
+            <li>
+                <span>工作压力:</span>
+                <span class="ml-10">{$contdb.yali}</span>
+            </li>
+            {/present}
+            {present name="$contdb.wendu"}
+            <li>
+                <span>工作温度:</span>
+                <span class="ml-10">{$contdb.wendu}</span>
+            </li>
+            {/present}
+            {present name="$contdb.guolvmianji"}
+            <li>
+                <span>过滤面积:</span>
+                <span class="ml-10">{$contdb.guolvmianji}</span>
+            </li>
+            {/present}
+            {present name="$contdb.lvshirongji"}
+            <li>
+                <span>滤室容积:</span>
+                <span class="ml-10">{$contdb.lvshirongji}</span>
+            </li>
+            {/present}
+            {present name="$contdb.lvbanchicun"}
+            <li>
+                <span>过滤尺寸:</span>
+                <span class="ml-10">{$contdb.lvbanchicun}</span>
+            </li>
+            {/present}
+            {present name="$contdb.lvbanshuliang"}
+            <li>
+                <span>滤材数量:</span>
+                <span class="ml-10">{$contdb.lvbanshuliang}</span>
+            </li>
+            {/present}
+            {present name="$contdb.jingdu"}
+            <li>
+                <span>过滤精度:</span>
+                <span class="ml-10">{$contdb.jingdu}</span>
+            </li>
+            {/present}
+            {present name="$contdb.chuliliang"}
+            <li>
+                <span>处理量:</span>
+                <span class="ml-10">{$contdb.chuliliang}</span>
+            </li>
+            {/present}
+            {present name="$contdb.jiekouchicun"}
+            <li>
+                <span>接口尺寸:</span>
+                <span class="ml-10">{$contdb.jiekouchicun}</span>
+            </li>
+            {/present}
+            {present name="$contdb.lvbanguige"}
+            <li>
+                <span>滤板规格:</span>
+                <span class="ml-10">{$contdb.lvbanguige}</span>
+            </li>
+            {/present}
+            {present name="$contdb.lvbanxingshi"}
+            <li>
+                <span>滤板形式:</span>
+                <span class="ml-10">{$contdb.lvbanxingshi}</span>
+            </li>
+            {/present}
+            {present name="$contdb.yajinxingshi"}
+            <li>
+                <span>压紧形式:</span>
+                <span class="ml-10">{$contdb.yajinxingshi}</span>
+            </li>
+            {/present}
+            {present name="$contdb.xieliaoxingshi"}
+            <li>
+                <span>卸料形式:</span>
+                <span class="ml-10">{$contdb.xieliaoxingshi}</span>
+            </li>
+            {/present}
+            {present name="$contdb.chicun"}
+            <li>
+                <span>外形尺寸:</span>
+                <span class="ml-10">{$contdb.chicun}</span>
+            </li>
+            {/present}
+            {present name="$contdb.gonglv"}
+            <li>
+                <span>电机功率:</span>
+                <span class="ml-10">{$contdb.gonglv}</span>
+            </li>
+            {/present}
+            {present name="$contdb.zhiliang"}
+            <li>
+                <span>整机质量:</span>
+                <span class="ml-10">{$contdb.zhiliang}</span>
+            </li>
+            {/present}
+            {present name="$contdb.guantirongji"}
+            <li>
+                <span>罐体容积:</span>
+                <span class="ml-10">{$contdb.guantirongji}</span>
+            </li>
+            {/present}
+            {present name="$contdb.tontizhijing"}
+            <li>
+                <span>筒体直径:</span>
+                <span class="ml-10">{$contdb.tontizhijing}</span>
+            </li>
+            {/present}
+            {present name="$contdb.guanticaizhi"}
+            <li>
+                <span>罐体材质:</span>
+                <span class="ml-10">{$contdb.guanticaizhi}</span>
+            </li>
+            {/present}
+            {present name="$contdb.guantileixing"}
+            <li>
+                <span>罐体类型:</span>
+                <span class="ml-10">{$contdb.guantileixing}</span>
+            </li>
+            {/present}
+            {present name="$contdb.jinkoukoujing"}
+            <li>
+                <span>进口口径:</span>
+                <span class="ml-10">{$contdb.jinkoukoujing}</span>
+            </li>
+            {/present}
+            {present name="$contdb.liuliang"}
+            <li>
+                <span>流量:</span>
+                <span class="ml-10">{$contdb.liuliang}</span>
+            </li>
+            {/present}
+            {present name="$contdb.yangcheng"}
+            <li>
+                <span>扬程:</span>
+                <span class="ml-10">{$contdb.yangcheng}</span>
+            </li>
+            {/present}
+            {present name="$contdb.chukouyali"}
+            <li>
+                <span>出口压力:</span>
+                <span class="ml-10">{$contdb.chukouyali}</span>
+            </li>
+            {/present}
+            {present name="$contdb.xicheng"}
+            <li>
+                <span>吸程:</span>
+                <span class="ml-10">{$contdb.xicheng}</span>
+            </li>
+            {/present}
+            {present name="$contdb.gonglu"}
+            <li>
+                <span>功率:</span>
+                <span class="ml-10">{$contdb.gonglu}</span>
+            </li>
+            {/present}
+        </ul>
+    </div>
+</div>
+<div class="layout mt-20 cp-cont-txt">
+    <h3 class="cp-cont-titlt">产品介绍</h3>
+    <div class="cp-cont">
+        {$contdb.articleconts}
+    </div>
+</div>
+<!--相似产品-S-->
+<div class="fex-column mt-20 cp-js-li lxwm-li">
+    <h3 class="pad-l10 fex-items-c">
+        其他产品
+        <a class="f-r t-14" href="" title="">更多<i class="cx-icon cx-icon-xiangyoujiantou"></i></a>
+    </h3>
+    <ul class="cp-list-nr-lb mt-20">
+        <li class="xs3 pad-a5 fex-column cp-list-nr-li" data-scroll-reveal="enter bottom,move 50px">
+            <div class="pad-a5 cp-list-tp">
+                <div class="cp-list-box">
+                    <a href="" title="">
+                        <img class="img-responsive" src="/images/junxian/tp4x3.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <dl class="cp-list-dl fex-column cx-fex fex-items-c">
+                <dt class="cp-list-dt t-16"><a href="" title="">产品标题</a></dt>
+                <dd class="pad-a5">产品内容介绍产品内容介绍产品内容介绍产品内容介绍产品内容</dd>
+            </dl>
+        </li>
+        <li class="xs3 pad-a5 fex-column cp-list-nr-li" data-scroll-reveal="enter bottom,move 50px">
+            <div class="pad-a5 cp-list-tp">
+                <div class="cp-list-box">
+                    <a href="" title="">
+                        <img class="img-responsive" src="/images/junxian/tp4x3.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <dl class="cp-list-dl fex-column cx-fex fex-items-c">
+                <dt class="cp-list-dt t-16"><a href="" title="">产品标题</a></dt>
+                <dd class="pad-a5">产品内容介绍产品内容介绍产品内容介绍产品内容介绍产品内容</dd>
+            </dl>
+        </li>
+        <li class="xs3 pad-a5 fex-column cp-list-nr-li" data-scroll-reveal="enter bottom,move 50px">
+            <div class="pad-a5 cp-list-tp">
+                <div class="cp-list-box">
+                    <a href="" title="">
+                        <img class="img-responsive" src="/images/junxian/tp4x3.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <dl class="cp-list-dl fex-column cx-fex fex-items-c">
+                <dt class="cp-list-dt t-16"><a href="" title="">产品标题</a></dt>
+                <dd class="pad-a5">产品内容介绍产品内容介绍产品内容介绍产品内容介绍产品内容</dd>
+            </dl>
+        </li>
+        <li class="xs3 pad-a5 fex-column cp-list-nr-li" data-scroll-reveal="enter bottom,move 50px">
+            <div class="pad-a5 cp-list-tp">
+                <div class="cp-list-box">
+                    <a href="" title="">
+                        <img class="img-responsive" src="/images/junxian/tp4x3.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <dl class="cp-list-dl fex-column cx-fex fex-items-c">
+                <dt class="cp-list-dt t-16"><a href="" title="">产品标题</a></dt>
+                <dd class="pad-a5">产品内容介绍产品内容介绍产品内容介绍产品内容介绍产品内容</dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+</div>
+{/block}
+{block name="listnewstitle"}{/block}
+{block name="listnewsmove"}{/block}
+{block name="guanggao1"}{$label.chanpingg2|default=""}{/block}
+<!--新闻中心-S-->
+<!--新闻中心-E-->
+{include file="$temps.foot" /}

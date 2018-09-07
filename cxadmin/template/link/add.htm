@@ -1,0 +1,163 @@
+{include file="public/meat" title="添加/编辑友情链接"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-l">
+            <div class="xs6 xl12">
+                <a href="{:url('index')}" class="button bg-blue">友情链接列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加友情链接</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">添加/编辑友情链接</legend>
+            <form class="layui-form" id="addform"  role="form" action="" method="post">
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">所属分类（<span class="t-red">*</span> ）</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <select name='class' required lay-verify="required" lay-filter='fidselect'>
+                            {volist name="linkclass" id="c" empty=""}
+                            <option {eq name="$postdb.class|default=''" value="$c.id"}selected="selected"{/eq} value="{$c.id}">{$c.title}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">链接标题（<span class="t-red">*</span> ）</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" name="title" required lay-verify="required" type="text" value="{$postdb.title|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">链接地址（<span class="t-red">*</span> ）</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" name="url" required lay-verify="required" type="text" value="{$postdb.url|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">LOGO</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <img class="picurlimg" src="{present name='postdb.picurl'}{$postdb.picurl}{/present}" onerror="this.src='__ADMIN__/imgnone.png'" height="60" width="auto">
+                        <span class="picurltext"></span>
+                        <a type="button" class="button button-S bor-green uploadbtn" data-img="picurlimg" data-val="picurlval" data-text="picurltext" data-del="picurldel" lay-data="{method:'post',accept:'images',data:'img',field:'picurl'}"><i class="layui-icon">&#xe67c;</i>上传图标</a>
+                        <a class="button button-S bg-red picurldel cx-click" data-img="picurlimg" data-val="picurlval" data-type="closdiv" {notpresent name="postdb.picurl"}style="display:none;"{/notpresent}><i class="layui-icon">&#xe67c;</i>删除</a>
+                        <input id="diconipt" type="hidden" name="picurl" placeholder="请选择logo" class="layui-input picurlval" value="{$postdb.picurl|default=''}">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">显示/隐藏（<span class="t-red">*</span> ）</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input name="status" value="1" {eq name="$postdb.status|default='1'" value="1"}checked="checked"{/eq} title="显示" type="radio">
+                        <input name="status" value="0" {eq name="$postdb.status|default='1'" value="0"}checked="checked"{/eq} title="隐藏" type="radio">
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r">
+                        <label class="lab">排序</label>
+                    </div>
+                    <div class="xs8 xl9">
+                        <input class="ipt" placeholder="数字大的排在前面" name="sort" required lay-verify="required|number" type="text" value="{$postdb.sort|default='0'}">
+                        <span class="t-gray">数字大的排在前面</span>
+                    </div>
+                </div>
+                <div class="cx-fex-c mb-15">
+                    <div class="x3 t-r"></div>
+                    <div class="xs8 xl9">
+                        <input type="hidden" name="id" value="{$postdb.id|default=''}">
+                        <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+                        <button class="button bg-blue" lay-submit lay-filter="">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+{load href="__JS__/colpick/colpick.css,__JS__/colpick/colpick.js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+    layui.define('upload', function(exports) {
+        var layupload = layui.upload;
+        var uplogo = layupload.render({
+            elem: '.uploadbtn',
+            url: "{:url('Uploads/index')}",
+            before: function (obj) {
+                layer.load();
+            },
+            done: function (res, index, upload) {
+                var cx = $(this.item).data();
+                layer.closeAll('loading');
+                if (res.code != 0) {
+                    $('.' + cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="button button-S bor-green reload">重试</a>');
+                    $('.' + cx.text).find('.reload').on('click', function () {
+                        uplogo.upload();
+                    });
+                    return layer.msg(res.msg, {time: 2000});
+                }
+                $('.' + cx.img).attr('src', '/' + res.src);
+                $('#auth-diconyl').attr('class', 'fa fa-plus');
+                $('.' + cx.val).val(res.src);
+                $('#iconlei').val('1');
+                $('.' + cx.del).show();
+                $('.' + cx.text).hide();
+                return layer.msg(res.msg, {time: 2000})
+            },
+            error: function () {
+                var cx = $(this.item).data();
+                layer.closeAll('loading');
+                $('.' + cx.text).html('<span style="color: #FF5722;">上传失败</span> <a class="button button-S bor-green reload">重试</a>');
+                $('.' + cx.text).find('.reload').on('click', function () {
+                    uplogo.upload();
+                });
+            }
+        });
+    })
+</script>
+<script>
+    function dicon(o) {
+        var val = $(o).find('i').attr('class');
+        $('#diconipt').val(val);
+        $('.picurlimg').attr('src','__ADMIN__/imgnone.png');
+        $('#auth-diconyl').attr('class','cx-click ' + val);
+        $('#delicon').show();
+        layer.close(layer.index);
+    }
+    function delaicon(o) {
+        $('#diconipt').val('');
+        $('#auth-diconyl').attr('class','cx-icon cx-icon-jia cx-click');
+        $('#delicon').hide();
+    }
+</script>
+<script>
+    $('#picker').colpick({
+        layout:'hex',
+        submit:0,
+        colorScheme:'dark',
+        onChange:function(hsb,hex,rgb,el,bySetColor) {
+            $(el).css('border-color','#'+hex);
+            $('#auth-diconyl').css('color','#'+hex);
+            if(!bySetColor) $(el).val(hex);
+        }
+    }).keyup(function(){
+        $(this).colpickSetColor(this.value);
+    });
+</script>
+<div id="upicon" class="" style="display: none">
+    {include file="public/icon" /}
+</div>
+{include file="public/footer" /}

@@ -1,0 +1,44 @@
+{include file="$temps.head" title="$webs.title" keywords="$webs.keywords" description="$webs.description" /}
+<section class="layout cx-fex-c list-top img-auto">
+    {$label.bengg_bg|default=""}
+</section>
+{eq name="mobileurl" value='true'}
+<nav class="layout cx-fex fw-l-nav t-reverse" data-scroll-reveal="enter bottom,move 100px">
+    <a class="fw-l-nav-a alick" title="{$contdb.partname}" href="{:url('Part/index',array('fid'=>$contdb.fid))}">{$contdb.partname}</a>
+    <a class="m-listnav cx-click" data-type="mlistnav" data-cid="#listnav" data-title="{$contdb.partname}"><i class="cx-icon cx-icon-all"></i></a>
+</nav>
+{/eq}
+<nav {eq name="mobileurl" value='true'}id="listnav"{/eq} class="layout cx-fex-c fw-l-nav t-reverse" {neq name="mobileurl" value='true'}data-scroll-reveal="enter bottom,move 100px"{else/}style="display:none;"{/neq}>
+<a class="fw-l-nav-a {eq name='$contdb.fid' value='$lagpart.id'}alick{/eq}" title="{$lagpart.title}" href="{:url('Part/index',array('fid'=>$lagpart.id))}">{$lagpart.title}</a>
+{volist name="partlist" id="cx" empty=""}
+{eq name="$cx.pid" value="$lagpart.id"}
+<a class="fw-l-nav-a {eq name='$cx.id' value='$contdb.fid'}alick{/eq}" title="{$cx.title}" href="{:url('Part/index',array('fid'=>$contdb.fid))}">
+    {$cx.title}
+</a>
+{/eq}
+{/volist}
+</nav>
+<section class="cont ben-cont cx-fex-c fex-column">
+    <h1 class="article-title t-c">{$contdb.title}</h1>
+    <div class="article-bq cx-fex-c t-gray">
+        <span class="mr-15">发表时间：{$contdb.addtime}</span>
+        <span class="mr-15">作者：{$contdb.username}</span>
+        <span class="mr-15">查看：{$contdb.hist} 次</span>
+        <span>来源：
+                {empty name="contdb.source"}
+                <a title="上海焱凤信息技术有限公司" href="{$webdb.www_url}" target="_blank">焱凤信息技术</a>
+                {else /}
+                <a title="{$contdb.source}" href="{$contdb.sourceurl}" target="_blank">{$contdb.source}</a>
+                {/empty}
+            </span>
+    </div>
+    <div class="article-cont t-16">{$contdb.articleconts}</div>
+    <div class="layout ben-tag">
+        <span>tag:{$contdb.keywords}</span>
+    </div>
+    <div class="layout ben-page cx-fex t-16">
+        {$artpage.prev}
+        {$artpage.next}
+    </div>
+</section>
+{include file="$temps.foot" /}

@@ -1,0 +1,431 @@
+{include file="public/meat" title="编辑栏目"/}
+<div class="cx-fex-c">
+    <div class="x11 pad-t15 pad-b10">
+        <div class="cx-fex-c">
+            <div class="layout">
+                <a href="{:url('index',array('mid'=>$Request.param.mid))}" class="button bg-blue">返回栏目列表</a>
+                {if $btn.add}
+                <a href="{:url('add')}" class="button bg-blue">添加栏目</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div class="x11">
+        <fieldset class="cx-field">
+            <legend class="cx-field-legend">编辑栏目</legend>
+        <form class="layui-form" role="form" action="" method="post">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">基本信息</li>
+                    <li>风格及权限</li>
+                    <li>SEO设置</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">栏目名称(<span class="t-red">*</span>)</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <input type="text" name="title" placeholder="请输入栏目名称" required lay-verify="required|quname|lang2" class="ipt" value="{$postdb.title}">
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">栏目类型(<span class="t-red">*</span>)</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <input name="class" required type="radio" value="0" {eq name="$postdb.class" value="0"}checked="checked"{/eq} title="大分类">
+                                <input name="class" required type="radio" value="1" {eq name="$postdb.class" value="1"}checked="checked"{/eq} title="小栏目">
+                                {eq name="$postdb.donnum" value="0"}<input name="class" required type="radio" value="2" {eq name="$postdb.class" value="2"}checked="checked"{/eq} title="单篇文章">{/eq}
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">所属分类(<span class="t-red">*</span>)</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <select  name="pid" required lay-filter='formtype'>
+                                    <option {eq name="$postdb.pid|default='0'" value="0"}selected{/eq} value="0">顶级分类</option>
+                                    {volist name="postdb.pids" id="cx"}
+                                    <option {eq name="$postdb.pid|default=''" value="$cx.id"}selected{/eq} value="{$cx.id}">{$cx.icon|default=''}{$cx.title}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">所属模型(<span class="t-red">*</span>)</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                {$postdb.model}
+                            </div>
+                        </div>
+                        {eq name="$postdb.class" value="0"}
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">子栏目显示内容数量</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <div class="cx-input-tabel">
+                                    <input name="maxpage" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.maxpage}" >
+                                    <span class="cx-input-fl">条</span>
+                                </div>
+                                <span class="t-gray">0或不填写则以默认为标准</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">标题显示字数</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <div class="cx-input-tabel">
+                                    <input name="maxnum" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.maxnum}" >
+                                    <span class="cx-input-fl">字符</span>
+                                </div>
+                                <span class="t-gray">一汉字等于2字符，0或不填写则以默认为标准</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">内容排序</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <select name="listorder" required lay-filter='listorder'>
+                                    <option value="0" {eq name="$postdb.listorder|default='0'" value="0"}selected="selected"{/eq}>默认</option>
+                                    <option value="1" {eq name="$postdb.listorder|default=''" value="1"}selected="selected"{/eq}>发表时间降序</option>
+                                    <option value="3" {eq name="$postdb.listorder|default=''" value="3"}selected="selected"{/eq}>点击率降序</option>
+                                    <option value="5" {eq name="$postdb.listorder|default=''" value="5"}selected="selected"{/eq}>最近浏览</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        {/eq}
+                        {eq name="$postdb.class" value="1"}
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">允许发布内容</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <div class="cx-input-tabel">
+                                    {volist name="$postdb.group" id="cx"}
+                                    <input type="checkbox" name="allgroup[]" {in name="$cx.id" value="$postdb.allgroup"}checked{/in} value="{$cx.id}" title="{$cx.title}">
+                                    {/volist}
+                                </div>
+                                <span class="t-gray">不选择则无权限.超级管理员与栏目管理员默认有权限</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">在父分类显示(<span class="t-red">*</span>)</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <input name="pidsee" required type="radio" value="1" {eq name="$postdb.pidsee|default='1'" value="1"}checked="checked"{/eq} title="显示">
+                                <input name="pidsee" required type="radio" value="0" {eq name="$postdb.pidsee|default=''" value="0"}checked="checked"{/eq} title="不显示">
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">标题显示字数</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <div class="cx-input-tabel">
+                                    <input name="maxnum" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.maxnum}" >
+                                    <span class="cx-input-fl">字符</span>
+                                </div>
+                                <span class="t-gray">一汉字等于2字符，0或不填写则以默认为标准</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">显示内容数量</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <div class="cx-input-tabel">
+                                    <input name="maxpage" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.maxpage}" >
+                                    <span class="cx-input-fl">条</span>
+                                </div>
+                                <span class="t-gray">0或不填写则以默认为标准</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">内容排序</label>
+                            </div>
+                            <div class="xs8 xl9 cx-partedit">
+                                <select name="listorder" required lay-filter='listorder'>
+                                    <option value="0" {eq name="$postdb.listorder|default='0'" value="0"}selected="selected"{/eq}>默认</option>
+                                    <option value="1" {eq name="$postdb.listorder|default=''" value="1"}selected="selected"{/eq}>发表时间降序</option>
+                                    <option value="2" {eq name="$postdb.listorder|default=''" value="2"}selected="selected"{/eq}>发表时间升序</option>
+                                    <option value="3" {eq name="$postdb.listorder|default=''" value="3"}selected="selected"{/eq}>点击率降序</option>
+                                    <option value="4" {eq name="$postdb.listorder|default=''" value="4"}selected="selected"{/eq}>点击率升序</option>
+                                    <option value="5" {eq name="$postdb.listorder|default=''" value="5"}selected="selected"{/eq}>最近浏览</option>
+                                    <option value="6" {eq name="$postdb.listorder|default=''" value="6"}selected="selected"{/eq}>赞的次数降序</option>
+                                    <option value="7" {eq name="$postdb.listorder|default=''" value="7"}selected="selected"{/eq}>赞的时间升序</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">启用评论(<span class="t-red">*</span>)</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <input name="comment" required type="radio" value="1" {eq name="$postdb.comment|default='1'" value="1"}checked="checked"{/eq} title="启用">
+                                <input name="comment" required type="radio" value="0" {eq name="$postdb.comment|default=''" value="0"}checked="checked"{/eq} title="不启用">
+                            </div>
+                        </div>
+                        {/eq}
+
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab"></label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <input name="id" class="ipt" required placeholder="默认值一般为空" type="hidden" value="{$postdb.id}" >
+                                <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+                                <button class="button bg-green" lay-submit="" lay-filter="d-button">立即提交</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">风格样式</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <select name="plate" lay-filter='plates'>
+                                    {$postdb.plates}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">{switch name="postdb.class"}{case value="0"}栏目显示样式{/case}{case value="1"}内容显示样式{/case}{/switch}</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                {$postdb.listtemp}
+                            </div>
+                        </div>
+                        {eq name="$postdb.class" value="1"}
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">简介字数</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <div class="cx-input-tabel">
+                                    <input name="listtqmp[num]" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.listtqmps.nums|default=''}" >
+                                    <span class="cx-input-fl">字符</span>
+                                </div>
+                                <span class="t-gray">如果存在内容简介，显示多少字符，一汉字等于2字符，不填则以默认为标准</span>
+                            </div>
+                        </div>
+                        {/eq}
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">自订义风格</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <div class="cx-input-tabel">
+                                    <span class="cx-input-fl">头部</span>
+                                    <input name="template[head]" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.temps.head|default=''}" >
+                                    <div class="cx-input-flselect">
+                                        <select class="cx-input-fl">
+                                            <option>默认风格</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="cx-input-tabel mt-10">
+                                    <span class="cx-input-fl">底部</span>
+                                    <input name="template[foot]" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.temps.foot|default=''}" >
+                                    <div class="cx-input-flselect">
+                                        <select class="cx-input-fl">
+                                            <option>默认风格</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="cx-input-tabel mt-10">
+                                    <span class="cx-input-fl">列表页</span>
+                                    <input name="template[list]" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.temps.list|default=''}" >
+                                    <div class="cx-input-flselect">
+                                        <select class="cx-input-fl">
+                                            <option>默认风格</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                {eq name="$postdb.class" value="1"}
+                                <div class="cx-input-tabel mt-10">
+                                    <span class="cx-input-fl">内容页</span>
+                                    <input name="template[cont]" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.temps.cont|default=''}" >
+                                    <div class="cx-input-flselect">
+                                        <select class="cx-input-fl">
+                                            <option>默认风格</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                {/eq}
+                            </div>
+                        </div>
+                        {eq name="$postdb.class" value="1"}
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">栏目密码</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <input name="password" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.password|default=''}" >
+                                <span class="t-gray">设置密码后，本栏目所有内容均会加密</span>
+                            </div>
+                        </div>
+                        {/eq}
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab"></label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <button class="button bg-green" lay-submit="" lay-filter="d-button">立即提交</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">自订静态URL</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <div class="cx-input-tabel">
+                                    <span class="cx-input-fl">列表页</span>
+                                    <input name="listhtml" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.listhtml|default=''}" >
+                                </div>
+                                {eq name="$postdb.class" value="1"}
+                                <div class="cx-input-tabel mt-10">
+                                    <span class="cx-input-fl">内容页</span>
+                                    <input name="conthtml" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.conthtml|default=''}" >
+                                </div>
+                                {/eq}
+                                <div class="content mt-15">
+                                    <span class="c-333 f-14">选择URL样式：</span>
+                                    <a class="button button-S bor-blue mr-10">默认</a>
+                                    <a class="button button-S bor-blue mr-10">个性一</a>
+                                    <a class="button button-S bor-blue">个性二</a>
+                                </div>
+                                <span class="t-gray">自己修改样式注意的是,不能为汉字,确保内容页文件不能雷同</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">绑定目录</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <input name="listdir" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.listdir|default=''}" >
+                                <span class="t-gray">结尾要加/,如news/</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">跳转地址</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <input name="jumpurl" class="ipt" placeholder="默认值一般为空" type="text" value="{$postdb.jumpurl}" >
+                                <span class="t-gray">要加http://或https://,如：http://www.cxbs.net</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">栏目logo</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <img id="logo-yl" src="{if $postdb.logo}/{$webdb.updir}/{$postdb.logo}{/if}" onerror="this.src='__ADMIN__/imgnone.png'" height="60" width="auto">
+                                <span id="logo-text"></span>
+                                <a class="button button-S bg-green uploadbtn" data-imgu="#logo-yl" data-err="#logo-text" data-vals="#weblogo" data-dels="#dellogo" lay-data="{method:'post',accept:'images',data:'img',field:'picurl'}"><i class="cx-icon cx-icon-shangchuan"></i> 上传LOGO</a>
+                                <a class="button button-S bg-red" id="dellogo" onclick="delicon(this)" {if !$postdb.logo}style="display:none;"{/if}><i class="layui-icon">&#xe67c;</i>删除</a>
+                                <input class="ipt" id="weblogo" name="logo" type="hidden" value="{$postdb.logo|default=''}">
+
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">SEO标题</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <input name="seotitle" class="ipt" placeholder="请输入SEO标题" type="text" value="{$postdb.seotitle}" >
+                                <span class="t-gray">禁止输入特殊字符</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">SEO关键词</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <input name="keywords" class="ipt" placeholder="请输入SEO关键词" type="text" value="{$postdb.keywords}" >
+                                <span class="t-gray">每个关键词请用英文","进行分割</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3 t-r">
+                                <label class="lab">SEO描述</label>
+                            </div>
+                            <div class="xs8 xl9">
+                                <textarea class="ipt" rows="3" placeholder="请输入SEO描述" name="description">{$postdb.description}</textarea>
+                                <span class="t-gray">推荐200字以内</span>
+                            </div>
+                        </div>
+                        <div class="cx-fex-l mb-10">
+                            <div class="x3"></div>
+                            <div class="xs8 xl9">
+                                <button class="button bg-green" lay-submit="" lay-filter="d-button">立即提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </fieldset>
+    </div>
+</div>
+<div style="height: 20px; overflow: hidden"></div>
+{include file="public/js" /}
+<script>
+    layui.config({
+        base: '__ADMIN__/js/'
+    }).use('app');
+    layui.use(['upload','layer'],function () {
+        var layupload = layui.upload,
+            layer = layui.layer;
+        var uplogo = layupload.render({
+            elem: '.uploadbtn',
+            url:"{:url('Uploads/index')}",
+            before: function(obj){
+                layer.load();
+            },
+            done: function(res, index, upload){
+                var cx = $(this.item).data();
+                layer.closeAll('loading');
+                if(res.code != 0){
+                    $(cx.err).html('<span style="color: #FF5722;">上传失败</span> <a class="button button-S bg-yellow reload">重试</a>');
+                    $(cx.err).find('.reload').on('click', function(){
+                        uplogo.upload();
+                    });
+                    return layer.msg(res.msg,{time: 2000});
+                }
+                $(cx.imgu).attr('src','/'+ res.src);
+                $(cx.vals).val(res.src);
+                $(cx.dels).show();
+                $(cx.err).hide();
+                return layer.msg(res.msg,{time: 2000})
+            },
+            error: function(){
+                var cx = $(this.item).data();
+                layer.closeAll('loading');
+                $(cx.err).html('<span style="color: #FF5722;">上传失败</span> <a class="button button-S bg-yellow reload">重试</a>');
+                $(cx.err).find('.reload').on('click', function(){
+                    uplogo.upload();
+                });
+            }
+        });
+    })
+    function delicon(o) {
+        $("#logo-yl").attr('src','');
+        $("#weblogo").val('');
+        $('#dellogo').hide();
+    }
+</script>
+{include file="public/footer" /}

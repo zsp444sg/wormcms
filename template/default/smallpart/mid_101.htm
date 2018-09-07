@@ -1,0 +1,44 @@
+<div class="cont cx-fex-c yunwei-cp-c">
+    <h1 class="fw-l-top-t t-c">{$parts.title}</h1>
+    {volist name="artlist" id="cx" empty=""}
+    <div class="x11 yunwei-cp-cont cx-fex">
+        <div class="xs3 xl12 yunwei-cp-left fex-column">
+            <h3 class="yunwei-cp-ert">{$cx.quyu}</h3>
+            <div class="yunwei-cp-erc">
+                {$cx.description}
+            </div>
+        </div>
+        <div class="xs7 xl12 yunwei-cp-z cx-fex-l">
+            <div class="x4 cx-fex-c fex-column fex-items-c l">
+                <h5>CPU</h5>
+                <div>{$cx.cpu} 核心</div>
+            </div>
+            <div class="x4 cx-fex-c fex-column fex-items-c z">
+                <h5>内存</h5>
+                <div>
+                    {$cx.neicun} GB
+                </div>
+            </div>
+            <div class="x4 cx-fex-c fex-column fex-items-c r">
+                <h5>带宽</h5>
+                <div>{$cx.daikuan} MB</div>
+            </div>
+            <div class="x4 cx-fex-c fex-column fex-items-c lb">
+                <h5>硬盘</h5>
+                <div>{$cx.yingpan} GB</div>
+            </div>
+            <div class="x4 cx-fex-c fex-column fex-items-c lb">
+                <h5>IP</h5>
+                <div>{$cx.ftpip} 个</div>
+            </div>
+        </div>
+        <div class="xs2 xl12 yunwei-cp-r cx-fex-c fex-items-c fex-column">
+            <span>{$cx.money} 元/月</span>
+            <a class="button bg-yellow" href="{:url('Order/index',array('aid'=>$cx.aid))}">立即购买</a>
+        </div>
+    </div>
+    {/volist}
+    <div class="cx-fex-c" style="padding: 30px 0">
+        {$pages}
+    </div>
+</div>

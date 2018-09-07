@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!-- Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>[title]</title>
+    <meta name="keywords" content="[keywords]" />
+    <meta name="description" content="[description]" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="cxbs.net!Zhaoyan" />
+    <link rel="shortcut icon" href="__IMAGES__/img/favicon.png" type="image/x-icon">
+    {load href="__CSS__/cxbsnet.css,__LAYUI__/css/layui.css,__CSS__/iconfont.css,__IMAGES__/default/css/app.css" /}
+    {load href="__IMAGES__/default/js/jquery-2.0.3.min.js,__LAYUI__/layui.js" /}
+</head>
+<h1 class="reg-title t-c">重置密码</h1>
+<form class="cont cx-fex-c pad-b30 layui-form" role="form" action="" method="post">
+    <div class="x11">
+        <div class="cx-fex-l ipt-bor mb-10">
+            <label class="cx-icon cx-icon-shouji ipt-icon"></label>
+            <input id="uphone" type="text" name="uphone" placeholder="手机号码" class="ipt-txt" required lay-verify="required" value="">
+        </div>
+        <div class="cx-fex-l ipt-bor mb-10">
+            <label class="cx-icon cx-icon-yanzhengma ipt-icon"></label>
+            <input type="text" name="uncode" placeholder="验证码" class="ipt-txt" required lay-verify="required" value="">
+            <a id="phocode" class="button bg-blue reg-yzbtn cx-click" data-phone="#uphone" data-type="phocode" data-types="4">获取验证码</a>
+        </div>
+        <div class="cx-fex-l ipt-bor mb-10">
+            <label class="cx-icon cx-icon-mima1 ipt-icon"></label>
+            <input type="password" name="upassword" placeholder="输入新密码" class="ipt-txt" required lay-verify="required" value="">
+        </div>
+        <div class="cx-fex-l ipt-bor mb-10">
+            <label class="cx-icon cx-icon-mima1 ipt-icon"></label>
+            <input type="password" name="rupassword" placeholder="再次输入新密码" class="ipt-txt" required lay-verify="required" value="">
+        </div>
+        <div class="cx-fex-c mb-10">
+            <input type="hidden" name="__token__" required lay-verify="required" value="{$Request.token}" />
+            <button class="button bg-blue" lay-submit lay-filter="reg-btn">重置密码</button>
+        </div>
+    </div>
+</form>
+<script>
+    layui.config({
+        base: '__IMAGES__/default/js/'
+    }).use('app');
+    layui.config({
+        base: '__JS__/'
+    }).use('default');
+</script>
+<script>
+    var index = parent.layer.getFrameIndex(window.name);
+    parent.layer.iframeAuto(index);
+</script>
+</body>
+</html>

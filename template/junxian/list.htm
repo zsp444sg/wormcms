@@ -1,0 +1,98 @@
+{include file="$temps.head" title="$webs.title" keywords="$webs.keywords" description="$webs.description" /}
+<section class="layout list-gg img-auto">
+    {block name="guanggao"}{$label.listgg01|default=""}{/block}
+</section>
+<section class="cont cx-fex">
+    <div id="xwzx-nav" class="xs3 fex-column pos-r">
+        <div id="cx-cixi" class="news-nav fex-column" data-cid="#listnavr" data-top="60">
+            <h3 class="bg-blue t-reverse t-c list-l-title">{block name="navtitle"}{present name="diquname"}{$diquname.zonename}{/present}新闻动态{/block}</h3>
+            <ul class="news-nav-ul fex-column">
+                {block name="nav"}
+                {volist name="partlist" id="cx" empty=""}
+                {if condition="($cx.mid == $lagpart.mid) AND ($cx.pid == 0) AND ($cx.id != 9)"}
+                <li class="in-cp-li {eq name='$cx.id' value='$parts.id'}open{/eq} {eq name='$cx.id' value='$parts.pid'}open{/eq}">
+                    <a class="cx-fex-l in-cp-lia {eq name='$cx.id' value='$parts.id'}alick{/eq}" title="{$cx.title}" {present name="diquname"}href="{:url('Part/index',array('fid'=>$cx.id,'chc'=>$diquname.zoneid))}"{else /}href="{:url('Part/index',array('fid'=>$cx.id))}"{/present}>
+                        <i class="cx-icon cx-icon-xiangyoujiantou mr-10"></i> {$cx.title}
+                    </a>
+                    {eq name="$cx.class" value="0"}
+                    <ul class="in-cp-rul cx-fex-c">
+                        {volist name="partlist" id="c" empty=""}
+                        {eq name="$c.pid" value="$cx.id"}
+                        <li class="x10 in-cp-lie">
+                            <a class="cx-fex in-cp-liea {eq name='$c.id' value='$parts.id'}alick{/eq}" title="{$c.title}" {present name="diquname"}href="{:url('Part/index',array('fid'=>$c.id,'chc'=>$diquname.zoneid))}"{else /}href="{:url('Part/index',array('fid'=>$c.id))}"{/present}><i class="cx-icon cx-icon-youjiantou mr-10"></i>{$c.title}</a>
+                        </li>
+                        {/eq}
+                        {/volist}
+                    </ul>
+                    {/eq}
+                </li>
+                {/if}
+                {/volist}
+                {/block}
+            </ul>
+        </div>
+    </div>
+    <div id="listnavr" class="xs9 xl12 list-r">
+        {block name="conts"}
+        <div class="layout fex-column list-rcon">
+            <div class="list-r-t cx-fex">
+                <h3 class="t-16 list-r-title">{present name="diquname"}{$diquname.zonename}{/present}{$parts.title}</h3>
+                <div class="xl2 cx-fex-c fex-column top-caidan">
+                    <a class="top-caidan-a t-blue cx-click" data-type="navlay" data-cid="#xwzx-nav"><i class="cx-icon cx-icon-htmal5icon35"></i></a>
+                </div>
+                <div class="list-menu hidden-l">{$menu}</div>
+            </div>
+            {include file="$largetemp" /}
+        </div>
+        {/block}
+    </div>
+</section>
+<!--广告-->
+<section class="cont list-gg mt-30">
+    <div class="img-auto">
+        {block name="guanggao1"}{$label.daishigg02|default=""}{/block}
+    </div>
+</section>
+<!--相似产品-S-->
+<section class="cont">
+    <div class="cp-cont-t cx-fex">
+        <h6 class="t-16 list-r-title">最新产品</h6>
+    </div>
+    <ul class="cx-fex-l cp-cont-tui">
+        {$label.article_xiangsi1|default=""}
+    </ul>
+</section>
+<section class="layout in-gy">
+    <div class="cont cx-fex bg-fff in-gy-k">
+        <div class="xs8 fex-column pad-a30 in-gy-c">
+            <div class="t-18 in-gy-tk cx-fex-l">
+                <h2 class="in-gy-t t-blue" style="border: none">企业概况</h2>
+                <span class="ml-10">/ About us</span>
+            </div>
+            <h4 class="in-gy-ft t-18">{$label.list_biaoyu|default=""}</h4>
+            <h4 class="in-gy-ft t-18">{$label.list_biaoyu1|default=""}</h4>
+            <span class="x1 mt-20 in-gy-sp bg-blue"></span>
+            <div class="in-gy-cont t-16">
+                {$label.list_jieshao|default=""}
+            </div>
+        </div>
+        <div class="xs4 in-gy-img">
+            {$label.gywm_img01|default=""}
+        </div>
+    </div>
+</section>
+<section class="layout in-lx pos-r">
+    <div id="allmap" class="mapzy in-maps"></div>
+    <div class="layout cx-fex-c fex-column fex-items-c in-lx-k">
+        <div class="fex-column pad-a30 bg-fff in-lx-c">
+            <div class="in-gy-tk cx-fex-l">
+                <h2 class="in-gy-t" style="border: none">联系我们</h2>
+                <span class="ml-10">/ Contact us</span>
+            </div>
+            <ul class="in-gy-rul fex-column">
+                {$label.in_lianxi|default=""}
+            </ul>
+        </div>
+    </div>
+</section>
+{include file="$temps.foot" /}

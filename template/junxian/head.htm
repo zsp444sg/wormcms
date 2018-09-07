@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!-- Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>[title]</title>
+    <meta name="keywords" content="[keywords]" />
+    <meta name="description" content="[description]" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="cxbs.net!Zhaoyan" />
+    <link rel="shortcut icon" href="__IMAGES__/img/favicon.png" type="image/x-icon">
+    {load href="__LAYUI__/css/layui.css,__CSS__/cxbsnet.css,__CSS__/iconfont.css,__IMAGES__/junxian/css/app.css" /}
+</head>
+<body {$bodyondblclick}>
+<section class="cont cx-fex top-k">
+    <div class="top-l xl7 cx-fex-l">
+        <h1 class="hidden">{$webdb.webname}</h1>
+        <a class="top-logo" href="{$webdb.www_url}" title="{$webdb.webname}">
+            <img class="img-responsive" title="{$webdb.webname}" src="/{$webdb.updir}/{$webdb.weblogo}">
+        </a>
+        <div class="cx-fex-c fex-column top-biaoyu">
+            <div class="top-biaoyu-r cx-fex pad-l10">
+                <span>十年来我们专注于</span>
+                <span class="cx-fex"><p class="top-biaoyu-r-p">过滤压滤</p>品质服务</span>
+            </div>
+        </div>
+    </div>
+    <div class="top-r xl5 cx-fex-r">
+        <div class="fex-column cx-fex-c top-gz">
+            <img class="top-wx" src="__IMAGES__/junxian/homeerm.jpg" alt="">
+            <span class="t-c t-gray">扫码访问</span>
+        </div>
+        <div class="fex-column cx-fex-c pad-l20 top-gz">
+            <img class="top-wx" src="__IMAGES__/junxian/liuyanerm.jpg" alt="">
+            <span class="t-c t-gray">在线留言</span>
+        </div>
+        <div class="fex-column cx-fex-c top-tel t-blue pad-l20">
+            <span class="top-tel-t t-16 t-r">全国服务热线</span>
+            <span class="top-tel-c top-tel-t t-r">021-57170633</span>
+        </div>
+    </div>
+    <div class="xl2 cx-fex-c fex-column top-caidan">
+        <a class="top-caidan-a t-blue cx-click" data-type="navlay" data-cid="#header-nav"><i class="cx-icon cx-icon-htmal5icon35"></i></a>
+    </div>
+</section>
+<nav class="layout bg-blue t-reverse cx-fixed">
+    <ul id="header-nav" class="cont cx-fex cx-nav t-16">
+        {present name="navs"}
+        {volist name="navs.navs" id="cx" empty="" key="k"}
+        {eq name="cx.pid" value="0"}
+        <li class="top-nav-li">
+            <a data-cid="t{$k}" class="cx-fex-c fex-column top-nav-a" title="{$cx.title}" href="{$cx.url}" {eq name="cx.target" value="1"}target="_blank"{/eq}>
+            <span>{$cx.title}
+                {eq name="webdb.nav_menu" value="1"}
+                {range name="cx.id" value="$navs.pids" type="in"}
+                <i class="cx-icon cx-icon-xiajiantou"></i>
+                </span>
+            </a>
+            <div class="layout top-nav-c pos-f" id="t{$k}">
+                <ul class="cont top-nav-cont cx-fex-l">
+                    {volist name="navs.navs" id="cxe"}
+                    {eq name="cxe.pid" value="$cx.id"}
+                    <li class="nav-menu-li">
+                        <a class="t-black" title="{$cxe.title}" href="{$cxe.url}">
+                            {present name="cxe.icon.class"}
+                            {switch name="$cxe.icon.class"}
+                            {case value="0"}<i class="{$cxe.icon.icon}"></i>{/case}
+                            {case value="1"}<img class="top-nav-img" src="{$cxe.icon.icon}" alt="{$cxe.title}">{/case}
+                            {/switch}
+                            {/present}
+                            <span>{$cxe.title}</span>
+                        </a>
+                    </li>
+                    {/eq}
+                    {/volist}
+                </ul>
+            </div>
+            {else /}
+            </span>
+            </a>
+            {/range}
+            {/eq}
+        </li>
+        {/eq}
+        {/volist}
+        {/present}
+    </ul>
+</nav>
